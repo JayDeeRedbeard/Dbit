@@ -92,19 +92,17 @@ public class essentialBits {
 																				// k und z sind die Laufindizes ,um jede Spalte durchzugehen							
 			for (int k=0; k<tmp.get(0).size(); k++){							//j - Reihe
 				for(int z=0; z<tmp.get(0).size(); z++){				
-					for(int j =0;j<tmp.size(); j++){		
-					//Zum Testen	
-					
-						//System.out.println("Spalte k ="+k+" j= "+j+" z="+z+ " i="+i);									//Zum Testen
-						//System.out.println("ijk"+(tmp.get(i).get(j).get(k))+ " \t ijz"+ tmp.get(i).get(j).get(z));	//Zum Testen
+					for(int j =0;j<tmp.size(); j++){						
+						System.out.println("Spalte k ="+k+" j= "+j+" z="+z );									//Zum Testen
+						System.out.println("jk "+(tmp.get(j).get(k))+ " \t jz "+ tmp.get(j).get(z));	//Zum Testen
 					
 						if(tmp.get(j).get(k).equals(tmp.get(j).get(z)) && z!=k){
 							counter++;
 						}
-						//System.out.println("Zähler "+counter);														//Zum Testen
+						System.out.println("Zähler "+counter);														//Zum Testen
 					}
 					System.out.println("Zähler "+counter + " =? "+ tmp.get(0).size());
-					if(counter==tmp.size()){						//Es müssen alle Zeilen in einer Spalten übereinstimmen
+					if(counter==tmp.size()){									//Es müssen alle Zeilen in einer Spalten übereinstimmen
 						if(tmp2.isEmpty()){										//ArrayList initialiesieren
 							tmp2.add(z); 
 							tmp2.add(k);
@@ -117,21 +115,21 @@ public class essentialBits {
 							tmp3.set(1, z);
 												
 						}
-						System.out.println("tmp2 und Tmp3 vorhanden in tmp1: "+ ((tmp1.contains(tmp2) ) || (tmp1.contains(tmp3)) ));
-						if( (!tmp1.contains(tmp2) ) || (!tmp1.contains(tmp3) ) ){	//Überrpüfung ob schon eine der ArrayListen schon vorhanden ist.
-							tmp1.add(tmp2);											// Wenn nicht soll tmp2 hinzugefügt werden.												
+						System.out.println("tmp2 und Tmp3 vorhanden in tmp1: "+ (tmp1.contains(tmp2) ) + (tmp1.contains(tmp3)) + ((!tmp1.contains(tmp2) ) ^ (!tmp1.contains(tmp3))));
+						if( (tmp1.contains(tmp2) ) || (tmp1.contains(tmp3) ) ){							//Überrpüfung ob schon eine der ArrayListen schon vorhanden ist.
+							System.out.println("schon vorhanden");										// Wenn nicht soll tmp2 hinzugefügt werden.	
+						} else{
+							System.out.println("hinzufügen von: "+  tmp2.get(0)+ " und " + tmp2.get(1));
+							tmp1.add(tmp2);	
 						}
 					}
 					counter=0;	
 				}
-			for(int x=0; x<tmp1.size();x++){
-				System.out.println(tmp1.get(x).get(0)+" "+ tmp1.get(x).get(1));//Immer auf den ersten und 2ten Platz befindet sich das Pattern
-				removeColumn(tmp,tmp1.get(x).get(1));		//und die Spalte
-				
-			}
-			
 		}
-		
+			for(int x=0; x<tmp1.size();x++){
+				System.out.println("Remove: "+tmp1.get(x).get(0)+" "+ tmp1.get(x).get(1));	//Immer auf den ersten und 2ten Platz befindet sich das Pattern
+				removeColumn(tmp,tmp1.get(x).get(1));										//und die Spalte
+		}
 		/*for (int i=tmp.size()-1; i>=0; i--){//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 			if(tmp.get(0).isEmpty() || tmp.get(i).isEmpty()){
 				tmp.remove(i);
@@ -232,13 +230,6 @@ public class essentialBits {
 		}
 		return k;
 	}
-	/*public static ArrayList<ArrayList<Boolean>> essential2D(ArrayList<ArrayList<Boolean>> tmp){
-		ArrayList<Boolean> essential2DAry= new ArrayList<Boolean>();
-		for(int i = 0; i<tmp.size(); i++){
-			essential2DAry.add(essential1D(tmp,i));
-		}
-		return essential2DAry;
-	}*/
 	public static ArrayList<Boolean> essential1D(ArrayList<ArrayList<Boolean>> tmp) {
 		boolean[] essentialAry = new boolean[tmp.size()];
 		int tmp1=0;
@@ -271,9 +262,9 @@ public class essentialBits {
 		*/
 		/*
 		 *  Testmuster um diese Methode zu testen
-		  	einlesenderdaten.Einlesen_new.print3DTEST(tmp);
+		  	readdata.readingdata.print2DTEST(tmp);
 			tmp=RemoveFalseColumn(tmp);
-			einlesenderdaten.Einlesen_new.print3DTEST(tmp);
+			readdata.readingdata.print2DTEST(tmp);
 		 * */
 		int j =0;
 			while(j<tmp.get(0).size()){					//AUFGEPASST HIER get(0) nicht get(j), weil j abhängig sonst von j
