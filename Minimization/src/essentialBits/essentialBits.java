@@ -132,12 +132,12 @@ public class essentialBits {
 			
 		}
 		
-		for (int i=tmp.size()-1; i>=0; i--){//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		/*for (int i=tmp.size()-1; i>=0; i--){//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 			if(tmp.get(0).isEmpty() || tmp.get(i).isEmpty()){
 				tmp.remove(i);
 				//patternEmpty.set(i, true);
 			}
-		}
+		}*/
 		return tmp;
 	}
 	
@@ -181,13 +181,12 @@ public class essentialBits {
 		
 		
 			for(int row =tmp.size()-1;row>=0; row--){
-				//System.out.println(" Row: "+row);
+				//System.out.println("Row: "+row);
 				if(essent1D.get(row)){
-					//System.out.println(" Row: "+row);
+					//System.out.println("Row: "+row);
 					tmp= removeOneRowTrueColumns(tmp, row);
 					 //Test
-					/*
-						for(int y = 0; y<tmp.size(); y++){
+						/*for(int y = 0; y<tmp.size(); y++){
 							for(int z = 0; z<tmp.get(y).size(); z++){
 								System.out.print(tmp.get(y).get(z)+ "\t");
 							}
