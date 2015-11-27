@@ -26,7 +26,7 @@ public class readingdata {
 		
 		//printpattern2D(booleanList);System.out.println();
 		print3DTEST(testpatternOneData());
-		ArrayList<ArrayList<ArrayList<Boolean>>> booleanList1 = testpatternOneData();
+		//ArrayList<ArrayList<ArrayList<Boolean>>> booleanList1 = testpatternOneData();
 		//System.out.println(booleanList1.get(3).size());
 	}
 	public static void print3DTEST(ArrayList<ArrayList<ArrayList<Boolean>>> p) throws IOException {
