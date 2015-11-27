@@ -25,29 +25,24 @@ public class readingdata {
 		ArrayList<ArrayList<Boolean>> booleanList = pattern(0);
 		
 		//printpattern2D(booleanList);System.out.println();
-		print3DTEST(testpatternOneData());
+		print2DTEST(testpatternOneData());
 		//ArrayList<ArrayList<ArrayList<Boolean>>> booleanList1 = testpatternOneData();
 		//System.out.println(booleanList1.get(3).size());
 	}
-	public static void print3DTEST(ArrayList<ArrayList<ArrayList<Boolean>>> p) throws IOException {
+	public static void print2DTEST(ArrayList<ArrayList<Boolean>> p) throws IOException {
 		/** Gebe auf der Konsole ein KLEINES Beispiel aus einer Überdeckungstabelle
 		@author Jan Dennis Reimer		
 		@version1.0
-		@param p : in p wird die 3D-ArrayList übergeben 		
+		@param p : in p wird die 2D-ArrayList übergeben 		
 		*/
-		int i=0;
-		while(i<p.size()){
-			System.out.println("Pattern: "+ i);
-			for(int y = 0; y<p.get(i).size(); y++){
-				for(int z = 0; z<p.get(i).get(y).size(); z++){
-					System.out.print(p.get(i).get(y).get(z)+ "\t");
-				}
-				System.out.println();			
+		System.out.println("Pattern: "+ 0);
+		for(int y = 0; y<p.size(); y++){
+			for(int z = 0; z<p.get(y).size(); z++){
+				System.out.print(p.get(y).get(z)+ "\t");
 			}
-		System.out.println();
-		System.out.println();
-		i++;
+			System.out.println();			
 		}
+		System.out.println();
 		System.out.println();
 	}
 	public static int numberOfFailures() throws IOException {
@@ -161,13 +156,9 @@ public class readingdata {
 		ArrayList<Boolean> tmp1= new ArrayList<Boolean>();
 		String b = "";
 		Scanner s = new Scanner(new File(testfile+".txt"));
-		int i= 1;
-		//int counter=0;																				//Version 1.0
-		int limit=nextPattern(whichpattern); //Sonst kommt es zur erheblichen Verschlechterungen der Laufzeit!
-		///int outputs= numberOfOutputs();																//Version 1.0
-		while (s.hasNextLine()){									//&&counter<=outputs){			//Version 1.0//Muss eingesetzt werden, falls man ein 
-																									//3D-ArrayList haben will wo in jeder neuen Dimension
-																									//ein neues "Pattern" erzeugt wird
+		int i= 1;						
+		int limit=nextPattern(whichpattern); 														//Sonst kommt es zur erheblichen Verschlechterungen der Laufzeit!
+		while (s.hasNextLine()){									
 			Scanner tmp= new Scanner(s.nextLine());
 			b=tmp.nextLine(); 																		//Zwischenspeicherung der aktuellen Zeile
 			//System.out.println(b.contains("{f")+" "+ b);
@@ -176,8 +167,7 @@ public class readingdata {
 				if(b.contains("{f")){		
 					tmp1= dbitcoveragerow(b);
 					pattern.add(tmp1);
-				}
-				//counter++;																			//Version 1.0
+				}																		
 			}
 			i++;
 			tmp.close();
@@ -185,34 +175,16 @@ public class readingdata {
 		s.close();
 		return pattern;
 	}
-	public static  ArrayList<ArrayList<ArrayList<Boolean>>> testpatternOneData()throws IOException{
-		/** Gebe ein Testmuster zurück in einer 3D-boolschen ArrayList	
+	public static  ArrayList<ArrayList<Boolean>> testpatternOneData()throws IOException{
+		/** Gebe ein Testmuster zurück in einer 2D-boolschen ArrayList	
+		@version1.0
 		@version1.1
 		//Es wird nun immer nur noch ein pattern geben. die 3. Dimension wird weg gelassen.
 		@param -
 		@return			Um alle Testmuster abzudecken, wird für jedes Testmuster eine 2D-ArrayList erstellt 
-						und danach zu einer 3D-ArrayList zusammengefasst
+						
 		*/
-		//int howmuchpattern= howmuchtestpattern();				//Version 1.0
-		//int Outputs =numberOfOutputs();						//Version 1.0
-		ArrayList<ArrayList<ArrayList<Boolean>>> testpattern= new ArrayList<ArrayList<ArrayList<Boolean>>>();
-		int a=0;
-		ArrayList<ArrayList<Boolean>> tmp= pattern(a);
-		
-		int i=0;
-		//while(i<howmuchpattern){								//Version 1.0
-			testpattern.add(tmp);//Uebernehme Werte in dem 3D-Array	
-			/*	
-			//System.out.println(i);
-			i++;												//Version 1.0
-			if(a==0)		//IF Anweisung zur Optimierung der Laufzeit	//Version 1.0
-				a=nextPattern(a)+1;								//Version 1.0
-			else												//Version 1.0
-				a=a+Outputs+1;									//Version 1.0
-			tmp=pattern(a);*/									//Version 1.0
-			//System.out.println(a);
-		//}
-		return testpattern;
+		return pattern(0);
 	}
 	
 	
