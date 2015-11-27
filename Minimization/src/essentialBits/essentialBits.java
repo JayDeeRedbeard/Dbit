@@ -25,8 +25,8 @@ for(int k=0;k<saveRow.size();k++){
 */
 public class essentialBits {
 	
-	public static ArrayList<ArrayList<Boolean>> solution = new ArrayList<ArrayList<Boolean>>();
-	public static ArrayList<ArrayList<Boolean>> saveRow = new ArrayList<ArrayList<Boolean>>(); //Zur späteren Bestimmung bei den Dominanzen
+	public static ArrayList<Boolean> solution = new ArrayList<Boolean>();
+	public static ArrayList<Boolean> saveRow = new ArrayList<Boolean>(); //Zur späteren Bestimmung bei den Dominanzen
 	public static ArrayList<Boolean> patternEmpty = new ArrayList<Boolean>();
 	
 	public static void main (String [] args) throws IOException{
@@ -36,19 +36,19 @@ public class essentialBits {
 		initsaveRow();
 		initpatternEmpty();
 		
-		print2DBooleanArrayList(solution);
+		print1DBooleanArrayList(solution);
 		//Ausgabe der ungefilterterten Daten
-		//einlesenderdaten.Einlesen_new.print3DTEST(tmp);
+		readdata.readingdata.print2DTEST(tmp);
 		System.out.println("Remove all False Columns: ");
 		tmp=RemoveFalseColumn(tmp);
-		einlesenderdaten.Einlesen_new.print3DTEST(tmp);
+		readdata.readingdata.print2DTEST(tmp);
 		System.out.println("Remove all EssentialBits: ");
 		tmp=removeAllEssential(tmp);
-		einlesenderdaten.Einlesen_new.print3DTEST(tmp);
+		readdata.readingdata.print2DTEST(tmp);
 		
 		System.out.println("Remove one of the EqualColumns: ");
 		tmp=removeEqualColumns(tmp);											
-		einlesenderdaten.Einlesen_new.print3DTEST(tmp);
+		readdata.readingdata.print2DTEST(tmp);
 		//System.out.println("Remove all EqualRows: ");
 		//tmp=removeEqualRows(tmp);
 		//einlesenderdaten.Einlesen_new.print3DTEST(tmp);
@@ -67,21 +67,17 @@ public class essentialBits {
 	public static void initsaveRow(){
 		//Es sind immer nur die übrigen D-Bits aktiv(true)
 		saveRow= solution;
-		for (int pattern=0; pattern<saveRow.size(); pattern++){
-			for(int row =0;row<saveRow.get(pattern).size(); row++){
-			if (saveRow.get(pattern).get(row))
-				saveRow.get(pattern).set(row, false);
+		for(int row =0;row<saveRow.size(); row++){
+			if (saveRow.get(row))
+				saveRow.set(row, false);
 			else
-				saveRow.get(pattern).set(row, true);
-			}
+				saveRow.set(row, true);
 		}
 	}
-	
-	
-	public static void initsolution(ArrayList<ArrayList<ArrayList<Boolean>>> tmp){
-		solution=essential2D(tmp);
+	public static void initsolution(ArrayList<ArrayList<Boolean>> tmp){
+		solution=essential1D(tmp);
 	}
-	public static ArrayList<ArrayList<ArrayList<Boolean>>> removeEqualColumns(ArrayList<ArrayList<ArrayList<Boolean>>> tmp){
+	public static ArrayList<ArrayList<Boolean>> removeEqualColumns(ArrayList<ArrayList<Boolean>> tmp){
 		/** Löschen von gleichen Spalten aus der Überdeckungstabelle
 		@author Jan Dennis Reimer		
 		@version1.0
@@ -93,22 +89,22 @@ public class essentialBits {
 		ArrayList<Integer> tmp3 = new ArrayList<Integer>();						//Brauche 2 verschiedene tmp ArrayList um zu überprüfen, 
 																				//ob sich im Lösungsarray tmp1 schon die gesuchte Spalte befindet
 		int counter=0;	
-		for (int i=0; i<tmp.size(); i++){										//i - Pattern, k und z sind die Laufindizes ,um jede Spalte durchzugehen							
-			for (int k=0; k<tmp.get(i).get(0).size(); k++){						//j - Reihe
-				for(int z=0; z<tmp.get(i).get(0).size(); z++){				
-					for(int j =0;j<tmp.get(i).size(); j++){		
+																				// k und z sind die Laufindizes ,um jede Spalte durchzugehen							
+			for (int k=0; k<tmp.get(0).size(); k++){							//j - Reihe
+				for(int z=0; z<tmp.get(0).size(); z++){				
+					for(int j =0;j<tmp.size(); j++){		
 					//Zum Testen	
 					
 						//System.out.println("Spalte k ="+k+" j= "+j+" z="+z+ " i="+i);									//Zum Testen
 						//System.out.println("ijk"+(tmp.get(i).get(j).get(k))+ " \t ijz"+ tmp.get(i).get(j).get(z));	//Zum Testen
 					
-						if(tmp.get(i).get(j).get(k).equals(tmp.get(i).get(j).get(z)) && z!=k){
+						if(tmp.get(j).get(k).equals(tmp.get(j).get(z)) && z!=k){
 							counter++;
 						}
 						//System.out.println("Zähler "+counter);														//Zum Testen
 					}
 					System.out.println("Zähler "+counter + " =? "+ tmp.get(0).size());
-					if(counter==tmp.get(i).size()){						//Es müssen alle Zeilen in einer Spalten übereinstimmen
+					if(counter==tmp.size()){						//Es müssen alle Zeilen in einer Spalten übereinstimmen
 						if(tmp2.isEmpty()){										//ArrayList initialiesieren
 							tmp2.add(z); 
 							tmp2.add(k);
@@ -128,17 +124,16 @@ public class essentialBits {
 					}
 					counter=0;	
 				}
-			}
 			for(int x=0; x<tmp1.size();x++){
 				System.out.println(tmp1.get(x).get(0)+" "+ tmp1.get(x).get(1));//Immer auf den ersten und 2ten Platz befindet sich das Pattern
-				removeColumn(tmp,tmp1.get(x).get(0),tmp1.get(x).get(1));		//und die Spalte
+				removeColumn(tmp,tmp1.get(x).get(1));		//und die Spalte
 				
 			}
 			
 		}
 		
-		for (int i=tmp.size()-1; i>=0; i--){
-			if(tmp.get(i).get(0).isEmpty()|| tmp.get(i).isEmpty()){
+		for (int i=tmp.size()-1; i>=0; i--){//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			if(tmp.get(0).isEmpty() || tmp.get(i).isEmpty()){
 				tmp.remove(i);
 				//patternEmpty.set(i, true);
 			}
@@ -146,94 +141,88 @@ public class essentialBits {
 		return tmp;
 	}
 	
-	public static ArrayList<ArrayList<ArrayList<Boolean>>> removeEqualRows(ArrayList<ArrayList<ArrayList<Boolean>>> tmp){
+	public static ArrayList<ArrayList<Boolean>> removeEqualRows(ArrayList<ArrayList<Boolean>> tmp){
 		//Diese For-Schleife ist zum überprüfen ob es 2 gleiche Zeilen gibt.////&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-		for (int i=0; i<tmp.size(); i++){
-			for(int j =0;j<tmp.get(i).size(); j++){
-				for(int k =0;k<tmp.get(i).size(); k++){
-					if (tmp.get(i).get(j).equals(tmp.get(i).get(k)) && tmp.get(i).get(j).contains(true)){
-						tmp=removeRow(tmp,i,j);
+		
+			for(int j =0;j<tmp.size(); j++){
+				for(int k =0;k<tmp.size(); k++){
+					if (tmp.get(j).equals(tmp.get(k)) && tmp.get(j).contains(true)){
+						tmp=removeRow(tmp,j);
 						//Aufgepasst es muss nicht unbedint zur Lösung hinzugefügt werden
 						//solution.get(i).set(k, true);				//in Solution erweitern
 						//Aufpassen bei mehreren gleichen Reihen	
-						System.out.println(i+" "+ k);
+						System.out.println(j+" "+ k);
 					}
 				}
 			}
-		}//Überprüfen, denn beim Riesen Testmuster kommt es zu einem Fehler
-		for (int i=tmp.size()-1; i>=0; i--){
+		//Überprüfen, denn beim Riesen Testmuster kommt es zu einem Fehler
+		/*for (int i=tmp.size()-1; i>=0; i--){
 			if(tmp.get(i).get(0).isEmpty()|| tmp.get(i).isEmpty()){
 				tmp.remove(i);
 				patternEmpty.set(i, true);
 			}
-		}
+		}*/
 		
 		return tmp;
 	}
-	public static ArrayList<ArrayList<ArrayList<Boolean>>> removeOneRowTrueColumns(ArrayList<ArrayList<ArrayList<Boolean>>> tmp, int pattern, int Row){
-		for(int i= tmp.get(pattern).get(Row).size()-1; i>=0; i--){
+	public static ArrayList<ArrayList<Boolean>> removeOneRowTrueColumns(ArrayList<ArrayList<Boolean>> tmp, int Row){
+		for(int i= tmp.get(Row).size()-1; i>=0; i--){
 			
-			if(tmp.get(pattern).get(Row).get(i)==true){
-				tmp=removeColumn(tmp,pattern,i);
+			if(tmp.get(Row).get(i)==true){
+				tmp=removeColumn(tmp,i);
 			}
 		}
-		tmp=removeRow(tmp,pattern, Row);
+		tmp=removeRow(tmp, Row);
 		return tmp;
 	}
 	
-	public static ArrayList<ArrayList<ArrayList<Boolean>>> removeAllEssential(ArrayList<ArrayList<ArrayList<Boolean>>> tmp)throws IOException{
-		ArrayList<ArrayList<Boolean>> essent2D= essential2D(tmp);
+	public static ArrayList<ArrayList<Boolean>> removeAllEssential(ArrayList<ArrayList<Boolean>> tmp)throws IOException{
+		ArrayList<Boolean> essent1D= essential1D(tmp);
 		
-		for (int pattern=0; pattern<tmp.size(); pattern++){
-			for(int row =tmp.get(pattern).size()-1;row>=0; row--){
-				//System.out.println( "Pattern: "+ pattern+" Row: "+row);
-				if(essent2D.get(pattern).get(row)){
-					//System.out.println( "Pattern: "+ pattern+" Row: "+row);
-					tmp= removeOneRowTrueColumns(tmp,pattern, row);
+		
+			for(int row =tmp.size()-1;row>=0; row--){
+				//System.out.println(" Row: "+row);
+				if(essent1D.get(row)){
+					//System.out.println(" Row: "+row);
+					tmp= removeOneRowTrueColumns(tmp, row);
 					 //Test
-					/*if(pattern==3){
-						for(int y = 0; y<tmp.get(3).size(); y++){
-							for(int z = 0; z<tmp.get(3).get(y).size(); z++){
-								System.out.print(tmp.get(3).get(y).get(z)+ "\t");
+					/*
+						for(int y = 0; y<tmp.size(); y++){
+							for(int z = 0; z<tmp.get(y).size(); z++){
+								System.out.print(tmp.get(y).get(z)+ "\t");
 							}
 							System.out.println();	
 							
 						}
 						System.out.println();	
-					}*/
+					*/
 					
 				}
 			}
-		}
+		
 		//Überprüfen, denn beim Riesen Testmuster kommt es zu einem Fehler
 		//Falls ein Pattern schon die richtige Lösung hat, muss das jeweilige Pattern gelöscht werden
-		for (int i=tmp.size()-1; i>=0; i--){
-			System.out.println(tmp.get(i).get(0).isEmpty());
-			if(tmp.get(i).get(0).isEmpty()|| tmp.get(i).isEmpty()){
+			/*if(tmp.get(0).isEmpty()|| tmp.isEmpty()){
 				if(!tmp.isEmpty()){
 				tmp.remove(i);
 				patternEmpty.set(i, true);
 				}
-			}
+			}*/
+		return tmp;
+	}
+	public static ArrayList<ArrayList<Boolean>> removeColumn(ArrayList<ArrayList<Boolean>> tmp, int column){
+		for(int k = 0; k<tmp.size(); k++){
+			tmp.get(k).remove(column);
 		}
 		return tmp;
 	}
-	public static ArrayList<ArrayList<ArrayList<Boolean>>> removeColumn(ArrayList<ArrayList<ArrayList<Boolean>>> tmp, int pattern, int column){
-		for(int k = 0; k<tmp.get(pattern).size(); k++){
-			tmp.get(pattern).get(k).remove(column);
-		}
+	public static ArrayList<ArrayList<Boolean>> removeRow (ArrayList<ArrayList<Boolean>> tmp, int row){
+		tmp.remove(row);
 		return tmp;
 	}
-	public static ArrayList<ArrayList<ArrayList<Boolean>>> removeRow (ArrayList<ArrayList<ArrayList<Boolean>>> tmp, int pattern, int row){
-		tmp.get(pattern).remove(row);
-		return tmp;
-	}
-	public static void print2DBooleanArrayList(ArrayList<ArrayList<Boolean>> tmp){
+	public static void print1DBooleanArrayList(ArrayList<Boolean> tmp){
 		for(int i = 0; i<tmp.size(); i++){
-			for(int j = 0; j<tmp.get(i).size(); j++){
-				System.out.print(tmp.get(i).get(j)+ "\t");
-			}
-			System.out.println();
+			System.out.println(tmp.get(i)+ "\t");
 		}
 		System.out.println();
 	}
@@ -244,20 +233,20 @@ public class essentialBits {
 		}
 		return k;
 	}
-	public static ArrayList<ArrayList<Boolean>> essential2D(ArrayList<ArrayList<ArrayList<Boolean>>> tmp){
-		ArrayList<ArrayList<Boolean>> essential2DAry= new ArrayList<ArrayList<Boolean>>();
+	/*public static ArrayList<ArrayList<Boolean>> essential2D(ArrayList<ArrayList<Boolean>> tmp){
+		ArrayList<Boolean> essential2DAry= new ArrayList<Boolean>();
 		for(int i = 0; i<tmp.size(); i++){
 			essential2DAry.add(essential1D(tmp,i));
 		}
 		return essential2DAry;
-	}
-	public static ArrayList<Boolean> essential1D(ArrayList<ArrayList<ArrayList<Boolean>>> tmp, int pattern) {
-		boolean[] essentialAry = new boolean[tmp.get(pattern).size()];
+	}*/
+	public static ArrayList<Boolean> essential1D(ArrayList<ArrayList<Boolean>> tmp) {
+		boolean[] essentialAry = new boolean[tmp.size()];
 		int tmp1=0;
 		int counter=0;
-		for (int column = 0; column<tmp.get(pattern).get(0).size(); column++){
-			for (int row=0; row<tmp.get(pattern).size(); row++){
-				if(tmp.get(pattern).get(row).get(column)){
+		for (int column = 0; column<tmp.get(0).size(); column++){
+			for (int row=0; row<tmp.size(); row++){
+				if(tmp.get(row).get(column)){
 					counter++;
 					tmp1= row;
 				}
@@ -274,7 +263,7 @@ public class essentialBits {
 		}
 		return BooleanAry1DToArrayList(essentialAry);
 	}
-	public static ArrayList<ArrayList<ArrayList<Boolean>>> RemoveFalseColumn(ArrayList<ArrayList<ArrayList<Boolean>>> tmp){
+	public static ArrayList<ArrayList<Boolean>> RemoveFalseColumn(ArrayList<ArrayList<Boolean>> tmp){
 		/** Berechnung einer ArrayList in der keine Spalte aus False besteht.
 		@author Jan Dennis Reimer		
 		@version1.0
@@ -288,24 +277,21 @@ public class essentialBits {
 			einlesenderdaten.Einlesen_new.print3DTEST(tmp);
 		 * */
 		int j =0;
-		for(int i = 0; i<tmp.size(); i++){
-			j=0;
-			while(j<tmp.get(i).get(0).size()){					//AUFGEPASST HIER get(0) nicht get(j), weil j abhängig sonst von j
+			while(j<tmp.get(0).size()){					//AUFGEPASST HIER get(0) nicht get(j), weil j abhängig sonst von j
 				//System.out.println(columnAllFalse(tmp,i,j) + " "+i +" " +j);
-				if (columnAllFalse(tmp,i,j)){
+				if (columnAllFalse(tmp,j)){
 					//System.out.println( "Pattern: " + i + "     j"+  j);
-					for(int k = 0; k<tmp.get(i).size(); k++){
-						tmp.get(i).get(k).remove(j);
+					for(int k = 0; k<tmp.size(); k++){
+						tmp.get(k).remove(j);
 					}
-					if(j<tmp.get(i).get(0).size())				//Nach jeden Schritt wo eine Spalte entfernt wurde muss geguckt 
+					if(j<tmp.get(0).size())				//Nach jeden Schritt wo eine Spalte entfernt wurde muss geguckt 
 						j--;									//werden ob die nachgerückte Spalte auch komplett False ist 
 				}
 			j++;
 			}
-		}
 		return tmp;
 	}
-	public static boolean columnAllFalse(ArrayList<ArrayList<ArrayList<Boolean>>> tmp, int pattern, int column){
+	public static boolean columnAllFalse(ArrayList<ArrayList<Boolean>> tmp, int column){
 		/** Gibt zurück, ob eine Spalte komplett FALSE ist
 		@author Jan Dennis Reimer		
 		@version1.0
@@ -315,9 +301,9 @@ public class essentialBits {
 		@return													Boolean, Spalte False oder True
 		*/
 		boolean counter=false;									
-		for(int i = 0; i<tmp.get(pattern).size(); i++){
+		for(int i = 0; i<tmp.size(); i++){
 			//System.out.println("Ausgabe= "+tmp.get(pattern).get(i).get(column));
-			if(tmp.get(pattern).get(i).get(column)==true){		//Sobald eine Zeile in der gegeben Spalte true ist, wird False zurüchgegeben
+			if(tmp.get(i).get(column)==true){		//Sobald eine Zeile in der gegeben Spalte true ist, wird False zurüchgegeben
 				counter= true;
 			}
 		}

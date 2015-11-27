@@ -16,8 +16,8 @@ public class readingdata {
 	@return		
 	*/
 	//public static String testfile = "Peter";
-	public static String testfile = "Testmuster";
-	//public static String testfile = "Testmusterppt";
+	//public static String testfile = "Testmuster";
+	public static String testfile = "Testmusterppt";
 			
 	public static void main (String [] args) throws IOException{
 		
