@@ -35,13 +35,13 @@ public class essentialBits {
 		initsolution(tmp);
 		initsaveRow();
 		initpatternEmpty();
-		
+		numberOfDBits();
 		print1DBooleanArrayList(solution);
 		//Ausgabe der ungefilterterten Daten
-		readdata.readingdata.print2DTEST(tmp);
+		//readdata.readingdata.print2DTEST(tmp);
 		System.out.println("Remove all False Columns: ");
 		tmp=RemoveFalseColumn(tmp);
-		readdata.readingdata.print2DTEST(tmp);
+		//readdata.readingdata.print2DTEST(tmp);
 		System.out.println("Remove all EssentialBits: ");
 		tmp=removeAllEssential(tmp);
 		readdata.readingdata.print2DTEST(tmp);
@@ -49,6 +49,9 @@ public class essentialBits {
 		System.out.println("Remove one of the EqualColumns: ");
 		tmp=removeEqualColumns(tmp);											
 		readdata.readingdata.print2DTEST(tmp);
+		
+		
+		
 		//System.out.println("Remove all EqualRows: ");
 		//tmp=removeEqualRows(tmp);
 		//einlesenderdaten.Einlesen_new.print3DTEST(tmp);
@@ -57,6 +60,14 @@ public class essentialBits {
 				
 		//System.out.println(tmp.get(0).get(1).get(1).equals(tmp.get(0).get(1).get(1)) );
 		
+	}
+	public static int numberOfDBits(){
+		int counter=0;
+		for(int j=0;j<solution.size();j++)
+			if(solution.get(j)==false)
+				counter++;
+		System.out.println("D-Bits: " + counter);
+		return counter;
 	}
 	
 	public static void initpatternEmpty(){
@@ -87,55 +98,53 @@ public class essentialBits {
 		ArrayList<ArrayList<Integer>> tmp1= new ArrayList<ArrayList<Integer>>();
 		ArrayList<Integer> tmp2 = new ArrayList<Integer>();
 		ArrayList<Integer> tmp3 = new ArrayList<Integer>();						//Brauche 2 verschiedene tmp ArrayList um zu überprüfen, 
-																				//ob sich im Lösungsarray tmp1 schon die gesuchte Spalte befindet
-		int counter=0;	
-			//int peter=0;																	// k und z sind die Laufindizes ,um jede Spalte durchzugehen							
+		tmp1.add(tmp2);tmp1.add(tmp3);											//ob sich im Lösungsarray tmp1 schon die gesuchte Spalte befindet
+		int counter=0;															// k und z sind die Laufindizes ,um jede Spalte durchzugehen						
 			for (int k=0; k<tmp.get(0).size(); k++){							//j - Reihe
 				for(int z=0; z<tmp.get(0).size(); z++){				
 					for(int j =0;j<tmp.size(); j++){						
-						//System.out.println("Spalte k ="+k+" j= "+j+" z="+z );									//Zum Testen
-						//System.out.println("jk "+(tmp.get(j).get(k))+ " \t jz "+ tmp.get(j).get(z));	//Zum Testen
+						//System.out.println("Spalte k ="+k+" j= "+j+" z="+z );											//Zum Testen
+						//System.out.println("jk "+(tmp.get(j).get(k))+ " \t jz "+ tmp.get(j).get(z));					//Zum Testen
 					
 						if(tmp.get(j).get(k).equals(tmp.get(j).get(z)) && z!=k){
 							counter++;
 						}
 						//System.out.println("Zähler "+counter);														//Zum Testen
 					}
-					//System.out.println("Zähler "+counter + " =? "+ tmp.size());
+					//System.out.println("Zähler "+counter + " =? "+ tmp.size());										//Zum Testen
 					if(counter==tmp.size()){									//Es müssen alle Zeilen in einer Spalten übereinstimmen
-						if(tmp2.isEmpty()){										//ArrayList initialiesieren
-							tmp2.add(z); 
-							tmp2.add(k);
-							tmp3.add(k);
-							tmp3.add(z);
-						} else{													//jeweils ein gedrehtes Array erstellen, um zu überprüfen 
-							tmp2.set(0, z);										//in der nächsten If Schleife ob eine gedrehte ArrayList vorhanden ist
-							tmp2.set(1, k);
-							tmp3.set(0, k);
-							tmp3.set(1, z);				
-						}
-						//Der folgende Abschnitt macht nicht das was er soll!
-						System.out.println("tmp2 und Tmp3 vorhanden in tmp1: "+ (tmp1.contains(tmp2) || tmp1.contains(tmp3) )  );
-						if( (tmp1.contains(tmp2) ) || (tmp1.contains(tmp3) ) ){							//Überrpüfung ob schon eine der ArrayListen schon vorhanden ist.
-							System.out.println("schon vorhanden");	
-																						//Wenn nicht soll tmp2 hinzugefügt werden.	
-						} else{
-							//peter++;
-							//System.out.println("hinzufügen von: "+  tmp2.get(0)+ " und " + tmp2.get(1));
-							tmp1.add(tmp2);	
-							
-						}
-						
+							tmp1.get(0).add(z);
+							tmp1.get(1).add(k);
 					}
 					counter=0;	
 				}
 		}
-			//System.out.println("Size: "+tmp1.size()+ "   "+peter);
-			for(int x=tmp1.size()-1; x>=0;x--){
-				System.out.println("Remove: "+tmp1.get(x).get(0)+" "+ tmp1.get(x).get(1));	//Immer auf den ersten und 2ten Platz befindet sich das Pattern
-				removeColumn(tmp,tmp1.get(x).get(1));										//und die Spalte
+			for(int idx=tmp1.get(0).size()-1; idx>=0;idx--){					//Folgender Block löscht jeweils die zu viel hinzugefügten Zwischenergebnisse
+				for(int idy=tmp1.get(1).size()-1; idy>=0;idy--){				//Hiernach sind keine gespiegelten Zwischenergebnisse mehr vorhanden.
+					if(tmp1.get(0).get(idx).equals(tmp1.get(1).get(idy)) && tmp1.get(1).get(idx).equals(tmp1.get(0).get(idy))&& idx!=idy ){
+						tmp1.get(0).remove(idy);
+						tmp1.get(1).remove(idy);
+						idx--;
+						
+					}
+				}
+			}
+			for(int idx=tmp1.get(0).size()-1; idx>=0;idx--){
+				for(int idy=tmp1.get(1).size()-1; idy>=0;idy--){				//Hier werden nun die Zwischenergebnisse aussortiert sodass in '1' jeweils die zu löschenden Spalten sich befinden
+					if(tmp1.get(1).get(idx).equals(tmp1.get(1).get(idy))&& idx!=idy ){
+						tmp1.get(0).remove(idy);
+						tmp1.get(1).remove(idy);
+						idx--;
+						
+					}
+				}
+			}
+			for(int x=tmp1.get(0).size()-1; x>=0;x--){
+				//System.out.println("Remove: "+tmp1.get(0).get(x)+" "+ tmp1.get(1).get(x));//Zum Testen
+				removeColumn(tmp,tmp1.get(1).get(x));							//
 		}
-		/*for (int i=tmp.size()-1; i>=0; i--){//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			
+		/*for (int i=tmp.size()-1; i>=0; i--){//%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 			if(tmp.get(0).isEmpty() || tmp.get(i).isEmpty()){
 				tmp.remove(i);
 				//patternEmpty.set(i, true);
@@ -257,6 +266,49 @@ public class essentialBits {
 			}
 		}
 		return BooleanAry1DToArrayList(essentialAry);
+	}
+	public static ArrayList<ArrayList<Boolean>> RemoveFalseRows(ArrayList<ArrayList<Boolean>> tmp){
+		/**
+		@author Jan Dennis Reimer		
+		@version1.0
+		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList übergeben	(Überdeckungstabelle)
+		@return													2D-ArrayList ohne Reihen die aus False bestehen
+		*/
+		int j =0;
+			while(j<tmp.size()){					
+				//System.out.println(columnAllFalse(tmp,i,j) + " "+i +" " +j);
+				if (rowAllFalse(tmp,j)){
+					//System.out.println( "Pattern: " + i + "     j"+  j);
+					for(int k = 0; k<tmp.size(); k++){
+						tmp.get(j).remove(k);
+					}
+					if(j<tmp.size())						//Nach jeden Schritt wo eine Spalte entfernt wurde muss geguckt 
+						j--;									//werden ob die nachgerückte Spalte auch komplett False ist 
+				}
+			j++;
+			}
+		return tmp;
+	}
+	public static boolean rowAllFalse(ArrayList<ArrayList<Boolean>> tmp, int row){
+		/** Gibt zurück, ob eine Reihe komplett FALSE ist
+		@author Jan Dennis Reimer		
+		@version1.0
+		@param ArrayList<ArrayList<Boolean>> tmp				Bekommt die 2D-ArrayList übergeben	
+		@param int row											Welche Reihe soll getestet werden	
+		@return													Boolean, row False oder True
+		*/
+		boolean counter=false;									
+		for(int i = 0; i<tmp.size(); i++){
+			if(tmp.get(row).get(i)==true){		//Sobald eine Zeile in der gegeben Spalte true ist, wird False zurüchgegeben
+				counter= true;
+			}
+		}
+		if(counter==true){
+			return false;
+		}
+		else{
+			return true;
+		}
 	}
 	public static ArrayList<ArrayList<Boolean>> RemoveFalseColumn(ArrayList<ArrayList<Boolean>> tmp){
 		/** Berechnung einer ArrayList in der keine Spalte aus False besteht.
