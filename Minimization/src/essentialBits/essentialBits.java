@@ -26,7 +26,7 @@ for(int k=0;k<saveRow.size();k++){
 public class essentialBits {
 	
 	public static ArrayList<Boolean> solution = new ArrayList<Boolean>();
-	public static ArrayList<Boolean> saveRow = new ArrayList<Boolean>(); //Zur späteren Bestimmung bei den Dominanzen
+	public static ArrayList<Boolean> saveRow = new ArrayList<Boolean>(); //Zur späteren Bestimmung bei den Dominanzen Speicher Reihe die weg ist aber nicht zur Lösung gehört(e.g. Allfalse Reihen
 	public static ArrayList<Boolean> patternEmpty = new ArrayList<Boolean>();
 	
 	public static void main (String [] args) throws IOException{
@@ -46,18 +46,15 @@ public class essentialBits {
 		tmp=removeAllEssential(tmp);
 		readdata.readingdata.print2DTEST(tmp);
 		
-		System.out.println("Remove one of the EqualColumns: ");
+		System.out.println("Remove all Equal Columns: ");
 		tmp=removeEqualColumns(tmp);											
+		readdata.readingdata.print2DTEST(tmp);
+		System.out.println("Remove False Rows: ");
+		tmp=RemoveFalseRows(tmp);											
 		readdata.readingdata.print2DTEST(tmp);
 		
 		
-		
-		//System.out.println("Remove all EqualRows: ");
-		//tmp=removeEqualRows(tmp);
-		//einlesenderdaten.Einlesen_new.print3DTEST(tmp);
-		
 
-				
 		//System.out.println(tmp.get(0).get(1).get(1).equals(tmp.get(0).get(1).get(1)) );
 		
 	}
@@ -78,12 +75,12 @@ public class essentialBits {
 	public static void initsaveRow(){
 		//Es sind immer nur die übrigen D-Bits aktiv(true)
 		saveRow= solution;
-		for(int row =0;row<saveRow.size(); row++){
+		/*for(int row =0;row<saveRow.size(); row++){
 			if (saveRow.get(row))
 				saveRow.set(row, false);
 			else
 				saveRow.set(row, true);
-		}
+		}*/
 	}
 	public static void initsolution(ArrayList<ArrayList<Boolean>> tmp){
 		solution=essential1D(tmp);
@@ -276,13 +273,12 @@ public class essentialBits {
 		*/
 		int j =0;
 			while(j<tmp.size()){					
-				//System.out.println(columnAllFalse(tmp,i,j) + " "+i +" " +j);
+				//System.out.println(rowAllFalse(tmp,j) + " " +j);	//zum Testen
 				if (rowAllFalse(tmp,j)){
-					//System.out.println( "Pattern: " + i + "     j"+  j);
-					for(int k = 0; k<tmp.size(); k++){
-						tmp.get(j).remove(k);
-					}
-					if(j<tmp.size())						//Nach jeden Schritt wo eine Spalte entfernt wurde muss geguckt 
+					//System.out.println( " j"+  j);				//zum Testen
+					removeRow(tmp,j);
+					saveRow.set(j, true);
+					if(j<tmp.size())						//Nach jeden Schritt wo eine Reihe entfernt wurde muss geguckt 
 						j--;									//werden ob die nachgerückte Spalte auch komplett False ist 
 				}
 			j++;
@@ -298,7 +294,7 @@ public class essentialBits {
 		@return													Boolean, row False oder True
 		*/
 		boolean counter=false;									
-		for(int i = 0; i<tmp.size(); i++){
+		for(int i = 0; i<tmp.get(0).size(); i++){
 			if(tmp.get(row).get(i)==true){		//Sobald eine Zeile in der gegeben Spalte true ist, wird False zurüchgegeben
 				counter= true;
 			}
