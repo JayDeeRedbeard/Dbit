@@ -89,19 +89,19 @@ public class essentialBits {
 		ArrayList<Integer> tmp3 = new ArrayList<Integer>();						//Brauche 2 verschiedene tmp ArrayList um zu überprüfen, 
 																				//ob sich im Lösungsarray tmp1 schon die gesuchte Spalte befindet
 		int counter=0;	
-																				// k und z sind die Laufindizes ,um jede Spalte durchzugehen							
+			//int peter=0;																	// k und z sind die Laufindizes ,um jede Spalte durchzugehen							
 			for (int k=0; k<tmp.get(0).size(); k++){							//j - Reihe
 				for(int z=0; z<tmp.get(0).size(); z++){				
 					for(int j =0;j<tmp.size(); j++){						
-						System.out.println("Spalte k ="+k+" j= "+j+" z="+z );									//Zum Testen
-						System.out.println("jk "+(tmp.get(j).get(k))+ " \t jz "+ tmp.get(j).get(z));	//Zum Testen
+						//System.out.println("Spalte k ="+k+" j= "+j+" z="+z );									//Zum Testen
+						//System.out.println("jk "+(tmp.get(j).get(k))+ " \t jz "+ tmp.get(j).get(z));	//Zum Testen
 					
 						if(tmp.get(j).get(k).equals(tmp.get(j).get(z)) && z!=k){
 							counter++;
 						}
-						System.out.println("Zähler "+counter);														//Zum Testen
+						//System.out.println("Zähler "+counter);														//Zum Testen
 					}
-					System.out.println("Zähler "+counter + " =? "+ tmp.get(0).size());
+					//System.out.println("Zähler "+counter + " =? "+ tmp.size());
 					if(counter==tmp.size()){									//Es müssen alle Zeilen in einer Spalten übereinstimmen
 						if(tmp2.isEmpty()){										//ArrayList initialiesieren
 							tmp2.add(z); 
@@ -112,21 +112,26 @@ public class essentialBits {
 							tmp2.set(0, z);										//in der nächsten If Schleife ob eine gedrehte ArrayList vorhanden ist
 							tmp2.set(1, k);
 							tmp3.set(0, k);
-							tmp3.set(1, z);
-												
+							tmp3.set(1, z);				
 						}
-						System.out.println("tmp2 und Tmp3 vorhanden in tmp1: "+ (tmp1.contains(tmp2) ) + (tmp1.contains(tmp3)) + ((!tmp1.contains(tmp2) ) ^ (!tmp1.contains(tmp3))));
+						//Der folgende Abschnitt macht nicht das was er soll!
+						System.out.println("tmp2 und Tmp3 vorhanden in tmp1: "+ (tmp1.contains(tmp2) || tmp1.contains(tmp3) )  );
 						if( (tmp1.contains(tmp2) ) || (tmp1.contains(tmp3) ) ){							//Überrpüfung ob schon eine der ArrayListen schon vorhanden ist.
-							System.out.println("schon vorhanden");										// Wenn nicht soll tmp2 hinzugefügt werden.	
+							System.out.println("schon vorhanden");	
+																						//Wenn nicht soll tmp2 hinzugefügt werden.	
 						} else{
-							System.out.println("hinzufügen von: "+  tmp2.get(0)+ " und " + tmp2.get(1));
+							//peter++;
+							//System.out.println("hinzufügen von: "+  tmp2.get(0)+ " und " + tmp2.get(1));
 							tmp1.add(tmp2);	
+							
 						}
+						
 					}
 					counter=0;	
 				}
 		}
-			for(int x=0; x<tmp1.size();x++){
+			//System.out.println("Size: "+tmp1.size()+ "   "+peter);
+			for(int x=tmp1.size()-1; x>=0;x--){
 				System.out.println("Remove: "+tmp1.get(x).get(0)+" "+ tmp1.get(x).get(1));	//Immer auf den ersten und 2ten Platz befindet sich das Pattern
 				removeColumn(tmp,tmp1.get(x).get(1));										//und die Spalte
 		}
