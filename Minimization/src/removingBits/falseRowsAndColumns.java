@@ -10,13 +10,19 @@ public class falseRowsAndColumns {
 		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList übergeben	(Überdeckungstabelle)
 		@return													2D-ArrayList ohne Reihen die aus False bestehen
 		*/
+		int save=0;
 		int j =0;
 			while(j<tmp.size()){					
 				//System.out.println(rowAllFalse(tmp,j) + " " +j);	//zum Testen
 				if (rowAllFalse(tmp,j)){
 					//System.out.println( " j"+  j);				//zum Testen
 					removingBits.removeRow(tmp,j);
-					removingBits.saveRow.set(j, true);			//ACHTUNG hier wurden schon  Bits eingefügt...es wird also eine schleife benötigt!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					for(int k=0; k<removingBits.saveRow.size() && k<=j;k++){			//Um die richtigen Zeilen zu speichern
+						if(removingBits.saveRow.get(k))
+							save++;
+					}
+					removingBits.saveRow.set(j+save, true);
+					save=0;
 					if(j<tmp.size())						//Nach jeden Schritt wo eine Reihe entfernt wurde muss geguckt 
 						j--;									//werden ob die nachgerückte Spalte auch komplett False ist 
 				}
