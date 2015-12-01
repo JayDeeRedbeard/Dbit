@@ -21,32 +21,49 @@ public class removingBits {
 		print.arrayList.print1DBooleanArrayList(solution);
 		//Ausgabe der ungefilterterten Daten
 		//print.arrayList.print2DTEST(tmp);
+		
 		System.out.println("Remove all False Columns: ");
 		tmp=falseRowsAndColumns.RemoveFalseColumn(tmp);
 		//print.arrayList.print2DTEST(tmp);
+		
 		System.out.println("Remove all EssentialBits: ");
 		tmp=essentialBits.removeAllEssential(tmp);
 		print.arrayList.print2DTEST(tmp);
+		
 		System.out.println("saveRow ");
 		print.arrayList.print1DBooleanArrayList(saveRow);
+		
 		System.out.println("Remove all Equal Columns: ");
 		tmp=removeEqualColumns(tmp);											
 		print.arrayList.print2DTEST(tmp);
+		
 		System.out.println("Remove False Rows: ");
 		tmp=falseRowsAndColumns.RemoveFalseRows(tmp);											
 		print.arrayList.print2DTEST(tmp);
+		
 		System.out.println("saveRow ");
 		print.arrayList.print1DBooleanArrayList(saveRow);
+		
 		System.out.println("Remove Equal Rows: ");
 		tmp= removeEqualRows(tmp);
 		print.arrayList.print2DTEST(tmp);
-		System.out.println("saveRow ");
-		print.arrayList.print1DBooleanArrayList(saveRow);
+		
 		System.out.println("Remove NOT dominating Rows: ");
 		tmp=removeNotDominatingRows(tmp);
 		print.arrayList.print2DTEST(tmp);
+		
 		System.out.println("saveRow ");
 		print.arrayList.print1DBooleanArrayList(saveRow);
+		
+		/*//Vorläufiges Ergebnis
+		System.out.println("solution");
+		int counter=0;
+		for (int j=0; j<solution.size(); j++)
+			if (!solution.get(j))
+				counter++;
+		print.arrayList.print1DBooleanArrayList(solution);
+		System.out.println(counter + " "+ solution.size());
+		*/
 		
 		
 	}
@@ -66,28 +83,39 @@ public class removingBits {
 	
 	public static void initsaveRow(){
 		//Es sind immer nur die übrigen D-Bits aktiv(true)
-		saveRow= solution;
-		for(int row =0;row<saveRow.size(); row++)
-			saveRow.set(row, false);
-		
+		for(int row =0;row<solution.size(); row++)
+			saveRow.add(row, false);
 	}
 	public static void initsolution(ArrayList<ArrayList<Boolean>> tmp){
 		solution=essentialBits.essential1D(tmp);
 	}
 	public static ArrayList<ArrayList<Boolean>> removeNotDominatingRows(ArrayList<ArrayList<Boolean>> tmp){
 		ArrayList<ArrayList<Integer>> tmp1 = new ArrayList<ArrayList<Integer>>();
-		int save=0;
-		for (int i=tmp.size()-1; i>=0;i--){
-			tmp1=dominatingRows(tmp,i);								//Es muss zuerst ein Sortieralgorithmus her, 2te Spalte sortieren!!!!
-			for(int k=tmp1.get(0).size()-1;k>=0;k--){
-				removeRow(tmp,tmp1.get(1).get(k));
-				for(int j=0; j<removingBits.saveRow.size() && j<tmp1.get(1).get(k);j++){			//Um die richtigen Zeilen zu speichern
-					if(removingBits.saveRow.get(j))
-						save++;
-				}
-				removingBits.saveRow.set(tmp1.get(1).get(k)+save, true);
-				save=0;
+		for (int x=tmp.size()-1; x>=0;x--){
+			tmp1=dominatingRows(tmp,x);								
+			// Sortieralgorithmus Bubble Sort
+			int temp1, temp2;
+			for(int i=0; i<tmp1.get(0).size(); i++)
+			{
+			        for(int k= i+1; k <tmp1.get(0).size(); k++)
+			        {
+			                if((tmp1.get(1).get(k)).compareTo(tmp1.get(1).get(i)) < 0)
+			                {
+			                	 temp1 = tmp1.get(1).get(i);
+			                	 temp2 = tmp1.get(0).get(i);
+			                     tmp1.get(1).set(i, tmp1.get(1).get(k));
+			                     tmp1.get(0).set(i, tmp1.get(0).get(k));
+			                     tmp1.get(1).set(k,temp1);
+			                     tmp1.get(0).set(k,temp2);	
+			                }
+			        }
+			        System.out.println(tmp1.get(0).get(i)+ tmp1.get(1).get(i));   
 			}
+			//Removing the Rows
+			for(int y=tmp1.get(0).size()-1;y>=0;y--){
+				removeRow(tmp,tmp1.get(1).get(y),false);
+			}
+			
 		}
 		return tmp;
 	}
@@ -229,8 +257,8 @@ public class removingBits {
 		}
 		for(int x=tmp1.get(0).size()-1; x>=0;x--){
 			System.out.println("Remove: "+tmp1.get(0).get(x)+" "+ tmp1.get(1).get(x));//Zum Testen
-			removeRow(tmp,tmp1.get(1).get(x));	
-			for(int j=0; j<removingBits.saveRow.size() && j<tmp1.get(1).get(x);j++){			//Um die richtigen Zeilen zu speichern
+			removeRow(tmp,tmp1.get(1).get(x),false);	
+			for(int j=0; j<removingBits.saveRow.size() && j<=tmp1.get(1).get(x);j++){			//Um die richtigen Zeilen zu speichern
 				if(removingBits.saveRow.get(j))
 					save++;
 			}
@@ -240,20 +268,13 @@ public class removingBits {
 		return tmp;
 	}
 	public static ArrayList<ArrayList<Boolean>> removeOneRowTrueColumns(ArrayList<ArrayList<Boolean>> tmp, int Row){
-		int save=0;
 		for(int i= tmp.get(Row).size()-1; i>=0; i--){
 			
 			if(tmp.get(Row).get(i)==true){
 				tmp=removeColumn(tmp,i);
 			}
 		}
-		tmp=removeRow(tmp, Row);
-		for(int j=0; j<removingBits.saveRow.size() && j<Row;j++){			//Um die richtigen Zeilen zu speichern
-			if(removingBits.saveRow.get(j))
-				save++;
-		}
-		removingBits.saveRow.set(Row+save, true);
-		save=0;
+		tmp=removeRow(tmp, Row,true);
 		return tmp;
 	}
 	
@@ -264,8 +285,18 @@ public class removingBits {
 		}
 		return tmp;
 	}
-	public static ArrayList<ArrayList<Boolean>> removeRow (ArrayList<ArrayList<Boolean>> tmp, int row){
+	public static ArrayList<ArrayList<Boolean>> removeRow (ArrayList<ArrayList<Boolean>> tmp, int row, boolean solutionBit){
 		tmp.remove(row);
+		
+		int save=0;
+		for(int j=0; j<removingBits.saveRow.size() && j<=row+save;j++){			//Um die richtigen Zeilen zu speichern
+			if(removingBits.saveRow.get(j))
+				save++;
+		}
+		removingBits.saveRow.set(row+save, true);
+		if (solutionBit)
+			removingBits.solution.set(row+save, true);
+			save=0;
 		return tmp;
 	}
 	

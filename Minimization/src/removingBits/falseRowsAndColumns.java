@@ -16,13 +16,7 @@ public class falseRowsAndColumns {
 				//System.out.println(rowAllFalse(tmp,j) + " " +j);	//zum Testen
 				if (rowAllFalse(tmp,j)){
 					//System.out.println( " j"+  j);				//zum Testen
-					removingBits.removeRow(tmp,j);
-					for(int k=0; k<removingBits.saveRow.size() && k<=j;k++){			//Um die richtigen Zeilen zu speichern
-						if(removingBits.saveRow.get(k))
-							save++;
-					}
-					removingBits.saveRow.set(j+save, true);
-					save=0;
+					removingBits.removeRow(tmp,j,false);
 					if(j<tmp.size())						//Nach jeden Schritt wo eine Reihe entfernt wurde muss geguckt 
 						j--;									//werden ob die nachgerückte Spalte auch komplett False ist 
 				}
