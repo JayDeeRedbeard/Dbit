@@ -6,7 +6,6 @@ import java.util.ArrayList;
 public class essentialBits {
 	public static ArrayList<ArrayList<Boolean>> removeAllEssential(ArrayList<ArrayList<Boolean>> tmp)throws IOException{
 		ArrayList<Boolean> essent1D= essential1D(tmp);
-		int save=0;
 		
 			for(int row =tmp.size()-1;row>=0; row--){
 				//System.out.println("Row: "+row);
@@ -14,12 +13,7 @@ public class essentialBits {
 					//System.out.println("Row: "+row);
 					tmp= removingBits.removeOneRowTrueColumns(tmp, row);
 					
-					for(int j=0; j<removingBits.saveRow.size() && j<=row;j++){			//Um die richtigen Zeilen zu speichern
-						if(removingBits.saveRow.get(j))
-							save++;
-					}
-					removingBits.saveRow.set(row+save, true);
-					save=0;
+					
 					//Test
 						/*for(int y = 0; y<tmp.size(); y++){
 							for(int z = 0; z<tmp.get(y).size(); z++){
