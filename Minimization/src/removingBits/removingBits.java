@@ -17,54 +17,37 @@ public class removingBits {
 		initsolution(tmp);
 		initsaveRow();
 		//initpatternEmpty();
-		for (int index=0; index<9; index++){
-			//Ausgabe der ungefilterterten Daten
-			//print.arrayList.print2DTEST(tmp);
-			if(!saveRowAllTrue()){
-			System.out.println(index+" Remove all False Columns: ");
-			tmp=falseRowsAndColumns.RemoveFalseColumn(tmp);
-			//print.arrayList.print2DTEST(tmp);
-			}if(!saveRowAllTrue()){
-			System.out.println(index+" Remove False Rows: ");
-			tmp=falseRowsAndColumns.RemoveFalseRows(tmp);											
-			//print.arrayList.print2DTEST(tmp);
-			}if(!saveRowAllTrue()){
-			System.out.println(index+" Remove all EssentialBits: ");
-			tmp=essentialBits.removeAllEssential(tmp);
-			//print.arrayList.print2DTEST(tmp);
-			}if(!saveRowAllTrue()){
-			System.out.println(index+" Remove all False Columns: ");
-			tmp=falseRowsAndColumns.RemoveFalseColumn(tmp);
-			//print.arrayList.print2DTEST(tmp);
-			}if(!saveRowAllTrue()){
-			System.out.println(index+" Remove False Rows: ");
-			tmp=falseRowsAndColumns.RemoveFalseRows(tmp);											
-			//print.arrayList.print2DTEST(tmp);
-			}if(!saveRowAllTrue()){
-			System.out.println(index+"Remove all Equal Columns: ");
-			tmp=removeEqualColumns(tmp);											
-			//print.arrayList.print2DTEST(tmp);
-			}if(!saveRowAllTrue()){
-			System.out.println(index+"Remove Equal Rows: ");
-			tmp= removeEqualRows(tmp);
-			//print.arrayList.print2DTEST(tmp);
-			}if(!saveRowAllTrue()){
-			System.out.println(index+"Remove NOT dominating Rows: ");
-			tmp=removeNotDominatingRows(tmp);
-			//print.arrayList.print2DTEST(tmp);
-			}
-		}
-		numberOfFalseinSolution();
-		//Vorläufiges Ergebnis
-		System.out.println("solution");
-		int counter=0;
-		for (int j=0; j<solution.size(); j++)
-			if (!solution.get(j))
-				counter++;
-		print.arrayList.print1DBooleanArrayList(solution);
-		System.out.println(counter + " "+ solution.size());
-	
+		//Ausgabe der ungefilterterten Daten
+		//print.arrayList.print2DTEST(tmp);
+		System.out.println("Remove all False Columns: ");
+		tmp=falseRowsAndColumns.RemoveFalseColumn(tmp);
+		//print.arrayList.print2DTEST(tmp);
+		System.out.println("Remove all EssentialBits: ");
+		tmp=essentialBits.removeAllEssential(tmp);
+		print.arrayList.print2DTEST(tmp);
 		
+		System.out.println("Remove all Equal Columns: ");
+		tmp=removeEqualColumns(tmp);											
+		print.arrayList.print2DTEST(tmp);
+		System.out.println("Remove False Rows: ");
+		tmp=falseRowsAndColumns.RemoveFalseRows(tmp);											
+		print.arrayList.print2DTEST(tmp);
+		System.out.println("Remove Equal Rows: ");
+		tmp= removeEqualRows(tmp);
+		print.arrayList.print2DTEST(tmp);
+ 		System.out.println("Remove NOT dominating Rows: ");
+ 		tmp=removeNotDominatingRows(tmp);
+ 		print.arrayList.print2DTEST(tmp);
+ 		
+ 		System.out.println("Remove all EssentialBits: ");
+ 		tmp=essentialBits.removeAllEssential(tmp);
+ 		print.arrayList.print2DTEST(tmp);
+ 		
+		//Vorläufiges Ergebnis
+		System.out.println("saveRowAllTrue: "+saveRowAllTrue());
+		System.out.println("numberOfFalseinSolution"+numberOfFalseinSolution());
+		
+		System.out.println(solution.size());
 		
 	}
 	public static int numberOfFalseinSolution(){
@@ -127,6 +110,16 @@ public class removingBits {
 		else 
 			return false;
 			
+	}
+	public static ArrayList<ArrayList<Boolean>> DominatingColumns(ArrayList<ArrayList<Boolean>> tmp){
+		/**  Remove all NOT dominating Columns.
+		@author Jan Dennis Reimer		
+		@version1.0
+		@param ArrayList<ArrayList<Boolean>> tmp				Bekommt die 2D-ArrayList übergeben	(Überdeckungstabelle)
+		@return													
+		*/
+		
+		return tmp;
 	}
 	public static ArrayList<ArrayList<Boolean>> removeNotDominatingRows(ArrayList<ArrayList<Boolean>> tmp){
 		/**  Remove all NOT dominating Rows.
