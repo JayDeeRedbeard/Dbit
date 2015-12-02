@@ -15,15 +15,15 @@ public class readingdata {
 	@return		
 	*/
 	//public static String testfile = "1_0095009ns.behavior ";
-	public static String testfile = "0_4758ns.behavior";
-	//public static String testfile = "Peter";
+	//public static String testfile = "0_4758ns.behavior";
+	public static String testfile = "Peter";
 	//public static String testfile = "Testmuster";
 	//public static String testfile = "Testmusterppt";
 			
 	public static void main (String [] args) throws IOException{
 		
 		
-		ArrayList<ArrayList<Boolean>> booleanList = pattern(0);
+		//ArrayList<ArrayList<Boolean>> booleanList = pattern(0);
 		
 		//printpattern2D(booleanList);System.out.println();
 		print.arrayList.print2DTEST(testpatternOneData());

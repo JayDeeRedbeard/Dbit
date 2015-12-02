@@ -5,6 +5,12 @@ import java.util.ArrayList;
 
 public class essentialBits {
 	public static ArrayList<ArrayList<Boolean>> removeAllEssential(ArrayList<ArrayList<Boolean>> tmp)throws IOException{
+		/** Es werden alle essentiellen D-Bits zur Lösung hinzugefügt und danach gelöscht( mit Spalten)
+		@author Jan Dennis Reimer		
+		@version1.0
+		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList übergeben	(Überdeckungstabelle)
+		@return													3D-ArrayList ohne die essentiellen Bits (Überdeckungstabelle)
+		*/
 		ArrayList<Boolean> essent1D= essential1D(tmp);
 		
 			for(int row =tmp.size()-1;row>=0; row--){
@@ -41,7 +47,13 @@ public class essentialBits {
 		return k;
 	}
 	public static ArrayList<Boolean> essential1D(ArrayList<ArrayList<Boolean>> tmp) {
-		boolean[] essentialAry = new boolean[tmp.size()];
+		/** Findet heraus, welches D-Bit essentiell ist und gibt dementsprechend eine Arraylist zurück
+		@author Jan Dennis Reimer		
+		@version1.0
+		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList übergeben	(Überdeckungstabelle)
+		@return													3D-ArrayList ohne die essentiellen Bits (Überdeckungstabelle)
+		*/
+		boolean[] essentialAry = new boolean[tmp.size()];		
 		int tmp1=0;
 		int counter=0;
 		for (int column = 0; column<tmp.get(0).size(); column++){
