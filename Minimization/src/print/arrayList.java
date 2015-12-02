@@ -43,7 +43,7 @@ public class arrayList {
 	}
 	public static void print1DBooleanArrayList(ArrayList<Boolean> tmp){
 		for(int i = 0; i<tmp.size(); i++){
-			System.out.println(tmp.get(i)+ "\t");
+			System.out.print(tmp.get(i)+ "\t");
 		}
 		System.out.println();
 	}

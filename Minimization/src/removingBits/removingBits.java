@@ -12,50 +12,51 @@ public class removingBits {
 	
 	public static void main (String [] args) throws IOException{
 		ArrayList<ArrayList<Boolean>> tmp=readdata.readingdata.testpatternOneData();
-		ArrayList<ArrayList<Integer>> tmp1 = new ArrayList<ArrayList<Integer>>();		
+		//ArrayList<ArrayList<Integer>> tmp1 = new ArrayList<ArrayList<Integer>>();		
 		//Initialisierung von solution und saveRow; patternEmpty
 		initsolution(tmp);
 		initsaveRow();
 		initpatternEmpty();
 		numberOfDBits();
-		print.arrayList.print1DBooleanArrayList(solution);
-		//Ausgabe der ungefilterterten Daten
-		//print.arrayList.print2DTEST(tmp);
+		for (int index=0; index<5; index++){
+			//Ausgabe der ungefilterterten Daten
+			//print.arrayList.print2DTEST(tmp);
+			if(!solutionAllTrue()){
+			System.out.println(index+" Remove all False Columns: ");
+			tmp=falseRowsAndColumns.RemoveFalseColumn(tmp);
+			//print.arrayList.print2DTEST(tmp);
+			}if(!solutionAllTrue()){
+			System.out.println(index+" Remove False Rows: ");
+			tmp=falseRowsAndColumns.RemoveFalseRows(tmp);											
+			//print.arrayList.print2DTEST(tmp);
+			}if(!solutionAllTrue()){
+			System.out.println(index+" Remove all EssentialBits: ");
+			tmp=essentialBits.removeAllEssential(tmp);
+			//print.arrayList.print2DTEST(tmp);
+			}if(!solutionAllTrue()){
+			System.out.println(index+" Remove all False Columns: ");
+			tmp=falseRowsAndColumns.RemoveFalseColumn(tmp);
+			//print.arrayList.print2DTEST(tmp);
+			}if(!solutionAllTrue()){
+			System.out.println(index+" Remove False Rows: ");
+			tmp=falseRowsAndColumns.RemoveFalseRows(tmp);											
+			//print.arrayList.print2DTEST(tmp);
+			}if(!solutionAllTrue()){
+			System.out.println(index+"Remove all Equal Columns: ");
+			tmp=removeEqualColumns(tmp);											
+			//print.arrayList.print2DTEST(tmp);
+			}if(!solutionAllTrue()){
+			System.out.println(index+"Remove Equal Rows: ");
+			tmp= removeEqualRows(tmp);
+			//print.arrayList.print2DTEST(tmp);
+			}if(!solutionAllTrue()){
+			System.out.println(index+"Remove NOT dominating Rows: ");
+			tmp=removeNotDominatingRows(tmp);
+			//print.arrayList.print2DTEST(tmp);
+			}
+		}
 		
-		System.out.println("Remove all False Columns: ");
-		tmp=falseRowsAndColumns.RemoveFalseColumn(tmp);
-		//print.arrayList.print2DTEST(tmp);
-		
-		System.out.println("Remove all EssentialBits: ");
-		tmp=essentialBits.removeAllEssential(tmp);
-		print.arrayList.print2DTEST(tmp);
-		
-		System.out.println("saveRow ");
-		print.arrayList.print1DBooleanArrayList(saveRow);
-		
-		System.out.println("Remove all Equal Columns: ");
-		tmp=removeEqualColumns(tmp);											
-		print.arrayList.print2DTEST(tmp);
-		
-		System.out.println("Remove False Rows: ");
-		tmp=falseRowsAndColumns.RemoveFalseRows(tmp);											
-		print.arrayList.print2DTEST(tmp);
-		
-		System.out.println("saveRow ");
-		print.arrayList.print1DBooleanArrayList(saveRow);
-		
-		System.out.println("Remove Equal Rows: ");
-		tmp= removeEqualRows(tmp);
-		print.arrayList.print2DTEST(tmp);
-		
-		System.out.println("Remove NOT dominating Rows: ");
-		tmp=removeNotDominatingRows(tmp);
-		print.arrayList.print2DTEST(tmp);
-		
-		System.out.println("saveRow ");
-		print.arrayList.print1DBooleanArrayList(saveRow);
-		
-		/*//Vorläufiges Ergebnis
+		//Vorläufiges Ergebnis
 		System.out.println("solution");
 		int counter=0;
 		for (int j=0; j<solution.size(); j++)
@@ -63,7 +64,7 @@ public class removingBits {
 				counter++;
 		print.arrayList.print1DBooleanArrayList(solution);
 		System.out.println(counter + " "+ solution.size());
-		*/
+		
 		
 		
 	}
@@ -88,6 +89,17 @@ public class removingBits {
 	}
 	public static void initsolution(ArrayList<ArrayList<Boolean>> tmp){
 		solution=essentialBits.essential1D(tmp);
+	}
+	public static boolean solutionAllTrue(){
+		int counter=0;
+		for (int i=0; i<solution.size();i++){
+			counter++;
+		}
+		if(solution.size()==counter)
+			return true;
+		else 
+			return false;
+			
 	}
 	public static ArrayList<ArrayList<Boolean>> removeNotDominatingRows(ArrayList<ArrayList<Boolean>> tmp){
 		ArrayList<ArrayList<Integer>> tmp1 = new ArrayList<ArrayList<Integer>>();
@@ -255,7 +267,7 @@ public class removingBits {
 				}
 			}
 		}
-		for(int x=tmp1.get(0).size()-1; x>=0;x--){
+		for(int x=tmp1.get(1).size()-1; x>=0;x--){
 			System.out.println("Remove: "+tmp1.get(0).get(x)+" "+ tmp1.get(1).get(x));//Zum Testen
 			removeRow(tmp,tmp1.get(1).get(x),false);	
 			for(int j=0; j<removingBits.saveRow.size() && j<=tmp1.get(1).get(x);j++){			//Um die richtigen Zeilen zu speichern
