@@ -18,10 +18,12 @@ public class removingBits {
 		initsaveRow();
 		//initpatternEmpty();
 		//Ausgabe der ungefilterterten Daten
-		//print.arrayList.print2DTEST(tmp);
+		//print.arrayList.print2DTEST(tmp);		
+		
 		System.out.println("Remove all False Columns: ");
 		tmp=falseRowsAndColumns.RemoveFalseColumn(tmp);
-		//print.arrayList.print2DTEST(tmp);
+		print.arrayList.print2DTEST(tmp);
+		
 		System.out.println("Remove all EssentialBits: ");
 		tmp=essentialBits.removeAllEssential(tmp);
 		print.arrayList.print2DTEST(tmp);
@@ -35,6 +37,11 @@ public class removingBits {
 		System.out.println("Remove Equal Rows: ");
 		tmp= removeEqualRows(tmp);
 		print.arrayList.print2DTEST(tmp);
+		
+		System.out.println("Remove Equal Rows: ");
+		tmp= removeEqualRows(tmp);
+		print.arrayList.print2DTEST(tmp);
+		
  		System.out.println("Remove NOT dominating Rows: ");
  		tmp=removeNotDominatingRows(tmp);
  		print.arrayList.print2DTEST(tmp);
@@ -45,9 +52,9 @@ public class removingBits {
  		
 		//Vorläufiges Ergebnis
 		System.out.println("saveRowAllTrue: "+saveRowAllTrue());
-		System.out.println("numberOfFalseinSolution"+numberOfFalseinSolution());
+		System.out.println("numberOfFalseinSolution "+numberOfFalseinSolution()+" ALLE D-Bits: " + solution.size());
 		
-		System.out.println(solution.size());
+		System.out.println();
 		
 	}
 	public static int numberOfFalseinSolution(){
@@ -111,8 +118,8 @@ public class removingBits {
 			return false;
 			
 	}
-	public static ArrayList<ArrayList<Boolean>> DominatingColumns(ArrayList<ArrayList<Boolean>> tmp){
-		/**  Remove all NOT dominating Columns.
+	public static ArrayList<ArrayList<Boolean>> removeDominatingRows(ArrayList<ArrayList<Boolean>> tmp){
+		/**  Remove all NOT dominating Rows.
 		@author Jan Dennis Reimer		
 		@version1.0
 		@param ArrayList<ArrayList<Boolean>> tmp				Bekommt die 2D-ArrayList übergeben	(Überdeckungstabelle)
@@ -132,14 +139,12 @@ public class removingBits {
 		for (int x=tmp.size()-1; x>=0;x--){
 			tmp1=dominatingRows(tmp,x);									//Die übergebene ArrayList hat 2 Spalten (beide nicht sortiert, 
 																		//sowie mit möglich doppelten Einträgen)
+			
 			// Sortieralgorithmus Bubble Sort start:
 			int temp1, temp2;
-			for(int i=0; i<tmp1.get(0).size(); i++)
-			{
-			        for(int k= i+1; k <tmp1.get(0).size(); k++)
-			        {
-			                if((tmp1.get(1).get(k)).compareTo(tmp1.get(1).get(i)) < 0)
-			                {
+			for(int i=0; i<tmp1.get(0).size(); i++){
+			        for(int k= i+1; k <tmp1.get(0).size(); k++){
+			                if((tmp1.get(1).get(k)).compareTo(tmp1.get(1).get(i)) < 0){
 			                	 temp1 = tmp1.get(1).get(i);
 			                	 temp2 = tmp1.get(0).get(i);
 			                     tmp1.get(1).set(i, tmp1.get(1).get(k));
@@ -151,11 +156,10 @@ public class removingBits {
 			        System.out.println(tmp1.get(0).get(i)+ tmp1.get(1).get(i));   
 			}///BubbleSort End
 			
-			//Removing the Rows
+			//Removing the NOT dominating Rows
 			for(int y=tmp1.get(0).size()-1;y>=0;y--){
 				removeRow(tmp,tmp1.get(1).get(y),false);
 			}
-			
 		}
 		return tmp;
 	}

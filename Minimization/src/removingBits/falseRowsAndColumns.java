@@ -10,7 +10,6 @@ public class falseRowsAndColumns {
 		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList übergeben	(Überdeckungstabelle)
 		@return													2D-ArrayList ohne Reihen die aus False bestehen
 		*/
-		int save=0;
 		int j =0;
 			while(j<tmp.size()){					
 				//System.out.println(rowAllFalse(tmp,j) + " " +j);	//zum Testen
@@ -60,14 +59,14 @@ public class falseRowsAndColumns {
 		 * */
 		int j =0;
 			while(j<tmp.get(0).size()){					//AUFGEPASST HIER get(0) nicht get(j), weil j abhängig sonst von j
-				//System.out.println(columnAllFalse(tmp,i,j) + " "+i +" " +j);
+				
 				if (columnAllFalse(tmp,j)){
-					//System.out.println( "Pattern: " + i + "     j"+  j);
-					for(int k = 0; k<tmp.size(); k++){
+					//System.out.println("Column All false: "+ columnAllFalse(tmp,j) + " " +j);
+					for(int k = tmp.size()-1; k>=0; k--){
 						tmp.get(k).remove(j);
 					}
 					if(j<tmp.get(0).size())				//Nach jeden Schritt wo eine Spalte entfernt wurde muss geguckt 
-						j--;									//werden ob die nachgerückte Spalte auch komplett False ist 
+						j--;							//werden ob die nachgerückte Spalte auch komplett False ist 
 				}
 			j++;
 			}
@@ -85,11 +84,11 @@ public class falseRowsAndColumns {
 		boolean counter=false;									
 		for(int i = 0; i<tmp.size(); i++){
 			//System.out.println("Ausgabe= "+tmp.get(pattern).get(i).get(column));
-			if(tmp.get(i).get(column)==true){		//Sobald eine Zeile in der gegeben Spalte true ist, wird False zurüchgegeben
+			if(tmp.get(i).get(column)){		//Sobald eine Zeile in der gegeben Spalte true ist, wird False zurüchgegeben
 				counter= true;
 			}
 		}
-		if(counter==true){
+		if(counter){
 			return false;
 		}
 		else{
