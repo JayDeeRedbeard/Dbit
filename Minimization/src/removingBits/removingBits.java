@@ -45,6 +45,14 @@ public class removingBits {
  		tmp=essentialBits.removeAllEssential(tmp);
  		print.arrayList.print2DTEST(tmp);
  		
+ 		System.out.println("Remove all True Columns: ");
+ 		tmp=domColumn.removetrueColumns(tmp);
+ 		print.arrayList.print2DTEST(tmp);
+ 		
+ 		System.out.println("Remove all Equal Columns: ");
+		tmp=domColumn.removeEqualColumns(tmp);											
+		print.arrayList.print2DTEST(tmp);
+ 		
 		//Vorläufiges Ergebnis
 		System.out.println("saveRowAllTrue: "+saveRowAllTrue());
 		System.out.println("numberOfFalseinSolution "+numberOfFalseinSolution()+" ALLE D-Bits: " + solution.size());
