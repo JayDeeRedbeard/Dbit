@@ -1,9 +1,11 @@
 package removingBits;
-
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class domColumn {
+	
 	public static ArrayList<ArrayList<Boolean>> removeEqualColumns(ArrayList<ArrayList<Boolean>> tmp){
+		//Diese funktion ist nicht mehr brauchbar da sie von Remove all dominating Columns dominiert wird
 		/** Löschen von gleichen Spalten aus der Überdeckungstabelle
 		@author Jan Dennis Reimer		
 		@version1.0
@@ -60,12 +62,14 @@ public class domColumn {
 		return tmp;
 	}
 	public static ArrayList<ArrayList<Boolean>> removetrueColumns(ArrayList<ArrayList<Boolean>> tmp){
-		/** Löschen von gleichen Spalten aus der Überdeckungstabelle
+		//Diese funktion ist nicht mehr brauchbar da sie von Remove all dominating Columns dominiert wird
+		/** Löschen von Spalten die nur true haben, aus der Überdeckungstabelle
 		@author Jan Dennis Reimer		
 		@version1.0
 		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList übergeben	(Überdeckungstabelle)
 		@return													3D-ArrayList ohne gleiche Spalten
 		*/
+		
 		int counttrue=0;
 		for (int k=tmp.get(0).size()-1; k>=0; k--){							//j - Reihe		
 			for(int j =0;j<tmp.size(); j++){	
@@ -82,18 +86,20 @@ public class domColumn {
 			
 		return tmp;
 	}
-	public static ArrayList<ArrayList<Boolean>> removeNotDominatingColumns(ArrayList<ArrayList<Boolean>> tmp){
-		/**  Remove all NOT dominating Rows.
+	public static ArrayList<ArrayList<Boolean>> removeNotDominatingColumns(ArrayList<ArrayList<Boolean>> tmp) throws IOException{
+		/**  Remove all NOT dominating Columns
 		@author Jan Dennis Reimer		
 		@version1.0
 		@param ArrayList<ArrayList<Boolean>> tmp				Bekommt die 2D-ArrayList übergeben	(Überdeckungstabelle)
 		@return													2D-ArrayList ohne die Zeilen, die dominiert wurden, also (hier) nur 2.Spalte löschen.
 		*/
+		int counter=0;
 		ArrayList<ArrayList<Integer>> tmp1 = new ArrayList<ArrayList<Integer>>();
-		for (int x=tmp.size()-1; x>=0;x--){
+		if(!tmp.isEmpty()){
+		for (int x=tmp.get(0).size()-1; x>=0;x--){
 			tmp1=dominatingColumns(tmp,x);									//Die übergebene ArrayList hat 2 Spalten (beide nicht sortiert, 
 																		//sowie mit möglich doppelten Einträgen)
-			// Sortieralgorithmus Bubble Sort start:
+			// Sortieralgorithmus Bubble Sort start:  //Hier eig nicht nötig!!!
 			int temp1, temp2;
 			for(int i=0; i<tmp1.get(0).size(); i++)
 			{
@@ -109,18 +115,23 @@ public class domColumn {
 			                     tmp1.get(0).set(k,temp2);	
 			                }
 			        }
-			        System.out.println(tmp1.get(0).get(i)+ tmp1.get(1).get(i));   
+			        //System.out.println(tmp1.get(0).get(i)+ tmp1.get(1).get(i));   
 			}///BubbleSort End
 			
-			//Removing the Rows
-			for(int y=tmp1.get(0).size()-1;y>=0;y--){
-				removingBits.removeRow(tmp,tmp1.get(1).get(y),false);
+			//Removing the Columns
+			for(int y=tmp1.get(1).size()-1;y>=0;y--){
+				removingBits.removeColumn(tmp,tmp1.get(1).get(y));
+				counter++;
 			}
-			
+			if (counter>=1){
+				x=x-counter;
+				counter=0;
+			}
+		}
 		}
 		return tmp;
 	}
-	public static ArrayList<ArrayList<Integer>> dominatingColumns(ArrayList<ArrayList<Boolean>> tmp, int row){
+	public static ArrayList<ArrayList<Integer>> dominatingColumns(ArrayList<ArrayList<Boolean>> tmp, int column){
 		/**  Finde alle Reihen die dominiert werden von int row.
 		@author Jan Dennis Reimer		
 		@version1.0
@@ -129,35 +140,34 @@ public class domColumn {
 		@return													Es wird eine ArrayList zurückgegeben, wo die erste Spalte jeweils die dominierende Reihe ist.
 																Die 2.Spalte ist dann die nicht dominierende Spalte
 		*/
-		/* Zum Testen in Main einfügen.
-		for(int j=0;j<tmp1.get(0).size();j++)
-		System.out.println(tmp1.get(0).get(j)+ " "+ tmp1.get(1).get(j));
-		 * */
 		ArrayList<ArrayList<Integer>> tmp1= new ArrayList<ArrayList<Integer>>();
 		ArrayList<Integer> tmp2 = new ArrayList<Integer>();						//tmp2 und 3 zum initailisieren von tmp1.
 		ArrayList<Integer> tmp3 = new ArrayList<Integer>();						 
 		tmp1.add(tmp2);tmp1.add(tmp3);	
 		int counttrue=0;
 		boolean isdominated= true;
-		for (int k=0; k<tmp.size(); k++){							
-			for(int z=0; z<tmp.get(0).size() && isdominated&& k!=row ; z++){
-				if( !(tmp.get(row).get(z).equals(false) && tmp.get(k).get(z).equals(true)) ){	//Entscheidendes Kriterium!!
-					//System.out.println("row= "+row + " z= "+z+ "k= "+k);
-					//System.out.println(tmp.get(row).get(z)+ "\t"+ tmp.get(k).get(z));
-					if(tmp.get(row).get(z)){													//counttrue muss größer als 1 sein,
-						counttrue++;															//da es sonst keine dominierens Zeile sein kann
-					}
+		
+		for(int z=0; z<tmp.get(0).size() ; z++){
+			for (int k=0; k<tmp.size() && z!=column && isdominated ; k++){	
+				
+				if( !(tmp.get(k).get(column).equals(true) && tmp.get(k).get(z).equals(false)) ){	//Entscheidendes Kriterium!!
+					//System.out.println("Column= "+column + " z= "+z+ "k= "+k);
+					//System.out.println(tmp.get(k).get(column)+ "\t"+ tmp.get(k).get(z));
+					//counttrue muss größer gleich 1 sein,
+					//da es sonst keine dominierens Zeile sein kann
+					if(tmp.get(k).get(column).equals(true) )
+						counttrue++;
 				}
 				else{
-						//System.out.println(" Reihe "+ row + " ist nicht dominiernd auf "+k);
+						//System.out.println(" Column "+ column + " ist nicht dominiernd auf "+z);
 						isdominated=false;
 					}
 				//System.out.println("counttrue= " + counttrue );	
 			}
-			if(counttrue>1 && isdominated)	{
-				//System.out.println(" Reihe "+ row + " ist dominiernd auf "+k);
-				tmp1.get(0).add(row);
-				tmp1.get(1).add(k);
+			if(counttrue>=1 && isdominated)	{
+				//System.out.println(" Column "+ column + " ist dominiernd auf "+z);
+				tmp1.get(0).add(column);
+				tmp1.get(1).add(z);
 			}
 			isdominated=true;
 			counttrue=0;

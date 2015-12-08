@@ -14,11 +14,12 @@ public class readingdata {
 	@param string	
 	@return		
 	*/
-	//public static String testfile = "1_0095009ns.behavior ";
+	public static String testfile = "1_0095009ns.behavior ";
 	//public static String testfile = "0_4758ns.behavior";
 	//public static String testfile = "Peter";
 	//public static String testfile = "Testmuster";
-	public static String testfile = "Testmusterppt";
+	//public static String testfile = "Testmusterppt";
+	//public static String testfile = "domColumn";
 			
 	public static void main (String [] args) throws IOException{
 		

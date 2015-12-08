@@ -5,7 +5,7 @@ public class removingBits {
 	
 	public static ArrayList<Boolean> solution = new ArrayList<Boolean>();
 	public static ArrayList<Boolean> saveRow = new ArrayList<Boolean>(); //Zur späteren Bestimmung bei den Dominanzen Speicher Reihe die weg ist aber nicht zur Lösung gehört(e.g. Allfalse Reihen
-	public static ArrayList<Boolean> patternEmpty = new ArrayList<Boolean>();
+	
 	
 	public static void main (String [] args) throws IOException{
 		ArrayList<ArrayList<Boolean>> tmp=readdata.readingdata.testpatternOneData();
@@ -13,51 +13,21 @@ public class removingBits {
 		//Initialisierung von solution und saveRow; patternEmpty
 		initsolution(tmp);
 		initsaveRow();
-		//initpatternEmpty();
 		//Ausgabe der ungefilterterten Daten
 		//print.arrayList.print2DTEST(tmp);		
+
+		System.out.println("Number of False in Solution: "+numberOfFalseinSolution());
 		
-		System.out.println("Remove all False Columns: ");
-		tmp=falseRowsAndColumns.RemoveFalseColumn(tmp);
-		print.arrayList.print2DTEST(tmp);
-		
-		System.out.println("Remove all EssentialBits: ");
-		tmp=essentialBits.removeAllEssential(tmp);
-		print.arrayList.print2DTEST(tmp);
-		
-		System.out.println("Remove all Equal Columns: ");
-		tmp=domColumn.removeEqualColumns(tmp);											
-		print.arrayList.print2DTEST(tmp);
-		
-		System.out.println("Remove False Rows: ");
-		tmp=falseRowsAndColumns.RemoveFalseRows(tmp);											
-		print.arrayList.print2DTEST(tmp);
-		
-		System.out.println("Remove Equal Rows: ");
-		tmp= domRows.removeEqualRows(tmp);
-		print.arrayList.print2DTEST(tmp);
-		
- 		System.out.println("Remove NOT dominating Rows: ");
- 		tmp=domRows.removeNotDominatingRows(tmp);
- 		print.arrayList.print2DTEST(tmp);
- 		
- 		System.out.println("Remove all EssentialBits: ");
- 		tmp=essentialBits.removeAllEssential(tmp);
- 		print.arrayList.print2DTEST(tmp);
- 		
- 		System.out.println("Remove all True Columns: ");
- 		tmp=domColumn.removetrueColumns(tmp);
- 		print.arrayList.print2DTEST(tmp);
- 		
- 		System.out.println("Remove all Equal Columns: ");
-		tmp=domColumn.removeEqualColumns(tmp);											
-		print.arrayList.print2DTEST(tmp);
- 		
-		//Vorläufiges Ergebnis
-		System.out.println("saveRowAllTrue: "+saveRowAllTrue());
-		System.out.println("numberOfFalseinSolution "+numberOfFalseinSolution()+" ALLE D-Bits: " + solution.size());
-		
+		tmp=essentialdominating(tmp);
 		System.out.println();
+		System.out.println("saveRowAllTrue: "+saveRowAllTrue());
+		System.out.println("Number of False in Solution: "+numberOfFalseinSolution());
+				
+		//Vorläufiges Ergebnis
+		//System.out.println("saveRowAllTrue: "+saveRowAllTrue());
+		//System.out.println("numberOfFalseinSolution "+numberOfFalseinSolution()+" ALLE D-Bits: " + solution.size());
+		
+		//System.out.println();
 		
 	}
 	public static int numberOfFalseinSolution(){
@@ -67,10 +37,10 @@ public class removingBits {
 		@return													Anzahl der D-Bits
 		*/
 		int counter=0;
-		for(int j=0;j<solution.size();j++)
+		for(int j=0;j<solution.size();j++){
 			if(solution.get(j)==false)
 				counter++;
-		System.out.println("D-Bits: " + counter);
+		}
 		return counter;
 	}
 	
@@ -113,13 +83,66 @@ public class removingBits {
 		*/
 		int counter=0;
 		for (int i=0; i<saveRow.size();i++){
-			counter++;
+			if(saveRow.get(i))
+				counter++;
 		}
 		if(saveRow.size()==counter)
 			return true;
 		else 
 			return false;
 			
+	}
+	public static ArrayList<ArrayList<Boolean>> essentialdominating(ArrayList<ArrayList<Boolean>> tmp) throws IOException{
+		int counter=0;
+		int counter1=2;
+		while(!saveRowAllTrue()){
+			
+			while(counter!=counter1){
+				counter=0;
+				for(int x=0; x<saveRow.size();x++){
+					if(saveRow.get(x))
+						counter++;
+				}
+				counter1=0;
+				System.out.println("Equal? = "+ counter + " " + counter1);
+				
+				System.out.println("Remove all False Columns: ");
+				tmp=falseRowsAndColumns.RemoveFalseColumn(tmp);
+				//print.arrayList.print2DTEST(tmp);
+
+				System.out.println("Remove False Rows: ");
+				tmp=falseRowsAndColumns.RemoveFalseRows(tmp);											
+				//print.arrayList.print2DTEST(tmp);
+				
+				System.out.println("Remove all EssentialBits: ");
+				tmp=essentialBits.removeAllEssential(tmp);
+				//print.arrayList.print2DTEST(tmp);
+				
+				System.out.println("Remove all False Columns: ");
+				tmp=falseRowsAndColumns.RemoveFalseColumn(tmp);
+				//print.arrayList.print2DTEST(tmp);
+
+				System.out.println("Remove False Rows: ");
+				tmp=falseRowsAndColumns.RemoveFalseRows(tmp);											
+				//print.arrayList.print2DTEST(tmp);
+				
+				System.out.println("Remove NOT dominating and Equal Rows: ");
+		 		tmp=domRows.removeNotDominatingRowsAndEqualRows(tmp);
+		 		//print.arrayList.print2DTEST(tmp);
+		 		
+				System.out.println("Remove all NOT dominating Columns and Eqaual Columns: ");
+				tmp=domColumn.removeNotDominatingColumns(tmp);
+				print.arrayList.print2DTEST(tmp);
+				
+				for(int k=0; k<saveRow.size();k++){
+					if(saveRow.get(k))
+						counter1++;
+				}
+				tmp = heuristic.removeBitWithMostTrues(tmp);
+			}
+			
+		}
+		return tmp;
 	}
 	public static ArrayList<ArrayList<Boolean>> removeOneRowTrueColumns(ArrayList<ArrayList<Boolean>> tmp, int Row){
 		/** Die übergebene Reihe(Row) soll zur Lösung hinzugefügt werden. Löschen von einer Reihe sowie jeweils die dazugehörigen Spalten.

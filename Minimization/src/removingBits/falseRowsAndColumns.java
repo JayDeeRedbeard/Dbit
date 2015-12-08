@@ -58,17 +58,19 @@ public class falseRowsAndColumns {
 			readdata.readingdata.print2DTEST(tmp);
 		 * */
 		int j =0;
-			while(j<tmp.get(0).size()){					//AUFGEPASST HIER get(0) nicht get(j), weil j abhängig sonst von j
+			if(!tmp.isEmpty()){
+			while(j<tmp.get(0).size() ){					//AUFGEPASST HIER get(0) nicht get(j), weil j abhängig sonst von j
 				
-				if (columnAllFalse(tmp,j)){
-					//System.out.println("Column All false: "+ columnAllFalse(tmp,j) + " " +j);
-					for(int k = tmp.size()-1; k>=0; k--){
-						tmp.get(k).remove(j);
-					}
-					if(j<tmp.get(0).size())				//Nach jeden Schritt wo eine Spalte entfernt wurde muss geguckt 
-						j--;							//werden ob die nachgerückte Spalte auch komplett False ist 
+					if (columnAllFalse(tmp,j) ){
+						//System.out.println("Column All false: "+ columnAllFalse(tmp,j) + " " +j);
+						for(int k = tmp.size()-1; k>=0 && !tmp.get(0).isEmpty(); k--){
+							tmp.get(k).remove(j);
+						}
+						if(j<tmp.get(0).size())				//Nach jeden Schritt wo eine Spalte entfernt wurde muss geguckt 
+							j--;							//werden ob die nachgerückte Spalte auch komplett False ist 
+						}
+					j++;
 				}
-			j++;
 			}
 		return tmp;
 	}

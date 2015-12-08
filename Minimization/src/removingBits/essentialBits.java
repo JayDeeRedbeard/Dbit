@@ -56,21 +56,23 @@ public class essentialBits {
 		boolean[] essentialAry = new boolean[tmp.size()];		
 		int tmp1=0;
 		int counter=0;
-		for (int column = 0; column<tmp.get(0).size(); column++){
-			for (int row=0; row<tmp.size(); row++){
-				if(tmp.get(row).get(column)){
-					counter++;
-					tmp1= row;
+		if(!tmp.isEmpty()){
+			for (int column = 0; column<tmp.get(0).size(); column++){
+				for (int row=0; row<tmp.size(); row++){
+					if(tmp.get(row).get(column)){
+						counter++;
+						tmp1= row;
+					}
+					//System.out.println(row + " " + counter + " " );
 				}
-				//System.out.println(row + " " + counter + " " );
-			}
-			if(counter==1){
-				essentialAry[tmp1]= true;
-				
-				//System.out.println("Reihe "+tmp1 + " true");
-				counter=0;
-			} else{
-				counter=0;
+				if(counter==1){
+					essentialAry[tmp1]= true;
+					
+					//System.out.println("Reihe "+tmp1 + " true");
+					counter=0;
+				} else{
+					counter=0;
+				}
 			}
 		}
 		return BooleanAry1DToArrayList(essentialAry);
