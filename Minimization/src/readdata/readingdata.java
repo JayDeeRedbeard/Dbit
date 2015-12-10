@@ -1,5 +1,4 @@
 package readdata;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,6 +13,7 @@ public class readingdata {
 	@param string	
 	@return		
 	*/
+	public static ArrayList<Boolean> saveRowDoubleDBits = new ArrayList<Boolean>();
 	public static String testfile = "1_0095009ns.behavior ";
 	//public static String testfile = "0_4758ns.behavior";
 	//public static String testfile = "Peter";
@@ -22,8 +22,6 @@ public class readingdata {
 	//public static String testfile = "domColumn";
 			
 	public static void main (String [] args) throws IOException{
-		
-		
 		//ArrayList<ArrayList<Boolean>> booleanList = pattern(0);
 		
 		//printpattern2D(booleanList);System.out.println();
@@ -121,6 +119,7 @@ public class readingdata {
 		@param int whichpattern 	in welchen Testmuster in der Datei befinden wir uns?	//Wird nun immer auf 0 gesetzt um immer ein 2D-ArrayList zu bekommen.
 		@return						Gibt eine 2D-ArrayList zurück die man dann später verarbeiten kann.
 		*/
+		int counter=0;
 		ArrayList<ArrayList<Boolean>> pattern= new ArrayList<ArrayList<Boolean>>();
 		ArrayList<Boolean> tmp1= new ArrayList<Boolean>();
 		String b = "";
@@ -136,7 +135,12 @@ public class readingdata {
 				if(b.contains("{f")){		
 					tmp1= dbitcoveragerow(b);
 					pattern.add(tmp1);
-				}																		
+					saveRowDoubleDBits.add(false);
+				}
+				else{
+					saveRowDoubleDBits.add(true);
+				}
+				counter++;
 			}
 			i++;
 			tmp.close();

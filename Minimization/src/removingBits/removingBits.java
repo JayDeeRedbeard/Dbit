@@ -1,6 +1,7 @@
 package removingBits;
 import java.io.IOException;
 import java.util.ArrayList;
+
 public class removingBits {
 	
 	public static ArrayList<Boolean> solution = new ArrayList<Boolean>();
@@ -8,7 +9,7 @@ public class removingBits {
 	
 	
 	public static void main (String [] args) throws IOException{
-		ArrayList<ArrayList<Boolean>> tmp=readdata.readingdata.testpatternOneData();
+		ArrayList<ArrayList<Boolean>> tmp=readdata.make1Datafile.returnbigList();
 		//ArrayList<ArrayList<Integer>> tmp1 = new ArrayList<ArrayList<Integer>>();		
 		//Initialisierung von solution und saveRow; patternEmpty
 		initsolution(tmp);
