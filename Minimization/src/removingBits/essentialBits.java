@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 public class essentialBits {
 	public static ArrayList<ArrayList<Boolean>> removeAllEssential(ArrayList<ArrayList<Boolean>> tmp)throws IOException{
-		/** Es werden alle essentiellen D-Bits zur Lösung hinzugefügt und danach gelöscht( mit Spalten)
+		/** Es werden alle essentiellen D-Bits zur Loesung hinzugefuegt und danach geloescht( mit Spalten)
 		@author Jan Dennis Reimer		
 		@version1.0
-		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList übergeben	(Überdeckungstabelle)
-		@return													3D-ArrayList ohne die essentiellen Bits (Überdeckungstabelle)
+		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	(ueberdeckungstabelle)
+		@return													3D-ArrayList ohne die essentiellen Bits (ueberdeckungstabelle)
 		*/
 		ArrayList<Boolean> essent1D= essential1D(tmp);
 		
@@ -35,7 +35,7 @@ public class essentialBits {
 			}
 		
 		
-		//Falls ein Pattern schon die richtige Lösung hat, muss das jeweilige Pattern gelöscht werden
+		//Falls ein Pattern schon die richtige Loesung hat, muss das jeweilige Pattern geloescht werden
 			
 		return tmp;
 	}
@@ -47,11 +47,11 @@ public class essentialBits {
 		return k;
 	}
 	public static ArrayList<Boolean> essential1D(ArrayList<ArrayList<Boolean>> tmp) {
-		/** Findet heraus, welches D-Bit essentiell ist und gibt dementsprechend eine Arraylist zurück
+		/** Findet heraus, welches D-Bit essentiell ist und gibt dementsprechend eine Arraylist zurueck
 		@author Jan Dennis Reimer		
 		@version1.0
-		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList übergeben	(Überdeckungstabelle)
-		@return													3D-ArrayList ohne die essentiellen Bits (Überdeckungstabelle)
+		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	(ueberdeckungstabelle)
+		@return													3D-ArrayList ohne die essentiellen Bits (ueberdeckungstabelle)
 		*/
 		boolean[] essentialAry = new boolean[tmp.size()];		
 		int tmp1=0;

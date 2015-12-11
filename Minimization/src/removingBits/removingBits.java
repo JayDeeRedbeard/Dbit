@@ -5,15 +5,15 @@ import java.util.ArrayList;
 public class removingBits {
 	
 	public static ArrayList<Boolean> solution = new ArrayList<Boolean>();
-	public static ArrayList<Boolean> saveRow = new ArrayList<Boolean>(); //Zur späteren Bestimmung bei den Dominanzen Speicher Reihe die weg ist aber nicht zur Lösung gehört(e.g. Allfalse Reihen
+	public static ArrayList<Boolean> saveRow = new ArrayList<Boolean>(); //Zur spaeteren Bestimmung bei den Dominanzen Speicher Reihe die weg ist aber nicht zur Loesung gehoert(e.g. Allfalse Reihen
 	
 	
 	public static void main (String [] args) throws IOException{
 		ArrayList<ArrayList<Boolean>> tmp=readdata.make1Datafile.returnbigList();
 		//ArrayList<ArrayList<Integer>> tmp1 = new ArrayList<ArrayList<Integer>>();		
 		//Initialisierung von solution und saveRow; patternEmpty
-		initsolution(tmp);
-		initsaveRow();
+		//initsolution(tmp);
+		//initsaveRow();
 		//Ausgabe der ungefilterterten Daten
 		//print.arrayList.print2DTEST(tmp);		
 
@@ -24,7 +24,7 @@ public class removingBits {
 		System.out.println("saveRowAllTrue: "+saveRowAllTrue());
 		System.out.println("Number of False in Solution: "+numberOfFalseinSolution());
 				
-		//Vorläufiges Ergebnis
+		//Vorlaeufiges Ergebnis
 		//System.out.println("saveRowAllTrue: "+saveRowAllTrue());
 		//System.out.println("numberOfFalseinSolution "+numberOfFalseinSolution()+" ALLE D-Bits: " + solution.size());
 		
@@ -32,7 +32,7 @@ public class removingBits {
 		
 	}
 	public static int numberOfFalseinSolution(){
-		/** Gibt die Anzahl der false in solution zurück
+		/** Gibt die Anzahl der false in solution zurueck
 		@author Jan Dennis Reimer		
 		@version1.0
 		@return													Anzahl der D-Bits
@@ -49,7 +49,7 @@ public class removingBits {
 		/** initialisierung von patternEmpty
 		@author Jan Dennis Reimer		
 		@version1.0
-		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList übergeben	(Überdeckungstabelle)
+		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	(ueberdeckungstabelle)
 		@return													3D-ArrayList ohne gleiche Spalten
 		/
 		for (int i=0 ; i<solution.size(); i++)
@@ -57,30 +57,30 @@ public class removingBits {
 	}*/
 	
 	public static void initsaveRow(){
-		/** Initialisierung von saveRow. Hier werden alle Reihen gespeichert die gestrichen wurden, um einen Überblick zu behalten. 
+		/** Initialisierung von saveRow. Hier werden alle Reihen gespeichert die gestrichen wurden, um einen ueberblick zu behalten. 
 		 *  Es soll jederzeit gewissheit herrschen, um welches DBit es sich handelt
 		@author Jan Dennis Reimer		
 		@version1.0
 		@return						-
 		*/
-		//Es sind immer nur die übrigen D-Bits aktiv(true)
+		//Es sind immer nur die uebrigen D-Bits aktiv(true)
 		for(int row =0;row<solution.size(); row++)
 			saveRow.add(row, false);
 	}
 	public static void initsolution(ArrayList<ArrayList<Boolean>> tmp){
-		/**  Initialisierung von solution: da zuerst die essentiellen D-Bits zur Lösung hinzugefügt werden, wird solution direkt hiermit initialisiert
+		/**  Initialisierung von solution: da zuerst die essentiellen D-Bits zur Loesung hinzugefuegt werden, wird solution direkt hiermit initialisiert
 		@author Jan Dennis Reimer		
 		@version1.0
-		@param ArrayList<ArrayList<Boolean>> tmp				Bekommt die 2D-ArrayList übergeben	(Überdeckungstabelle)
+		@param ArrayList<ArrayList<Boolean>> tmp				Bekommt die 2D-ArrayList uebergeben	(ueberdeckungstabelle)
 		@return													-
 		*/
 		solution=essentialBits.essential1D(tmp);
 	}
 	public static boolean saveRowAllTrue(){
-		/**  Überprüfung ob in saveRow nur true drin steht. Wenn ja, gebe true zurück
+		/**  ueberpruefung ob in saveRow nur true drin steht. Wenn ja, gebe true zurueck
 		@author Jan Dennis Reimer		
 		@version1.0
-		@return									alles true gebe true zurück, else false				-
+		@return									alles true gebe true zurueck, else false				-
 		*/
 		int counter=0;
 		for (int i=0; i<saveRow.size();i++){
@@ -96,10 +96,12 @@ public class removingBits {
 	public static ArrayList<ArrayList<Boolean>> essentialdominating(ArrayList<ArrayList<Boolean>> tmp) throws IOException{
 		int counter=0;
 		int counter1=2;
+		int a=0;
 		while(!saveRowAllTrue()){
 			
 			while(counter!=counter1){
 				counter=0;
+				System.out.println("Schritt: "+a);
 				for(int x=0; x<saveRow.size();x++){
 					if(saveRow.get(x))
 						counter++;
@@ -133,24 +135,25 @@ public class removingBits {
 		 		
 				System.out.println("Remove all NOT dominating Columns and Eqaual Columns: ");
 				tmp=domColumn.removeNotDominatingColumns(tmp);
-				print.arrayList.print2DTEST(tmp);
+				//print.arrayList.print2DTEST(tmp);
 				
 				for(int k=0; k<saveRow.size();k++){
 					if(saveRow.get(k))
 						counter1++;
 				}
 				tmp = heuristic.removeBitWithMostTrues(tmp);
+				a++;
 			}
 			
 		}
 		return tmp;
 	}
 	public static ArrayList<ArrayList<Boolean>> removeOneRowTrueColumns(ArrayList<ArrayList<Boolean>> tmp, int Row){
-		/** Die übergebene Reihe(Row) soll zur Lösung hinzugefügt werden. Löschen von einer Reihe sowie jeweils die dazugehörigen Spalten.
+		/** Die uebergebene Reihe(Row) soll zur Loesung hinzugefuegt werden. Loeschen von einer Reihe sowie jeweils die dazugehoerigen Spalten.
 		@author Jan Dennis Reimer		
 		@version1.0
-		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList übergeben	(Überdeckungstabelle)
-		@param int Row											Die Reihe, die zur Lösung hinzugefügt werden soll. Und außerdem gelöscht werden soll
+		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	(ueberdeckungstabelle)
+		@param int Row											Die Reihe, die zur Loesung hinzugefuegt werden soll. Und ausserdem geloescht werden soll
 		@return													3D-ArrayList ohne diese Reihe und Spalten
 		*/
 		for(int i= tmp.get(Row).size()-1; i>=0; i--){
@@ -165,11 +168,11 @@ public class removingBits {
 	
 	
 	public static ArrayList<ArrayList<Boolean>> removeColumn(ArrayList<ArrayList<Boolean>> tmp, int column){
-		/** Spalte die gelöscht werden soll
+		/** Spalte die geloescht werden soll
 		@author Jan Dennis Reimer		
 		@version1.0
-		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList übergeben	(Überdeckungstabelle)
-		@param int Column										Spalte column wird gelöscht.
+		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	(ueberdeckungstabelle)
+		@param int Column										Spalte column wird geloescht.
 		@return													3D-ArrayList ohne diese Spalte
 		*/
 		for(int k = 0; k<tmp.size(); k++){
@@ -178,12 +181,12 @@ public class removingBits {
 		return tmp;
 	}
 	public static ArrayList<ArrayList<Boolean>> removeRow (ArrayList<ArrayList<Boolean>> tmp, int row, boolean solutionBit){
-		/** Reihe die gelöscht werden soll
+		/** Reihe die geloescht werden soll
 		@author Jan Dennis Reimer		
 		@version1.0
-		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList übergeben	(Überdeckungstabelle)
-		@param int row											Reihe row wird gelöscht.
-		@param boolean solutionBit								Gibt an, ob es sich um ein Bit handelt, dass auch zur Lösung hinzugefügt werden muss.
+		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	(ueberdeckungstabelle)
+		@param int row											Reihe row wird geloescht.
+		@param boolean solutionBit								Gibt an, ob es sich um ein Bit handelt, dass auch zur Loesung hinzugefuegt werden muss.
 		@return													3D-ArrayList ohne diese Spalte
 		*/
 		tmp.remove(row);

@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 public class arrayList {
 	public static void print2DTEST(ArrayList<ArrayList<Boolean>> p) throws IOException {
-		/** Gebe auf der Konsole ein KLEINES Beispiel aus einer Überdeckungstabelle
+		/** Gebe auf der Konsole ein KLEINES Beispiel aus einer ueberdeckungstabelle
 		@author Jan Dennis Reimer		
 		@version1.0
-		@param p : in p wird die 2D-ArrayList übergeben 		
+		@param p : in p wird die 2D-ArrayList uebergeben 		
 		*/
 		System.out.println("Pattern: "+ 0);
 		for(int y = 0; y<p.size(); y++){
@@ -25,7 +25,7 @@ public class arrayList {
 	public static void printpattern2D(ArrayList<ArrayList<Boolean>> tmp) throws IOException{
 		/** Gibt ein 2D-boolsches Array in der Datei und auf der Konsole aus.
 		@version1.0
-		@param ArrayList<ArrayList<Boolean>> tmp 	Ist eine 2D-ArrayList die übergeben wird
+		@param ArrayList<ArrayList<Boolean>> tmp 	Ist eine 2D-ArrayList die uebergeben wird
 		@return -
 		*/
 		//

@@ -5,14 +5,14 @@ public class domRows{
 		/**  Remove all NOT dominating Rows.
 		@author Jan Dennis Reimer		
 		@version1.0
-		@param ArrayList<ArrayList<Boolean>> tmp				Bekommt die 2D-ArrayList übergeben	(Überdeckungstabelle)
-		@return													2D-ArrayList ohne die Zeilen, die dominiert wurden, also (hier) nur 2.Spalte löschen.
+		@param ArrayList<ArrayList<Boolean>> tmp				Bekommt die 2D-ArrayList uebergeben	(ueberdeckungstabelle)
+		@return													2D-ArrayList ohne die Zeilen, die dominiert wurden, also (hier) nur 2.Spalte loeschen.
 		 */
 		tmp=removeEqualRows(tmp);
 		ArrayList<ArrayList<Integer>> tmp1 = new ArrayList<ArrayList<Integer>>();
 		for (int x=tmp.size()-1; x>=0;x--){
-			tmp1=dominatingRows(tmp,x);									//Die übergebene ArrayList hat 2 Spalten (beide nicht sortiert, 
-			//sowie mit möglich doppelten Einträgen)
+			tmp1=dominatingRows(tmp,x);									//Die uebergebene ArrayList hat 2 Spalten (beide nicht sortiert, 
+			//sowie mit moeglich doppelten Eintraegen)
 			// Sortieralgorithmus Bubble Sort start:
 			int temp1, temp2;
 			for(int i=0; i<tmp1.get(0).size(); i++)
@@ -48,12 +48,12 @@ public static ArrayList<ArrayList<Integer>> dominatingRows(ArrayList<ArrayList<B
 	/**  Finde alle Reihen die dominiert werden von int row.
 	@author Jan Dennis Reimer		
 	@version1.0
-	@param ArrayList<ArrayList<Boolean>> tmp				Bekommt die 2D-ArrayList übergeben	(Überdeckungstabelle)
-	@param int row											Es wird jeweils überprüft, ob diese Reihe irgendeine andere Reihe dominiert
-	@return													Es wird eine ArrayList zurückgegeben, wo die erste Spalte jeweils die dominierende Reihe ist.
+	@param ArrayList<ArrayList<Boolean>> tmp				Bekommt die 2D-ArrayList uebergeben	(ueberdeckungstabelle)
+	@param int row											Es wird jeweils ueberprueft, ob diese Reihe irgendeine andere Reihe dominiert
+	@return													Es wird eine ArrayList zurueckgegeben, wo die erste Spalte jeweils die dominierende Reihe ist.
 															Die 2.Spalte ist dann die nicht dominierende Spalte
 	*/
-	/* Zum Testen in Main einfügen.
+	/* Zum Testen in Main einfuegen.
 	for(int j=0;j<tmp1.get(0).size();j++)
 	System.out.println(tmp1.get(0).get(j)+ " "+ tmp1.get(1).get(j));
 	 * */
@@ -69,7 +69,7 @@ public static ArrayList<ArrayList<Integer>> dominatingRows(ArrayList<ArrayList<B
 			if( !(tmp.get(row).get(z).equals(false) && tmp.get(k).get(z).equals(true)) ){	//Entscheidendes Kriterium!!
 				//System.out.println("row= "+row + " z= "+z+ "k= "+k);
 				//System.out.println(tmp.get(row).get(z)+ "\t"+ tmp.get(k).get(z));
-				if(tmp.get(row).get(z)){													//counttrue muss größer als 1 sein,
+				if(tmp.get(row).get(z)){													//counttrue muss groesser als 1 sein,
 					counttrue++;															//da es sonst keine dominierens Zeile sein kann
 				}
 			}
@@ -91,10 +91,10 @@ public static ArrayList<ArrayList<Integer>> dominatingRows(ArrayList<ArrayList<B
 	return tmp1;
 }
 public static ArrayList<ArrayList<Boolean>> removeEqualRows(ArrayList<ArrayList<Boolean>> tmp){
-	/** Löschen von gleichen Reihen aus der Überdeckungstabelle
+	/** Loeschen von gleichen Reihen aus der ueberdeckungstabelle
 	@author Jan Dennis Reimer		
 	@version1.0
-	@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList übergeben	(Überdeckungstabelle)
+	@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	(ueberdeckungstabelle)
 	@return													3D-ArrayList ohne gleiche Reihen
 	*/
 	ArrayList<ArrayList<Integer>> tmp1= new ArrayList<ArrayList<Integer>>();
@@ -112,7 +112,7 @@ public static ArrayList<ArrayList<Boolean>> removeEqualRows(ArrayList<ArrayList<
 					counter++;
 				}
 			}
-			//System.out.println("Zähler "+counter + " =? "+ tmp.get(0).size());	
+			//System.out.println("Zaehler "+counter + " =? "+ tmp.get(0).size());	
 			if (counter==tmp.get(0).size()){
 				tmp1.get(0).add(k);
 				tmp1.get(1).add(j);
@@ -120,7 +120,7 @@ public static ArrayList<ArrayList<Boolean>> removeEqualRows(ArrayList<ArrayList<
 			counter=0;
 		}
 	}
-	for(int idx=tmp1.get(0).size()-1; idx>=0;idx--){					//Folgender Block löscht jeweils die zu viel hinzugefügten Zwischenergebnisse
+	for(int idx=tmp1.get(0).size()-1; idx>=0;idx--){					//Folgender Block loescht jeweils die zu viel hinzugefuegten Zwischenergebnisse
 		for(int idy=tmp1.get(1).size()-1; idy>=0;idy--){				//Hiernach sind keine gespiegelten Zwischenergebnisse mehr vorhanden.
 			if(tmp1.get(0).get(idx).equals(tmp1.get(1).get(idy)) && tmp1.get(1).get(idx).equals(tmp1.get(0).get(idy))&& idx!=idy ){
 				tmp1.get(0).remove(idy);
@@ -131,7 +131,7 @@ public static ArrayList<ArrayList<Boolean>> removeEqualRows(ArrayList<ArrayList<
 		}
 	}
 	for(int idx=tmp1.get(0).size()-1; idx>=0;idx--){
-		for(int idy=tmp1.get(1).size()-1; idy>=0;idy--){				//Hier werden nun die Zwischenergebnisse aussortiert sodass in '1' jeweils die zu löschenden Spalten sich befinden
+		for(int idy=tmp1.get(1).size()-1; idy>=0;idy--){				//Hier werden nun die Zwischenergebnisse aussortiert sodass in '1' jeweils die zu loeschenden Spalten sich befinden
 			if(tmp1.get(1).get(idx).equals(tmp1.get(1).get(idy))&& idx!=idy ){
 				tmp1.get(0).remove(idy);
 				tmp1.get(1).remove(idy);

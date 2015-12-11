@@ -7,7 +7,7 @@ public class falseRowsAndColumns {
 		/**
 		@author Jan Dennis Reimer		
 		@version1.0
-		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList übergeben	(Überdeckungstabelle)
+		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	(ueberdeckungstabelle)
 		@return													2D-ArrayList ohne Reihen die aus False bestehen
 		*/
 		int j =0;
@@ -17,23 +17,23 @@ public class falseRowsAndColumns {
 					//System.out.println( " j"+  j);				//zum Testen
 					removingBits.removeRow(tmp,j,false);
 					if(j<tmp.size())						//Nach jeden Schritt wo eine Reihe entfernt wurde muss geguckt 
-						j--;									//werden ob die nachgerückte Spalte auch komplett False ist 
+						j--;									//werden ob die nachgerueckte Spalte auch komplett False ist 
 				}
 			j++;
 			}
 		return tmp;
 	}
 	public static boolean rowAllFalse(ArrayList<ArrayList<Boolean>> tmp, int row){
-		/** Gibt zurück, ob eine Reihe komplett FALSE ist
+		/** Gibt zurueck, ob eine Reihe komplett FALSE ist
 		@author Jan Dennis Reimer		
 		@version1.0
-		@param ArrayList<ArrayList<Boolean>> tmp				Bekommt die 2D-ArrayList übergeben	
+		@param ArrayList<ArrayList<Boolean>> tmp				Bekommt die 2D-ArrayList uebergeben	
 		@param int row											Welche Reihe soll getestet werden	
 		@return													Boolean, row False oder True
 		*/
 		boolean counter=false;									
 		for(int i = 0; i<tmp.get(0).size(); i++){
-			if(tmp.get(row).get(i)==true){		//Sobald eine Zeile in der gegeben Spalte true ist, wird False zurüchgegeben
+			if(tmp.get(row).get(i)==true){		//Sobald eine Zeile in der gegeben Spalte true ist, wird False zuruechgegeben
 				counter= true;
 			}
 		}
@@ -48,7 +48,7 @@ public class falseRowsAndColumns {
 		/** Berechnung einer ArrayList in der keine Spalte aus False besteht.
 		@author Jan Dennis Reimer		
 		@version1.0
-		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList übergeben	(Überdeckungstabelle)
+		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	(ueberdeckungstabelle)
 		@return													3D-ArrayList ohne Spalte die aus False bestehen
 		*/
 		/*
@@ -59,7 +59,7 @@ public class falseRowsAndColumns {
 		 * */
 		int j =0;
 			if(!tmp.isEmpty()){
-			while(j<tmp.get(0).size() ){					//AUFGEPASST HIER get(0) nicht get(j), weil j abhängig sonst von j
+			while(j<tmp.get(0).size() ){					//AUFGEPASST HIER get(0) nicht get(j), weil j abhaengig sonst von j
 				
 					if (columnAllFalse(tmp,j) ){
 						//System.out.println("Column All false: "+ columnAllFalse(tmp,j) + " " +j);
@@ -67,7 +67,7 @@ public class falseRowsAndColumns {
 							tmp.get(k).remove(j);
 						}
 						if(j<tmp.get(0).size())				//Nach jeden Schritt wo eine Spalte entfernt wurde muss geguckt 
-							j--;							//werden ob die nachgerückte Spalte auch komplett False ist 
+							j--;							//werden ob die nachgerueckte Spalte auch komplett False ist 
 						}
 					j++;
 				}
@@ -75,10 +75,10 @@ public class falseRowsAndColumns {
 		return tmp;
 	}
 	public static boolean columnAllFalse(ArrayList<ArrayList<Boolean>> tmp, int column){
-		/** Gibt zurück, ob eine Spalte komplett FALSE ist
+		/** Gibt zurueck, ob eine Spalte komplett FALSE ist
 		@author Jan Dennis Reimer		
 		@version1.0
-		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList übergeben	
+		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	
 		@param int pattern										In welches Testmuster soll getestet werden	
 		@param int column										Welche Spalte soll getestet werden	
 		@return													Boolean, Spalte False oder True
@@ -86,7 +86,7 @@ public class falseRowsAndColumns {
 		boolean counter=false;									
 		for(int i = 0; i<tmp.size(); i++){
 			//System.out.println("Ausgabe= "+tmp.get(pattern).get(i).get(column));
-			if(tmp.get(i).get(column)){		//Sobald eine Zeile in der gegeben Spalte true ist, wird False zurüchgegeben
+			if(tmp.get(i).get(column)){		//Sobald eine Zeile in der gegeben Spalte true ist, wird False zuruechgegeben
 				counter= true;
 			}
 		}

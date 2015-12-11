@@ -31,7 +31,7 @@ public class readingdata {
 	}
 	
 	public static int numberOfFailures() throws IOException {
-		/** Gibt die Anzahl der Fehler zurück
+		/** Gibt die Anzahl der Fehler zurueck
 		@author Jan Dennis Reimer		
 		@version1.0
 		@param  		
@@ -39,7 +39,7 @@ public class readingdata {
 		return (nextPattern(0)-6);
 	}
 	public static int numberOfOutputs() throws IOException{
-		/** Gibt die Anzahl der Outputs für das erste Pattern zurück.
+		/** Gibt die Anzahl der Outputs fuer das erste Pattern zurueck.
 		@author Jan Dennis Reimer		
 		@version1.0
 		@param  		
@@ -51,7 +51,7 @@ public class readingdata {
 		return numberOfOutputs;
 	}
 	public static int howmuchtestpattern()throws IOException{
-		/** Gibt die Anzahl der Testmuster für die Datei zurück.
+		/** Gibt die Anzahl der Testmuster fuer die Datei zurueck.
 		@author Jan Dennis Reimer		
 		@version1.0
 		@param  		
@@ -66,10 +66,10 @@ public class readingdata {
 		return b-1;	
 	}
 	public static int nextPattern(int row) throws IOException{
-		/** Gibt jeweils die Zeilennummer aus nach der das nächste Testmuster losgeht	
+		/** Gibt jeweils die Zeilennummer aus nach der das naechste Testmuster losgeht	
 		@version1.0
 		@param row 	Welche Reihe befinden wir uns gerade.	
-		@return		die Zeilennummer aus dem nächsten Testmuster
+		@return		die Zeilennummer aus dem naechsten Testmuster
 		*/
 		try{
 			Scanner s = new Scanner(new File(testfile+".txt"));
@@ -89,7 +89,7 @@ public class readingdata {
 			s.close();
 		}
 			catch (NoSuchElementException e){	
-				return 42352; //Wichtig für die Funktion howmuchtestpattern()
+				return 42352; //Wichtig fuer die Funktion howmuchtestpattern()
 			}
 		return 0;
 		}
@@ -105,7 +105,7 @@ public class readingdata {
 		ArrayList<Boolean> booleanList = new ArrayList<Boolean>();
 		for(int i=0; i<= max; i++){
 			String x= ""+ i;
-			if (dbit.contains("f"+x+",")||dbit.contains("f"+x+"}")) //Es gibt nur diese 2 Möglichkeiten
+			if (dbit.contains("f"+x+",")||dbit.contains("f"+x+"}")) //Es gibt nur diese 2 Moeglichkeiten
 				booleanList.add(true);
 			else
 				booleanList.add(false);
@@ -114,10 +114,10 @@ public class readingdata {
 	}
 	
 	public static ArrayList<ArrayList<Boolean>> pattern (int whichpattern) throws IOException{
-		/**Gibt immer ein Testmuster zurück in einer ArrayList	
+		/**Gibt immer ein Testmuster zurueck in einer ArrayList	
 		@version1.1
 		@param int whichpattern 	in welchen Testmuster in der Datei befinden wir uns?	//Wird nun immer auf 0 gesetzt um immer ein 2D-ArrayList zu bekommen.
-		@return						Gibt eine 2D-ArrayList zurück die man dann später verarbeiten kann.
+		@return						Gibt eine 2D-ArrayList zurueck die man dann spaeter verarbeiten kann.
 		*/
 		int counter=0;
 		ArrayList<ArrayList<Boolean>> pattern= new ArrayList<ArrayList<Boolean>>();
@@ -149,12 +149,12 @@ public class readingdata {
 		return pattern;
 	}
 	public static  ArrayList<ArrayList<Boolean>> testpatternOneData()throws IOException{
-		/** Gebe ein Testmuster zurück in einer 2D-boolschen ArrayList	
+		/** Gebe ein Testmuster zurueck in einer 2D-boolschen ArrayList	
 		@version1.0
 		@version1.1
 		//Es wird nun immer nur noch ein pattern geben. die 3. Dimension wird weg gelassen.
 		@param -
-		@return			Um alle Testmuster abzudecken, wird für jedes Testmuster eine 2D-ArrayList erstellt 
+		@return			Um alle Testmuster abzudecken, wird fuer jedes Testmuster eine 2D-ArrayList erstellt 
 						
 		*/
 		return pattern(0);
