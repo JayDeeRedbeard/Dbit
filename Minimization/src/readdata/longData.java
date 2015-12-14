@@ -6,9 +6,40 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class longData {
+	public static ArrayList<Long> validColumn = new ArrayList<Long>();
+	public static ArrayList<Boolean> validRow = new ArrayList<Boolean>();
 	
 	public static void main (String [] args) throws IOException{
 		
+		ArrayList<ArrayList<Long>> a= pattern(readingdata.testfile+".txt");		
+		printLongPattern(a);
+		
+		for(int i=0; i<64; i++)
+			System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(0), i)+" ");
+		
+	}
+	public static void printLongPattern(ArrayList<ArrayList<Long>> a)throws IOException{
+		/**			 k=0  k=1  k=2  k=3	 k=4  k=5
+		 * i=0		[...][...][...][...][...][...]   
+		 * i=1		[...][...][...][...][...][...]
+		 * i=2		[...][...][...][...][...][...]
+		 * i=...	[...][...][...][...][...][...]
+		 * [...] j=0...63
+		 */
+		
+		for (int i=0; i<a.size(); i++){
+			if(validRow.get(i)){
+			for(int k=0; k<a.get(i).size() ; k++){
+				for(int j=0; j<64  ; j++){
+					if (stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(k), j)== 1)
+						System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(a.get(i).get(k), j)+" ");
+				}
+			}
+			System.out.println();
+			}
+			
+		}
+		System.out.println();
 	}
 	public static ArrayList<Long> dbitcoveragerow(String dbit,int max)throws IOException{
 		/** gets an D-Bit in the String dbit with {f1,f2,f4,f3}|1
@@ -23,20 +54,21 @@ public class longData {
 		int b= (int) a +1;
 		int c=0;
 		int d=0;
-		for(int j=0;j<=b; j++){
-			LongList.add(new Long(0));
+		//System.out.println(a + " " + b+ " "+max);
+		for(int j=0;j<b; j++){
+			LongList.add(0L);
 		}
 		for(int i=0; i<= max; i++){
 			String x= ""+ i;
 			if (dbit.contains("f"+x+",")||dbit.contains("f"+x+"}")) //Es gibt nur diese 2 Moeglichkeiten
-				stuff.DirtyLittleHelpers.setBitAtPosition(LongList.get(d), i, true);
+				LongList.set(d,stuff.DirtyLittleHelpers.setBitAtPosition(LongList.get(d), c, true));
 			else
-				stuff.DirtyLittleHelpers.setBitAtPosition(LongList.get(d), i, false);
+				LongList.set(d,stuff.DirtyLittleHelpers.setBitAtPosition(LongList.get(d), c, false));
+			c++;
 			if(c==63){
-				i=0;
+				c=0;
 				d++;
 			}
-			c++;
 		}
 		return LongList;
 	}
@@ -49,28 +81,47 @@ public class longData {
 		ArrayList<ArrayList<Long>> pattern= new ArrayList<ArrayList<Long>>();
 		ArrayList<Long> tmp1= new ArrayList<Long>();
 		int max=readingdata.numberOfFailures();
+		int c=0;
+		int k=0;
+		
+		//Initialisierung von validColumn
+		float a= max/64;
+		int idx= (int) a +1;
+		for(int j=0;j<idx; j++){
+			validColumn.add(0L);
+		}
+		for(int i=0; i<= max; i++){
+			validColumn.set(k,stuff.DirtyLittleHelpers.setBitAtPosition(validColumn.get(k), c, true));
+			c++;
+			if(c==63 && k<=idx){
+				c=0;
+				k++;
+			}
+		}//Ende Initialisierung von validColumn
+		
 		String b = "";
 		//Scanner s = new Scanner(new File("/home/dj0804/Downloads/minimization/src/src/b14_1/"+testfile));
-		Scanner s = new Scanner(new File("C:/Users/Dennis/git/Minimization/src/b14_1/"+testfile));				
+		Scanner s = new Scanner(new File("C:/Users/Dennis/git/Minimization/src/"+testfile));				
 		while (s.hasNextLine()){									
 			Scanner tmp= new Scanner(s.nextLine());
 			b=tmp.nextLine(); 															//Zwischenspeicherung der aktuellen Zeile
 			//System.out.println(b.contains("{f")+" "+ b);
-			//System.out.print(" Counter= "+counter+" ");
+			
 			if(b.contains("{f")){	
 				tmp1= dbitcoveragerow(b,max);
 				if(!pattern.contains(tmp1)){
 					pattern.add(tmp1);
-					removingBits.removingBits.saveRow.add(false);
+					validRow.add(true);
 					//System.out.println(b);
 				} else {
-					removingBits.removingBits.saveRow.add(true);
+					validRow.add(false);
 				}
-				removingBits.removingBits.solution.add(false);
+				LongRemovingBits.removingBits.solution.add(false);
 			}	
 			tmp.close();
 		}
 		s.close();
+		
 		return pattern;
 	}
 }

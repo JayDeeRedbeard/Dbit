@@ -9,8 +9,8 @@ public class make1Datafile {
 	public static ArrayList<ArrayList<Boolean>> returnbigList() throws IOException{
 		ArrayList<ArrayList<Boolean>> a = new ArrayList<ArrayList<Boolean>>();
 		ArrayList<ArrayList<Boolean>> b = new ArrayList<ArrayList<Boolean>>();
-		//File folder = new File("C:/Users/Dennis/git/Minimization/src/b14_1");
-		File folder = new File("/home/dj0804/Downloads/minimization/src/src/b14_1");
+		File folder = new File("C:/Users/Dennis/git/Minimization/src/b14_1");
+		//File folder = new File("/home/dj0804/Downloads/minimization/src/src/b14_1");
 		for( File file : folder.listFiles() ){
 			System.out.println( file.getName() );
 		   	a=pattern(0,file.getName());
@@ -28,8 +28,8 @@ public class make1Datafile {
 		ArrayList<ArrayList<Boolean>> pattern= new ArrayList<ArrayList<Boolean>>();
 		ArrayList<Boolean> tmp1= new ArrayList<Boolean>();
 		String b = "";
-		Scanner s = new Scanner(new File("/home/dj0804/Downloads/minimization/src/src/b14_1/"+testfile));
-		//Scanner s = new Scanner(new File("C:/Users/Dennis/git/Minimization/src/b14_1/"+testfile));
+		//Scanner s = new Scanner(new File("/home/dj0804/Downloads/minimization/src/src/b14_1/"+testfile));
+		Scanner s = new Scanner(new File("C:/Users/Dennis/git/Minimization/src/b14_1/"+testfile));
 		int i= 1;
 		//int counter=0;					
 		while (s.hasNextLine()){									
