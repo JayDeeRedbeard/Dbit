@@ -3,8 +3,10 @@ package removingBits;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import removingBits.removingBits;
+
 public class essentialBits {
-	public static ArrayList<ArrayList<Boolean>> removeAllEssential(ArrayList<ArrayList<Boolean>> tmp)throws IOException{
+	public static ArrayList<ArrayList<Boolean>>removeAllEssential(ArrayList<ArrayList<Boolean>> tmp)throws IOException{
 		/** Es werden alle essentiellen D-Bits zur Loesung hinzugefuegt und danach geloescht( mit Spalten)
 		@author Jan Dennis Reimer		
 		@version1.0

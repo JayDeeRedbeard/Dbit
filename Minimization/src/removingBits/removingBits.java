@@ -2,6 +2,7 @@ package removingBits;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 public class removingBits {
 	
 	public static ArrayList<Boolean> solution = new ArrayList<Boolean>();

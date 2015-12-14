@@ -148,7 +148,7 @@ public class domColumn {
 		boolean isdominated= true;
 		
 		for(int z=0; z<tmp.get(0).size() ; z++){
-			for (int k=0; k<tmp.size() && z!=column && isdominated ; k++){	
+			for (int k=0; k<tmp.size() && z!=column && isdominated ; k++){	///z!=column muss doch weg???!!!!!
 				
 				if( !(tmp.get(k).get(column).equals(true) && tmp.get(k).get(z).equals(false)) ){	//Entscheidendes Kriterium!!
 					//System.out.println("Column= "+column + " z= "+z+ "k= "+k);
