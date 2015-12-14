@@ -12,29 +12,37 @@ public class removingBits {
 			ArrayList<ArrayList<Long>> tmp=longData.pattern(readingdata.testfile+".txt");
 			
 			longData.printLongPattern(tmp);	
-
-			System.out.println("RemoveFalseColumn: ");
+			//essentialdominating(tmp);
+			System.out.println("Remove all False Columns: ");
 			falseRowsAndColumns.RemoveFalseColumn(tmp);
-			longData.printLongPattern(tmp);	
+			longData.printLongPattern(tmp);
+
+			System.out.println("Remove False Rows: ");
+			falseRowsAndColumns.RemoveFalseRows(tmp);											
+			longData.printLongPattern(tmp);
 			
-			for(int i=0; i<64; i++)
-				System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(longData.validColumn.get(0), i)+" ");
-			System.out.println();
-			
-			System.out.println("RemoveFalseRows: ");
-			falseRowsAndColumns.RemoveFalseRows(tmp);
-			longData.printLongPattern(tmp);	
-			
-			System.out.println("Remove Essentials: ");
+			System.out.println("Remove all EssentialBits: ");
 			essentialBits.removeAllEssential(tmp);
+			longData.printLongPattern(tmp);
 			
-			for(int i=0; i<64; i++)
-				System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(longData.validColumn.get(0), i)+" ");
-			System.out.println();
+			System.out.println("Remove all False Columns: ");
+			falseRowsAndColumns.RemoveFalseColumn(tmp);
+			longData.printLongPattern(tmp);
+
+			System.out.println("Remove False Rows: ");
+			falseRowsAndColumns.RemoveFalseRows(tmp);											
+			longData.printLongPattern(tmp);
 			
-			longData.printLongPattern(tmp);	
+			System.out.println("Remove NOT dominating and Equal Rows: ");
+	 		domRows.removeNotDominatingRowsAndEqualRows(tmp);
+	 		longData.printLongPattern(tmp);
+
+	 		
+			System.out.println("Remove all NOT dominating Columns and Eqaual Columns: ");
+			domColumn.removeNotDominatingColumns(tmp);
+			longData.printLongPattern(tmp);
 			
-			
+			System.out.println("validRowAllFalse "+ validRowAllFalse());
 			
 			
 			for(int i=0; i<64; i++)
@@ -79,63 +87,61 @@ public class removingBits {
 				
 		}
 		//Programmablauf 
-		/*
-		public static ArrayList<ArrayList<Boolean>> essentialdominating(ArrayList<ArrayList<Boolean>> tmp) throws IOException{
+		
+		public static void essentialdominating(ArrayList<ArrayList<Long>> tmp) throws IOException{
 			int counter=0;
 			int counter1=2;
 			int a=0;
-			while(!saveRowAllTrue()){
+			while(!validRowAllFalse()){
 				
 				while(counter!=counter1){
+					System.out.println("Equal? = "+ counter + " " + counter1);
 					counter=0;
 					System.out.println("Schritt: "+a);
-					for(int x=0; x<saveRow.size();x++){
-						if(saveRow.get(x))
+					for(int x=0; x<longData.validRow.size();x++){
+						if(longData.validRow.get(x))
 							counter++;
 					}
 					counter1=0;
-					System.out.println("Equal? = "+ counter + " " + counter1);
 					
 					System.out.println("Remove all False Columns: ");
-					tmp=falseRowsAndColumns.RemoveFalseColumn(tmp);
-					//print.arrayList.print2DTEST(tmp);
+					falseRowsAndColumns.RemoveFalseColumn(tmp);
+					longData.printLongPattern(tmp);
 
 					System.out.println("Remove False Rows: ");
-					tmp=falseRowsAndColumns.RemoveFalseRows(tmp);											
-					//print.arrayList.print2DTEST(tmp);
+					falseRowsAndColumns.RemoveFalseRows(tmp);											
+					longData.printLongPattern(tmp);
 					
 					System.out.println("Remove all EssentialBits: ");
-					tmp=essentialBits.removeAllEssential(tmp);
-					//print.arrayList.print2DTEST(tmp);
+					essentialBits.removeAllEssential(tmp);
+					longData.printLongPattern(tmp);
 					
 					System.out.println("Remove all False Columns: ");
-					tmp=falseRowsAndColumns.RemoveFalseColumn(tmp);
-					//print.arrayList.print2DTEST(tmp);
+					falseRowsAndColumns.RemoveFalseColumn(tmp);
+					longData.printLongPattern(tmp);
 
 					System.out.println("Remove False Rows: ");
-					tmp=falseRowsAndColumns.RemoveFalseRows(tmp);											
-					//print.arrayList.print2DTEST(tmp);
+					falseRowsAndColumns.RemoveFalseRows(tmp);											
+					longData.printLongPattern(tmp);
 					
 					System.out.println("Remove NOT dominating and Equal Rows: ");
-			 		tmp=domRows.removeNotDominatingRowsAndEqualRows(tmp);
-			 		//print.arrayList.print2DTEST(tmp);
+			 		domRows.removeNotDominatingRowsAndEqualRows(tmp);
+			 		longData.printLongPattern(tmp);
+		
 			 		
 					System.out.println("Remove all NOT dominating Columns and Eqaual Columns: ");
-					tmp=domColumn.removeNotDominatingColumns(tmp);
-					//print.arrayList.print2DTEST(tmp);
+					domColumn.removeNotDominatingColumns(tmp);
+					longData.printLongPattern(tmp);
 					
-					for(int k=0; k<saveRow.size();k++){
-						if(saveRow.get(k))
+					for(int k=0; k<longData.validRow.size();k++){
+						if(longData.validRow.get(k))
 							counter1++;
-					}
-					tmp = heuristic.removeBitWithMostTrues(tmp);
+					}	
 					a++;
 				}
-				
+				heuristic.removeBitWithMostTrues(tmp);
 			}
-			return tmp;
 		}
-		*/
 		public static void removeOneRowTrueColumns(ArrayList<ArrayList<Long>> tmp, int Row){
 			/** Die uebergebene Reihe(Row) soll zur Loesung hinzugefuegt werden. Loeschen von einer Reihe sowie jeweils die dazugehoerigen Spalten.
 			@author Jan Dennis Reimer		
@@ -199,14 +205,8 @@ public class removingBits {
 			@return													3D-ArrayList ohne diese Spalte
 			*/
 			
-			int save=0;
-			for(int j=0; j<longData.validRow.size() && j<=row+save;j++){			//Um die richtigen Zeilen zu speichern
-				if(!longData.validRow.get(j))										//Berechnung von save, bzw Berechnung wie viele trues schon in saveRow gespeichert sind
-					save++;
-			}
-			longData.validRow.set(row+save, false);
+			longData.validRow.set(row, false);
 			if (solutionBit)
-				solution.set(row+save, true);
-			save=0;
+				solution.set(row, true);
 		}
 	}

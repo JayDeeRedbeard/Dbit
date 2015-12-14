@@ -33,10 +33,12 @@ public class longData {
 				for(int j=0; j<64  ; j++){
 					if (stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(k), j)== 1)
 						System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(a.get(i).get(k), j)+" ");
+					else 
+						System.out.print("  ");
 				}
 			}
-			System.out.println();
 			}
+			System.out.println();
 			
 		}
 		System.out.println();

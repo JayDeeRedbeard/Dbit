@@ -15,14 +15,11 @@ public class domRows{
 		for (int x=tmp.size()-1; x>=0;x--){
 			tmp1=dominatingRows(tmp,x);									//Die uebergebene ArrayList hat 2 Spalten (beide nicht sortiert, 
 			//sowie mit moeglich doppelten Eintraegen)
-			// Sortieralgorithmus Bubble Sort start:
+			/*// Sortieralgorithmus Bubble Sort start:
 			int temp1, temp2;
-			for(int i=0; i<tmp1.get(0).size(); i++)
-				{
-					for(int k= i+1; k <tmp1.get(0).size(); k++)
-						{
-							if((tmp1.get(1).get(k)).compareTo(tmp1.get(1).get(i)) < 0)
-								{
+			for(int i=0; i<tmp1.get(0).size(); i++){
+					for(int k= i+1; k <tmp1.get(0).size(); k++){
+							if((tmp1.get(1).get(k)).compareTo(tmp1.get(1).get(i)) < 0){
 								temp1 = tmp1.get(1).get(i);
 								temp2 = tmp1.get(0).get(i);
 								tmp1.get(1).set(i, tmp1.get(1).get(k));
@@ -31,8 +28,8 @@ public class domRows{
 								tmp1.get(0).set(k,temp2);	
 							}
 					}
-					//System.out.println(tmp1.get(0).get(i)+ tmp1.get(1).get(i));   
-			}///BubbleSort End
+					System.out.println(tmp1.get(0).get(i)+ tmp1.get(1).get(i));   
+			}///BubbleSort End*/
 		
 			//Removing the Rows
 			for(int y=tmp1.get(0).size()-1;y>=0;y--){
@@ -50,8 +47,9 @@ public static ArrayList<ArrayList<Integer>> dominatingRows(ArrayList<ArrayList<L
 															Die 2.Spalte ist dann die nicht dominierende Spalte
 	*/
 	/* Zum Testen in Main einfuegen.
+	ArrayList<ArrayList<Integer>> tmp1= domRows.dominatingRows(tmp,5);
 	for(int j=0;j<tmp1.get(0).size();j++)
-	System.out.println(tmp1.get(0).get(j)+ " "+ tmp1.get(1).get(j));
+		System.out.println(tmp1.get(0).get(j)+ " "+ tmp1.get(1).get(j));
 	 * */
 	ArrayList<ArrayList<Integer>> tmp1= new ArrayList<ArrayList<Integer>>();
 	ArrayList<Integer> tmp2 = new ArrayList<Integer>();						//tmp2 und 3 zum initailisieren von tmp1.
@@ -60,34 +58,44 @@ public static ArrayList<ArrayList<Integer>> dominatingRows(ArrayList<ArrayList<L
 	int counttrue=0;
 	int c=0;
 	boolean isdominated= true;
-	if(!tmp.isEmpty()){
-	for(int k=0; k<tmp.size(); k++){							
-		for(int d=0; d<tmp.get(0).size() && isdominated && readdata.longData.validRow.get(row) && k!=row;){
-			if( !(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)==0 && stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)==1) ){	//Entscheidendes Kriterium!!
-				//System.out.println("row= "+row + " z= "+z+ "k= "+k);
-				//System.out.println(tmp.get(row).get(z)+ "\t"+ tmp.get(k).get(z));
-				if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)==1){													//counttrue muss groesser als 1 sein,
-					counttrue++;															//da es sonst keine dominierens Zeile sein kann
+	if(!removingBits.validRowAllFalse()){
+	for(int k=0; k<tmp.size(); k++){
+		if(readdata.longData.validRow.get(k)){
+			for(int d=0; d<tmp.get(0).size() && isdominated ;){
+				if(stuff.DirtyLittleHelpers.getBitAtPosition(longData.validColumn.get(d), c)==1){
+					//System.out.println("row= "+row + " k= "+k + " d "+d +" c  "+ c);
+					//System.out.println(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)+ "\t"+ 
+					//		stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) + "\t");
+					if( !(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)==0 && 
+							stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)==1)  && k!=row){	//Entscheidendes Kriterium!!
+						
+						if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)==1){													//counttrue muss groesser als 1 sein,
+							counttrue++;															//da es sonst keine dominierens Zeile sein kann
+						}
+					}
+					else{
+						//System.out.println(" Reihe "+ row + " ist nicht dominiernd auf "+k);
+						isdominated=false;
+					}
+					//System.out.println("counttrue= " + counttrue + "\t"+stuff.DirtyLittleHelpers.getBitAtPosition(longData.validColumn.get(d), c));	
+				}
+				
+				
+				c++;
+				if(c==64){
+					d++;
+					c=0;
 				}
 			}
-			else{
-					//System.out.println(" Reihe "+ row + " ist nicht dominiernd auf "+k);
-					isdominated=false;
-				}
-			//System.out.println("counttrue= " + counttrue );	
-			c++;
-			if(c==64){
-				d++;
-				c=0;
+			if(counttrue>=1 && isdominated)	{
+				System.out.println(" Reihe "+ row + " ist dominiernd auf "+k);
+				tmp1.get(0).add(row);
+				tmp1.get(1).add(k);
 			}
+			isdominated=true;
+			counttrue=0;
+			c=0;
 		}
-		if(counttrue>1 && isdominated)	{
-			//System.out.println(" Reihe "+ row + " ist dominiernd auf "+k);
-			tmp1.get(0).add(row);
-			tmp1.get(1).add(k);
-		}
-		isdominated=true;
-		counttrue=0;
 	}
 	}
 	return tmp1;

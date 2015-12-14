@@ -33,7 +33,8 @@ public class falseRowsAndColumns {
 		boolean counter=false;	
 		int c=0;
 		for(int d = 0;d<tmp.get(0).size();){
-			if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)==1 && stuff.DirtyLittleHelpers.getBitAtPosition(longData.validColumn.get(d), c)==1){		//Sobald eine Zeile in der gegeben Spalte true ist, wird False zuruechgegeben
+			if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)==1 && 
+					stuff.DirtyLittleHelpers.getBitAtPosition(longData.validColumn.get(d), c)==1){		//Sobald eine Zeile in der gegeben Spalte true ist, wird False zuruechgegeben
 				counter= true;
 			}
 			c++;
