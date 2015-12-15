@@ -13,7 +13,8 @@ public class domRows{
 		removeEqualRows(tmp);
 		ArrayList<ArrayList<Integer>> tmp1 = new ArrayList<ArrayList<Integer>>();
 		for (int x=tmp.size()-1; x>=0;x--){
-			tmp1=dominatingRows(tmp,x);									//Die uebergebene ArrayList hat 2 Spalten (beide nicht sortiert, 
+			if(longData.validRow.get(x))
+				tmp1=dominatingRows(tmp,x);									//Die uebergebene ArrayList hat 2 Spalten (beide nicht sortiert, 
 			//sowie mit moeglich doppelten Eintraegen)
 			/*// Sortieralgorithmus Bubble Sort start:
 			int temp1, temp2;
@@ -32,8 +33,10 @@ public class domRows{
 			}///BubbleSort End*/
 		
 			//Removing the Rows
+			if(!tmp1.isEmpty()){
 			for(int y=tmp1.get(0).size()-1;y>=0;y--){
 				removingBits.removeRow(tmp,tmp1.get(1).get(y),false);
+			}
 			}
 		}
 	}

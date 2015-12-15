@@ -8,8 +8,9 @@ public class heuristic {
 	public static ArrayList<ArrayList<Integer>> numberOfTruesRow(ArrayList<ArrayList<Long>> tmp){
 		ArrayList<ArrayList<Integer>> mem= new ArrayList<ArrayList<Integer>>();
 		ArrayList<Integer> tmp1 = new ArrayList<Integer>();
+		ArrayList<Integer> tmp2 = new ArrayList<Integer>();
 		mem.add(tmp1);
-		mem.add(tmp1);
+		mem.add(tmp2);
 		int counter=0;
 		int c=0;
 		for (int x=0; x<tmp.size();x++){
@@ -22,16 +23,20 @@ public class heuristic {
 					c=0;
 				}
 			}
-			mem.get(0).add(x);
-			mem.get(1).add(counter);
+			if(counter>0){
+				mem.get(0).add(x);
+				mem.get(1).add(counter);
+			}
 			counter=0;
 		}
 		return mem;
 	}
 	public static void removeBitWithMostTrues(ArrayList<ArrayList<Long>> tmp){
 		ArrayList<ArrayList<Integer>> mem= numberOfTruesRow(tmp);
+		boolean counter = false;
+		int a= mem.get(0).size()-1;
 		int temp1, temp2;
-		if(!tmp.isEmpty()){
+		if(!removingBits.validRowAllFalse()){
 			for(int i=0; i<mem.get(0).size(); i++){
 					for(int k= i+1; k <mem.get(0).size(); k++){
 							if((mem.get(1).get(k)).compareTo(mem.get(1).get(i)) < 0){
@@ -43,9 +48,17 @@ public class heuristic {
 								mem.get(0).set(k,temp2);
 							}
 					}
-				//System.out.println(mem.get(i)+ mem.get(i));   
+				System.out.println(mem.get(0).get(i)+ " "+mem.get(1).get(i));   
 			}///BubbleSort End
-			LongRemovingBits.removingBits.removeOneRowTrueColumns(tmp, mem.get(0).get(mem.get(0).size()-1));
+			while(!counter && !mem.isEmpty() && a>=0){
+				if(longData.validRow.get(mem.get(0).get(a)) ){
+					LongRemovingBits.removingBits.removeOneRowTrueColumns(tmp, mem.get(0).get(a));
+					counter=true;
+				} else{
+					a--;
+				}
+			}
 		}
 	}
+	
 }

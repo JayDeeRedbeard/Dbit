@@ -18,6 +18,29 @@ public class longData {
 			System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(0), i)+" ");
 		
 	}
+	public static void printLongPatternwithoutEmptySpace(ArrayList<ArrayList<Long>> a)throws IOException{
+		/**			 k=0  k=1  k=2  k=3	 k=4  k=5
+		 * i=0		[...][...][...][...][...][...]   
+		 * i=1		[...][...][...][...][...][...]
+		 * i=2		[...][...][...][...][...][...]
+		 * i=...	[...][...][...][...][...][...]
+		 * [...] j=0...63
+		 */
+		
+		for (int i=0; i<a.size(); i++){
+			if(validRow.get(i)){
+			for(int k=0; k<a.get(i).size() ; k++){
+				for(int j=0; j<64  ; j++){
+					if (stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(k), j)== 1)
+						System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(a.get(i).get(k), j)+" ");
+				}
+			}
+			System.out.println();
+			}
+			
+		}
+		System.out.println();
+	}
 	public static void printLongPattern(ArrayList<ArrayList<Long>> a)throws IOException{
 		/**			 k=0  k=1  k=2  k=3	 k=4  k=5
 		 * i=0		[...][...][...][...][...][...]   
@@ -67,7 +90,7 @@ public class longData {
 			else
 				LongList.set(d,stuff.DirtyLittleHelpers.setBitAtPosition(LongList.get(d), c, false));
 			c++;
-			if(c==63){
+			if(c==64){
 				c=0;
 				d++;
 			}
@@ -85,17 +108,18 @@ public class longData {
 		int max=readingdata.numberOfFailures();
 		int c=0;
 		int k=0;
-		
 		//Initialisierung von validColumn
 		float a= max/64;
+		
 		int idx= (int) a +1;
+		System.out.println(a+"\t"+ idx);
 		for(int j=0;j<idx; j++){
 			validColumn.add(0L);
 		}
-		for(int i=0; i<= max; i++){
-			validColumn.set(k,stuff.DirtyLittleHelpers.setBitAtPosition(validColumn.get(k), c, true));
+		for(int i=0; i<=max; i++){
+			validColumn.set(k, stuff.DirtyLittleHelpers.setBitAtPosition(validColumn.get(k), c, true));
 			c++;
-			if(c==63 && k<=idx){
+			if(c==64 ){
 				c=0;
 				k++;
 			}
@@ -116,6 +140,7 @@ public class longData {
 					validRow.add(true);
 					//System.out.println(b);
 				} else {
+					pattern.add(tmp1);
 					validRow.add(false);
 				}
 				LongRemovingBits.removingBits.solution.add(false);

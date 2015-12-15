@@ -3,8 +3,6 @@ package LongRemovingBits;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import removingBits.removingBits;
-
 public class essentialBits {
 	public static void removeAllEssential(ArrayList<ArrayList<Long>> tmp)throws IOException{
 		/** Es werden alle essentiellen D-Bits zur Loesung hinzugefuegt und danach geloescht( mit Spalten)
@@ -30,13 +28,8 @@ public class essentialBits {
 						}
 						System.out.println();	
 					*/
-					
 				}
 			}
-		
-		
-		//Falls ein Pattern schon die richtige Loesung hat, muss das jeweilige Pattern geloescht werden
-			
 	}
 	public static ArrayList<Boolean> BooleanAry1DToArrayList(boolean[] tmp){
 		ArrayList<Boolean> k = new ArrayList<Boolean>();
@@ -56,23 +49,23 @@ public class essentialBits {
 		int tmp1=0;
 		int counter=0;
 		int c=0;
-		if(!tmp.isEmpty()){
+		if(!removingBits.validRowAllFalse()){
 			for (int d = 0; d<tmp.get(0).size();){
 				for (int row=0; row<tmp.size(); row++){
-					if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)==1){
-						counter++;
-						tmp1= row;
+					if (readdata.longData.validRow.get(row)){
+						if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)==1 && 
+								stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c)==1){
+							counter++;
+							tmp1= row;
+						}
+						//System.out.println(row + " " + counter + " " );
 					}
-					//System.out.println(row + " " + counter + " " );
 				}
 				if(counter==1){
 					essentialAry[tmp1]= true;
-					
 					//System.out.println("Reihe "+tmp1 + " true");
-					counter=0;
-				} else{
-					counter=0;
 				}
+				counter=0;
 				c++;
 				if(c==64){
 					d++;

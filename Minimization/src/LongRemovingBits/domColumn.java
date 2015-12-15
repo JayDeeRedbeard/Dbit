@@ -2,6 +2,8 @@ package LongRemovingBits;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import readdata.longData;
+
 public class domColumn {
 	public static void removeNotDominatingColumns(ArrayList<ArrayList<Long>> tmp) throws IOException{
 		/**  Remove all NOT dominating Columns
@@ -51,6 +53,7 @@ public class domColumn {
 		//System.out.println("d= "+d + " c= "+c);
 		for(int y=0; y<tmp.get(0).size();){
 			for (int k=0; k<tmp.size() && isdominated && stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c)==1; k++){	
+				if(longData.validRow.get(k)){
 				if( !(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)==1 && stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(y), e)==0) ){	//Entscheidendes Kriterium!!
 					if(!(d==y  && c==e)){
 					//counttrue muss groesser gleich 1 sein,
@@ -65,6 +68,7 @@ public class domColumn {
 					//System.out.println(" Column "+ column + " ist nicht dominiernd auf y= "+y+ " e= "+e);
 					isdominated=false;
 					}
+				}
 				//System.out.println("counttrue= " + counttrue );	
 			}
 			if(counttrue>=1 && isdominated)	{
