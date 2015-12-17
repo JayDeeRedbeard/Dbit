@@ -10,10 +10,11 @@ public class domRows{
 		@param ArrayList<ArrayList<Boolean>> tmp				Bekommt die 2D-ArrayList uebergeben	(ueberdeckungstabelle)
 		@return													2D-ArrayList ohne die Zeilen, die dominiert wurden, also (hier) nur 2.Spalte loeschen.
 		 */
-		removeEqualRows(tmp);
+		//removeEqualRows(tmp);
 		ArrayList<ArrayList<Integer>> tmp1 = new ArrayList<ArrayList<Integer>>();
 		for (int x=tmp.size()-1; x>=0;x--){
 			if(longData.validRow.get(x))
+				System.out.println("Reihe "+x+" wird ueberprueft");
 				tmp1=dominatingRows(tmp,x);									//Die uebergebene ArrayList hat 2 Spalten (beide nicht sortiert, 
 			//sowie mit moeglich doppelten Eintraegen)
 			/*// Sortieralgorithmus Bubble Sort start:
@@ -68,7 +69,7 @@ public static ArrayList<ArrayList<Integer>> dominatingRows(ArrayList<ArrayList<L
 				if(stuff.DirtyLittleHelpers.getBitAtPosition(longData.validColumn.get(d), c)==1){
 					//System.out.println("row= "+row + " k= "+k + " d "+d +" c  "+ c);
 					//System.out.println(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)+ "\t"+ 
-					//		stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) + "\t");
+					//	stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) + "\t");
 					if( !(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)==0 && 
 							stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)==1)  && k!=row){	//Entscheidendes Kriterium!!
 						
@@ -90,7 +91,7 @@ public static ArrayList<ArrayList<Integer>> dominatingRows(ArrayList<ArrayList<L
 					c=0;
 				}
 			}
-			if(counttrue>=1 && isdominated)	{
+			if(counttrue>1 && isdominated)	{
 				System.out.println(" Reihe "+ row + " ist dominiernd auf "+k);
 				tmp1.get(0).add(row);
 				tmp1.get(1).add(k);

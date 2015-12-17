@@ -2,7 +2,6 @@ package removingBits;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 public class removingBits {
 	
 	public static ArrayList<Boolean> solution = new ArrayList<Boolean>();
@@ -10,7 +9,7 @@ public class removingBits {
 	
 	
 	public static void main (String [] args) throws IOException{
-		ArrayList<ArrayList<Boolean>> tmp=readdata.make1Datafile.returnbigList();
+		ArrayList<ArrayList<Boolean>> tmp=readdata.make1DatafileOLD.returnbigList();
 		//ArrayList<ArrayList<Integer>> tmp1 = new ArrayList<ArrayList<Integer>>();		
 		//Initialisierung von solution und saveRow; patternEmpty
 		//initsolution(tmp);
@@ -28,9 +27,7 @@ public class removingBits {
 		//Vorlaeufiges Ergebnis
 		//System.out.println("saveRowAllTrue: "+saveRowAllTrue());
 		//System.out.println("numberOfFalseinSolution "+numberOfFalseinSolution()+" ALLE D-Bits: " + solution.size());
-		
 		//System.out.println();
-		
 	}
 	public static int numberOfFalseinSolution(){
 		/** Gibt die Anzahl der false in solution zurueck

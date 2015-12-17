@@ -15,6 +15,7 @@ public class domColumn {
 		ArrayList<ArrayList<Integer>> tmp1 = new ArrayList<ArrayList<Integer>>();
 		if(!removingBits.validRowAllFalse()){
 		for (int x=0; x<tmp.get(0).size()*64;x++){
+			System.out.println("Ueberpruefe Spalte"+ x );
 			tmp1=dominatingColumns(tmp,x);									//Die uebergebene ArrayList hat 2 Spalten (beide nicht sortiert, 
 																		//sowie mit moeglich doppelten Eintraegen)
 			//Removing the Columns

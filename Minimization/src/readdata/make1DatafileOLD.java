@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class make1Datafile {
+public class make1DatafileOLD {
 	public static ArrayList<ArrayList<Boolean>> returnbigList() throws IOException{
 		ArrayList<ArrayList<Boolean>> a = new ArrayList<ArrayList<Boolean>>();
 		ArrayList<ArrayList<Boolean>> b = new ArrayList<ArrayList<Boolean>>();

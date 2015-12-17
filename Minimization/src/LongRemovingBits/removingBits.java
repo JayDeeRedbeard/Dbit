@@ -3,26 +3,38 @@ package LongRemovingBits;
 import java.io.IOException;
 import java.util.ArrayList;
 import readdata.longData;
-import readdata.readingdata;
+import readdata.make1DatafileLong;
 
 public class removingBits {
 		public static ArrayList<Boolean> solution = new ArrayList<Boolean>();
 		
 		public static void main (String [] args) throws IOException{
-			ArrayList<ArrayList<Long>> tmp=longData.pattern(readingdata.testfile+".txt");
 			
-			
-			longData.printLongPattern(tmp);	
+			ArrayList<ArrayList<Long>> tmp= new ArrayList<ArrayList<Long>>();
+			tmp=make1DatafileLong.returnbigList();
+			//longData.printLongPattern(tmp);	
 			essentialdominating(tmp);
 			
 			System.out.println("Number of False in Solution: "+numberOfFalseinSolution());
+			System.out.println("Number of Trues in Solution: "+numberOfTruesinSolution());
 			System.out.println();
 			System.out.println("validRowAllFalse: "+validRowAllFalse());
-			
-			
+		}
+		public static int numberOfTruesinSolution(){
+			/** Gibt die Anzahl der Trues in Solution zurueck
+			@author Jan Dennis Reimer		
+			@version1.0
+			@return													Anzahl der D-Bits
+			*/
+			int counter=0;
+			for(int j=0;j<solution.size();j++){
+				if(solution.get(j))
+					counter++;
+			}
+			return counter;
 		}
 		public static int numberOfFalseinSolution(){
-			/** Gibt die Anzahl der false in solution zurueck
+			/** Gibt die Anzahl der False in solution zurueck
 			@author Jan Dennis Reimer		
 			@version1.0
 			@return													Anzahl der D-Bits
@@ -83,43 +95,35 @@ public class removingBits {
 					
 					System.out.println("Remove all False Columns: ");
 					falseRowsAndColumns.RemoveFalseColumn(tmp);
-					longData.printLongPatternwithoutEmptySpace(tmp);
+					//longData.printLongPatternwithoutEmptySpace(tmp);
 					
-
 					System.out.println("Remove False Rows: ");
 					falseRowsAndColumns.RemoveFalseRows(tmp);											
-					longData.printLongPatternwithoutEmptySpace(tmp);
+					//longData.printLongPatternwithoutEmptySpace(tmp);
 					
 					System.out.println("Remove all EssentialBits: ");
 					essentialBits.removeAllEssential(tmp);
-					longData.printLongPatternwithoutEmptySpace(tmp);
-					
-					System.out.println("Remove all False Columns: ");
-					falseRowsAndColumns.RemoveFalseColumn(tmp);
-					longData.printLongPatternwithoutEmptySpace(tmp);
-
-					System.out.println("Remove False Rows: ");
-					falseRowsAndColumns.RemoveFalseRows(tmp);											
-					longData.printLongPatternwithoutEmptySpace(tmp);
+					//longData.printLongPatternwithoutEmptySpace(tmp);
 					
 					System.out.println("Remove NOT dominating and Equal Rows: ");
 			 		domRows.removeNotDominatingRowsAndEqualRows(tmp);
-			 		longData.printLongPatternwithoutEmptySpace(tmp);
-		
+			 		//longData.printLongPatternwithoutEmptySpace(tmp);
 			 		
 					System.out.println("Remove all NOT dominating Columns and Eqaual Columns: ");
 					domColumn.removeNotDominatingColumns(tmp);
-					longData.printLongPatternwithoutEmptySpace(tmp);
+					//longData.printLongPatternwithoutEmptySpace(tmp);
 					
 					for(int k=0; k<longData.validRow.size();k++){
 						if(longData.validRow.get(k))
 							counter1++;
 					}	
+					System.out.println("numberOfvalidRows: "+	numberOfvalidRows());
+					System.out.println("longData.validRow.size(): "+	longData.validRow.size() );
 					a++;
 				}
 				System.out.println("removeBitWithMostTrues: ");
 				heuristic.removeBitWithMostTrues(tmp);
-				longData.printLongPatternwithoutEmptySpace(tmp);
+				//longData.printLongPatternwithoutEmptySpace(tmp);
 				counter=0;
 				counter1=2;
 				System.out.println("numberOfvalidRows: "+	numberOfvalidRows());
@@ -147,8 +151,6 @@ public class removingBits {
 			longData.validRow.set(Row, false);
 			solution.set(Row, true);
 		}
-		
-		
 		public static void removeColumn(ArrayList<ArrayList<Long>> tmp, int column){
 			/** Spalte die geloescht werden soll
 			@author Jan Dennis Reimer		

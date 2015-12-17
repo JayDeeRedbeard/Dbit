@@ -8,15 +8,18 @@ import java.util.Scanner;
 public class longData {
 	public static ArrayList<Long> validColumn = new ArrayList<Long>();
 	public static ArrayList<Boolean> validRow = new ArrayList<Boolean>();
+	public static ArrayList<Boolean> validRowZwischenspeicher = new ArrayList<Boolean>();
 	
+	//public static String testpfad = "C:/Users/Dennis/git/Minimization/src/b14_1";
+	public static String testpfad = "/home/dj0804/Downloads/minimization/src/src/b14_1";
 	public static void main (String [] args) throws IOException{
 		
-		ArrayList<ArrayList<Long>> a= pattern(readingdata.testfile+".txt");		
-		printLongPattern(a);
+		//ArrayList<ArrayList<Long>> a= pattern(readingdata.testfile+".txt");		
+		//printLongPattern(a);
 		
-		for(int i=0; i<64; i++)
-			System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(0), i)+" ");
-		
+		//for(int i=0; i<64; i++)
+		//	System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(0), i)+" ");
+		//
 	}
 	public static void printLongPatternwithoutEmptySpace(ArrayList<ArrayList<Long>> a)throws IOException{
 		/**			 k=0  k=1  k=2  k=3	 k=4  k=5
@@ -126,8 +129,7 @@ public class longData {
 		}//Ende Initialisierung von validColumn
 		
 		String b = "";
-		//Scanner s = new Scanner(new File("/home/dj0804/Downloads/minimization/src/src/b14_1/"+testfile));
-		Scanner s = new Scanner(new File("C:/Users/Dennis/git/Minimization/src/"+testfile));				
+		Scanner s = new Scanner(new File(longData.testpfad+"/"+testfile));				
 		while (s.hasNextLine()){									
 			Scanner tmp= new Scanner(s.nextLine());
 			b=tmp.nextLine(); 															//Zwischenspeicherung der aktuellen Zeile
@@ -138,10 +140,9 @@ public class longData {
 				if(!pattern.contains(tmp1)){
 					pattern.add(tmp1);
 					validRow.add(true);
-					//System.out.println(b);
+					validRowZwischenspeicher.add(true);
 				} else {
-					pattern.add(tmp1);
-					validRow.add(false);
+					validRowZwischenspeicher.add(false);
 				}
 				LongRemovingBits.removingBits.solution.add(false);
 			}	
