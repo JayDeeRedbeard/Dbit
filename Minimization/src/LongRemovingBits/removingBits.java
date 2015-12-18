@@ -2,6 +2,8 @@ package LongRemovingBits;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import outputData.printData;
 import readdata.longData;
 import readdata.make1DatafileLong;
 
@@ -14,6 +16,10 @@ public class removingBits {
 			tmp=make1DatafileLong.returnbigList();
 			//longData.printLongPattern(tmp);	
 			essentialdominating(tmp);
+			
+			printData.ausgabeindatei();
+			
+			System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));		
 			
 			System.out.println("Number of False in Solution: "+numberOfFalseinSolution());
 			System.out.println("Number of Trues in Solution: "+numberOfTruesinSolution());

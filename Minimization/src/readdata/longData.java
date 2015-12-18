@@ -10,8 +10,9 @@ public class longData {
 	public static ArrayList<Boolean> validRow = new ArrayList<Boolean>();
 	public static ArrayList<Boolean> validRowZwischenspeicher = new ArrayList<Boolean>();
 	
+	public static String testpfad = "C:/Users/Dennis/git/Minimization/src/TestDaten";
 	//public static String testpfad = "C:/Users/Dennis/git/Minimization/src/b14_1";
-	public static String testpfad = "/home/dj0804/Downloads/minimization/src/src/b14_1";
+	//public static String testpfad = "/home/dj0804/Downloads/minimization/src/src/b14_1";
 	public static void main (String [] args) throws IOException{
 		
 		//ArrayList<ArrayList<Long>> a= pattern(readingdata.testfile+".txt");		

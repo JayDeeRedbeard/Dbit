@@ -9,7 +9,6 @@ public class make1DatafileLong {
 			ArrayList<ArrayList<Long>> a = new ArrayList<ArrayList<Long>>();
 			ArrayList<ArrayList<Long>> b = new ArrayList<ArrayList<Long>>();
 			File folder = new File(longData.testpfad);
-			//File folder = new File("/home/dj0804/Downloads/minimization/src/src/b14_1");
 			for( File file : folder.listFiles() ){
 				System.out.println( file.getName() );
 			   	a=pattern(file.getName());
