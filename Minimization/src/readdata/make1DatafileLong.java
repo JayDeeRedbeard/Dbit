@@ -25,7 +25,7 @@ public class make1DatafileLong {
 			*/
 			ArrayList<ArrayList<Long>> pattern= new ArrayList<ArrayList<Long>>();
 			ArrayList<Long> tmp1= new ArrayList<Long>();
-			int max=readingdata.numberOfFailures();
+			int max=readingdata.numberOfFailures(testfile);
 			int c=0;
 			int k=0;
 			//Initialisierung von validColumn

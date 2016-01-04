@@ -38,7 +38,7 @@ public class make1DatafileOLD {
 			//System.out.println(b.contains("{f")+" "+ b);
 			//System.out.print(" Counter= "+counter+" ");
 			if(b.contains("{f")){	
-				tmp1= readingdata.dbitcoveragerow(b);
+				tmp1= readingdata.dbitcoveragerow(b, testfile);
 				
 				
 				if(!pattern.contains(tmp1)){

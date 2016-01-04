@@ -16,7 +16,8 @@ public class domColumn {
 		if(!removingBits.validRowAllFalse()){
 		for (int x=0; x<tmp.get(0).size()*64;x++){
 			System.out.println("Ueberpruefe Spalte"+ x );
-			tmp1=dominatingColumns(tmp,x);									//Die uebergebene ArrayList hat 2 Spalten (beide nicht sortiert, 
+			tmp1=dominatingColumns(tmp,x);	
+			//Die uebergebene ArrayList hat 2 Spalten (beide nicht sortiert, 
 																		//sowie mit moeglich doppelten Eintraegen)
 			//Removing the Columns
 			for(int y=tmp1.get(1).size()-1;y>=0;y--){
@@ -53,21 +54,21 @@ public class domColumn {
 		}
 		//System.out.println("d= "+d + " c= "+c);
 		for(int y=0; y<tmp.get(0).size();){
-			for (int k=0; k<tmp.size() && isdominated && stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c)==1; k++){	
-				if(longData.validRow.get(k)){
-				if( !(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)==1 && stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(y), e)==0) ){	//Entscheidendes Kriterium!!
-					if(!(d==y  && c==e)){
-					//counttrue muss groesser gleich 1 sein,
-					//da es sonst keine dominierens Zeile sein kann
-					if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)==1)
-						counttrue++;
-					//System.out.println("d= "+d + " c= "+c+ " k= "+k+ " y= " + y+" e= " + e+ " counttrue= "+ counttrue);
+			for (int k=0; k<tmp.size() && isdominated ; k++){	
+				if(longData.validRow.get(k) && stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c)==1){
+					if( !(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)==1 && stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(y), e)==0) ){	//Entscheidendes Kriterium!!
+						if(!(d==y  && c==e)){
+							//counttrue muss groesser gleich 1 sein,
+							//da es sonst keine dominierens Zeile sein kann
+							if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)==1)
+								counttrue++;
+							//System.out.println("d= "+d + " c= "+c+ " k= "+k+ " y= " + y+" e= " + e+ " counttrue= "+ counttrue);
+						}
 					}
-				}
-				else{
-					//System.out.println("dc= "+stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)+ " "+"ye= "+ +stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(y), e) );
-					//System.out.println(" Column "+ column + " ist nicht dominiernd auf y= "+y+ " e= "+e);
-					isdominated=false;
+					else{
+						//System.out.println("dc= "+stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)+ " "+"ye= "+ +stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(y), e) );
+						//System.out.println(" Column "+ column + " ist nicht dominiernd auf y= "+y+ " e= "+e);
+						isdominated=false;
 					}
 				}
 				//System.out.println("counttrue= " + counttrue );	

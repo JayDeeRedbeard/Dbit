@@ -13,9 +13,11 @@ public class domRows{
 		//removeEqualRows(tmp);
 		ArrayList<ArrayList<Integer>> tmp1 = new ArrayList<ArrayList<Integer>>();
 		for (int x=tmp.size()-1; x>=0;x--){
-			if(longData.validRow.get(x))
+			if(longData.validRow.get(x)){
 				System.out.println("Reihe "+x+" wird ueberprueft");
-				tmp1=dominatingRows(tmp,x);									//Die uebergebene ArrayList hat 2 Spalten (beide nicht sortiert, 
+				tmp1=dominatingRows(tmp,x);	
+			}
+			//Die uebergebene ArrayList hat 2 Spalten (beide nicht sortiert, 
 			//sowie mit moeglich doppelten Eintraegen)
 			/*// Sortieralgorithmus Bubble Sort start:
 			int temp1, temp2;

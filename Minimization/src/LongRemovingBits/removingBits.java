@@ -101,23 +101,23 @@ public class removingBits {
 					
 					System.out.println("Remove all False Columns: ");
 					falseRowsAndColumns.RemoveFalseColumn(tmp);
-					//longData.printLongPatternwithoutEmptySpace(tmp);
+					longData.printLongPatternwithoutEmptySpace(tmp);
 					
 					System.out.println("Remove False Rows: ");
 					falseRowsAndColumns.RemoveFalseRows(tmp);											
-					//longData.printLongPatternwithoutEmptySpace(tmp);
+					longData.printLongPatternwithoutEmptySpace(tmp);
 					
 					System.out.println("Remove all EssentialBits: ");
 					essentialBits.removeAllEssential(tmp);
-					//longData.printLongPatternwithoutEmptySpace(tmp);
+					longData.printLongPatternwithoutEmptySpace(tmp);
 					
 					System.out.println("Remove NOT dominating and Equal Rows: ");
 			 		domRows.removeNotDominatingRowsAndEqualRows(tmp);
-			 		//longData.printLongPatternwithoutEmptySpace(tmp);
+			 		longData.printLongPatternwithoutEmptySpace(tmp);
 			 		
 					System.out.println("Remove all NOT dominating Columns and Eqaual Columns: ");
 					domColumn.removeNotDominatingColumns(tmp);
-					//longData.printLongPatternwithoutEmptySpace(tmp);
+					longData.printLongPatternwithoutEmptySpace(tmp);
 					
 					for(int k=0; k<longData.validRow.size();k++){
 						if(longData.validRow.get(k))
@@ -129,7 +129,7 @@ public class removingBits {
 				}
 				System.out.println("removeBitWithMostTrues: ");
 				heuristic.removeBitWithMostTrues(tmp);
-				//longData.printLongPatternwithoutEmptySpace(tmp);
+				longData.printLongPatternwithoutEmptySpace(tmp);
 				counter=0;
 				counter1=2;
 				System.out.println("numberOfvalidRows: "+	numberOfvalidRows());

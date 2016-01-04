@@ -16,7 +16,7 @@ public class readingdata {
 	public static ArrayList<Boolean> saveRowDoubleDBits = new ArrayList<Boolean>();
 	//public static String testfile = "1_0095009ns.behavior ";
 	//public static String testfile = "0_4758ns.behavior";
-	public static String testfile = "Peter";
+	//public static String testfile = "Peter";
 	//public static String testfile = "Testmuster";
 	//public static String testfile = "Testmusterppt";
 	//public static String testfile = "domColumn";
@@ -25,32 +25,32 @@ public class readingdata {
 		//ArrayList<ArrayList<Boolean>> booleanList = pattern(0);
 		
 		//printpattern2D(booleanList);System.out.println();
-		print.arrayList.print2DTEST(testpatternOneData());
+		//print.arrayList.print2DTEST(testpatternOneData());
 		//ArrayList<ArrayList<ArrayList<Boolean>>> booleanList1 = testpatternOneData();
 		//System.out.println(booleanList1.get(3).size());
 	}
 	
-	public static int numberOfFailures() throws IOException {
+	public static int numberOfFailures(String testfile) throws IOException {
 		/** Gibt die Anzahl der Fehler zurueck
 		@author Jan Dennis Reimer		
 		@version1.0
 		@param  		
 		*/
-		return (nextPattern(0)-6);
+		return (nextPattern(0, testfile)-6);
 	}
-	public static int numberOfOutputs() throws IOException{
+	public static int numberOfOutputs(String testfile) throws IOException{
 		/** Gibt die Anzahl der Outputs fuer das erste Pattern zurueck.
 		@author Jan Dennis Reimer		
 		@version1.0
 		@param  		
 		*/
 		// Es reicht aus nur ein Pattern zu betrachten
-		int firstpattern= nextPattern(0);
-		int secondpattern= nextPattern(firstpattern+1);
+		int firstpattern= nextPattern(0,testfile);
+		int secondpattern= nextPattern(firstpattern+1, testfile);
 		int numberOfOutputs= secondpattern-firstpattern-1;
 		return numberOfOutputs;
 	}
-	public static int howmuchtestpattern()throws IOException{
+	public static int howmuchtestpattern(String testfile)throws IOException{
 		/** Gibt die Anzahl der Testmuster fuer die Datei zurueck.
 		@author Jan Dennis Reimer		
 		@version1.0
@@ -58,21 +58,21 @@ public class readingdata {
 		*/
 		int a = 0;
 		int b = 0;
-		while (nextPattern(a)!= 42352){
+		while (nextPattern(a, testfile)!= 42352){
 			//System.out.println(a);   // zum Testen der Funktion
-			a=nextPattern(a)+1;
+			a=nextPattern(a, testfile)+1;
 			b++;
 		}
 		return b-1;	
 	}
-	public static int nextPattern(int row) throws IOException{
+	public static int nextPattern(int row, String testfile) throws IOException{
 		/** Gibt jeweils die Zeilennummer aus nach der das naechste Testmuster losgeht	
 		@version1.0
 		@param row 	Welche Reihe befinden wir uns gerade.	
 		@return		die Zeilennummer aus dem naechsten Testmuster
 		*/
 		try{
-			Scanner s = new Scanner(new File(testfile+".txt"));
+			Scanner s = new Scanner(new File(longData.testpfad+"/"+ testfile ) );
 			int i = 1;
 			boolean temp=true;
 			while (s.hasNextLine()) {
@@ -93,7 +93,7 @@ public class readingdata {
 			}
 		return 0;
 		}
-	public static ArrayList<Boolean> dbitcoveragerow(String dbit)throws IOException{
+	public static ArrayList<Boolean> dbitcoveragerow(String dbit, String testfile)throws IOException{
 		/** gets an D-Bit in the String dbit with {f1,f2,f4,f3}|1
 		returns an Boolean ArrayList with [1 1 1 1 0 0 0]	
 		@version1.0
@@ -101,7 +101,7 @@ public class readingdata {
 		@return ArrayList 			Welches Bit abgedeckt ist
 		*/
 		//int max...Maximale Anzahl an Fehler
-		int max=numberOfFailures();
+		int max=numberOfFailures(testfile);
 		ArrayList<Boolean> booleanList = new ArrayList<Boolean>();
 		for(int i=0; i<= max; i++){
 			String x= ""+ i;
@@ -113,7 +113,7 @@ public class readingdata {
 		return booleanList;
 	}
 	
-	public static ArrayList<ArrayList<Boolean>> pattern (int whichpattern) throws IOException{
+	public static ArrayList<ArrayList<Boolean>> pattern (int whichpattern,String testfile) throws IOException{
 		/**Gibt immer ein Testmuster zurueck in einer ArrayList	
 		@version1.1
 		@param int whichpattern 	in welchen Testmuster in der Datei befinden wir uns?	//Wird nun immer auf 0 gesetzt um immer ein 2D-ArrayList zu bekommen.
@@ -123,9 +123,9 @@ public class readingdata {
 		ArrayList<ArrayList<Boolean>> pattern= new ArrayList<ArrayList<Boolean>>();
 		ArrayList<Boolean> tmp1= new ArrayList<Boolean>();
 		String b = "";
-		Scanner s = new Scanner(new File(testfile+".txt"));
+		Scanner s = new Scanner(new File(testfile));
 		int i= 1;						
-		int limit=nextPattern(whichpattern); 														//Sonst kommt es zur erheblichen Verschlechterungen der Laufzeit!
+		int limit=nextPattern(whichpattern, testfile); 														//Sonst kommt es zur erheblichen Verschlechterungen der Laufzeit!
 		while (s.hasNextLine()){									
 			Scanner tmp= new Scanner(s.nextLine());
 			b=tmp.nextLine(); 																		//Zwischenspeicherung der aktuellen Zeile
@@ -133,7 +133,7 @@ public class readingdata {
 			if (i>limit){
 				//System.out.print(" Counter= "+counter+" ");
 				if(b.contains("{f")){		
-					tmp1= dbitcoveragerow(b);
+					tmp1= dbitcoveragerow(b, testfile);
 					pattern.add(tmp1);
 					saveRowDoubleDBits.add(false);
 				}
@@ -148,7 +148,7 @@ public class readingdata {
 		s.close();
 		return pattern;
 	}
-	public static  ArrayList<ArrayList<Boolean>> testpatternOneData()throws IOException{
+	public static  ArrayList<ArrayList<Boolean>> testpatternOneData(String testfile)throws IOException{
 		/** Gebe ein Testmuster zurueck in einer 2D-boolschen ArrayList	
 		@version1.0
 		@version1.1
@@ -157,7 +157,7 @@ public class readingdata {
 		@return			Um alle Testmuster abzudecken, wird fuer jedes Testmuster eine 2D-ArrayList erstellt 
 						
 		*/
-		return pattern(0);
+		return pattern(0, testfile);
 	}
 	
 	
