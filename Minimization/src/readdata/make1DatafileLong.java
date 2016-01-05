@@ -3,6 +3,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import LongRemovingBits.domRows;
+import LongRemovingBits.removingBits;
 public class make1DatafileLong {
 
 		public static ArrayList<ArrayList<Long>> returnbigList() throws IOException{
@@ -10,10 +13,10 @@ public class make1DatafileLong {
 			ArrayList<ArrayList<Long>> b = new ArrayList<ArrayList<Long>>();
 			File folder = new File(longData.testpfad);
 			for( File file : folder.listFiles() ){
-				System.out.println( file.getName() );
-			   	a=pattern(file.getName());
-			   	System.out.println(a.size());
-			   	b.addAll(a);
+					System.out.println( file.getName() );
+					a=pattern(file.getName());
+					System.out.println(a.size());
+					b.addAll(a);
 			}
 			return b;
 		}
@@ -44,7 +47,7 @@ public class make1DatafileLong {
 					k++;
 				}
 			}//Ende Initialisierung von validColumn
-			
+			int counter=0;
 			String b = "";
 			Scanner s = new Scanner(new File(longData.testpfad +"/"+testfile));				
 			while (s.hasNextLine()){									
@@ -54,13 +57,16 @@ public class make1DatafileLong {
 				
 				if(b.contains("{f")){	
 					tmp1= readdata.longData.dbitcoveragerow(b,max);
-					if(!pattern.contains(tmp1)){
+					//System.out.println(b);
+					//System.out.println("isdominatedRow(pattern,tmp1): "+ isdominatedRow(pattern,tmp1)+ " pattern.contains(tmp1) "+pattern.contains(tmp1));
+					//System.out.println((pattern.contains(tmp1)) || (isdominatedRow(pattern,tmp1)));
+					
+					if((pattern.contains(tmp1)) || (isdominatedRow(pattern,tmp1)) ){
+						longData.validRowZwischenspeicher.add(false);
+					} else {
 						pattern.add(tmp1);
 						longData.validRow.add(true);
 						longData.validRowZwischenspeicher.add(true);
-						//System.out.println(b);
-					} else {
-						longData.validRowZwischenspeicher.add(false);
 					}
 					LongRemovingBits.removingBits.solution.add(false);
 				}
@@ -70,5 +76,31 @@ public class make1DatafileLong {
 			
 			return pattern;
 		}
-
+		public static boolean isdominatedRow(ArrayList<ArrayList<Long>> tmp, ArrayList<Long> tmp1) {
+			int c=0;
+			boolean isdominated= true;
+			if(!removingBits.validRowAllFalse()){
+				for(int k=0; k<tmp.size()  ; k++){
+					for(int d=0; d<tmp.get(0).size() && isdominated;){
+							if( !(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)==0 && 
+									stuff.DirtyLittleHelpers.getBitAtPosition(tmp1.get(d), c)==1) ){	
+								
+							}else{	
+								isdominated=false;
+							} 
+						c++;
+						if(c==64){
+							d++;
+							c=0;
+						}
+					}
+					if (isdominated)
+						return true;
+					c=0;
+					isdominated=true;
+				}
+				
+			}
+			return false;
+		}
 }

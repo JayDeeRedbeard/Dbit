@@ -37,9 +37,9 @@ public class domRows{
 		
 			//Removing the Rows
 			if(!tmp1.isEmpty()){
-			for(int y=tmp1.get(0).size()-1;y>=0;y--){
-				removingBits.removeRow(tmp,tmp1.get(1).get(y),false);
-			}
+				for(int y=tmp1.get(0).size()-1;y>=0;y--){
+					removingBits.removeRow(tmp,tmp1.get(1).get(y),false);
+				}
 			}
 		}
 	}

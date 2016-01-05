@@ -18,7 +18,7 @@ public class printData {
 				System.out.println( file.getName() );
 				a=file.getName();
 				a=a.substring(0, a.length()-4);
-				File ausgabeDatei = new File(longData.testpfad+"/"+a + "new.txt");
+				File ausgabeDatei = new File(longData.results+"/"+a + "new.txt");
 				PrintStream ausgabe = null;
 				if ( !ausgabeDatei.exists() )
 					ausgabe = new PrintStream(ausgabeDatei);

@@ -2,6 +2,7 @@ package readdata;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,9 +11,13 @@ public class longData {
 	public static ArrayList<Boolean> validRow = new ArrayList<Boolean>();
 	public static ArrayList<Boolean> validRowZwischenspeicher = new ArrayList<Boolean>();
 	
-	public static String testpfad = "C:/Users/Dennis/git/Minimization/src/TestDaten";
+	//public static String testpfad = "C:/Users/Dennis/git/Minimization/src/TestDaten";
 	//public static String testpfad = "C:/Users/Dennis/git/Minimization/src/b14_1";
-	//public static String testpfad = "/home/dj0804/Downloads/minimization/src/src/b14_1";
+	public static String testpfad = "/home/dj0804/Downloads/minimization/src/src/b14_1";
+	//public static String results = "C:/Users/Dennis/git/Minimization/src/results";
+	public static String results = "/home/dj0804/Downloads/minimization/src/src/results";
+	//public static String protokoll = "C:/Users/Dennis/git/Minimization/src/results/protokoll.txt";
+	public static String protokoll = "/home/dj0804/Downloads/minimization/src/src/results/protokoll.txt";
 	public static void main (String [] args) throws IOException{
 		
 		//ArrayList<ArrayList<Long>> a= pattern(readingdata.testfile+".txt");		
@@ -22,7 +27,7 @@ public class longData {
 		//	System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(0), i)+" ");
 		//
 	}
-	public static void printLongPatternwithoutEmptySpace(ArrayList<ArrayList<Long>> a)throws IOException{
+	public static PrintWriter printLongPatternwithoutEmptySpace(ArrayList<ArrayList<Long>> a, PrintWriter writer)throws IOException{
 		/**			 k=0  k=1  k=2  k=3	 k=4  k=5
 		 * i=0		[...][...][...][...][...][...]   
 		 * i=1		[...][...][...][...][...][...]
@@ -30,13 +35,37 @@ public class longData {
 		 * i=...	[...][...][...][...][...][...]
 		 * [...] j=0...63
 		 */
-		
 		for (int i=0; i<a.size(); i++){
 			if(validRow.get(i)){
 			for(int k=0; k<a.get(i).size() ; k++){
 				for(int j=0; j<64  ; j++){
-					if (stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(k), j)== 1)
+					if (stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(k), j)== 1){
+						writer.append(stuff.DirtyLittleHelpers.getBitAtPosition(a.get(i).get(k), j)+" ");
+					}
+				}
+			}
+			writer.append("\n");
+			}
+			
+		}
+		writer.append("\n");
+		return writer;
+	}
+	public static void printLongPatternwithoutEmptySpaceohneProtokoll(ArrayList<ArrayList<Long>> a)throws IOException{
+		/**			 k=0  k=1  k=2  k=3	 k=4  k=5
+		 * i=0		[...][...][...][...][...][...]   
+		 * i=1		[...][...][...][...][...][...]
+		 * i=2		[...][...][...][...][...][...]
+		 * i=...	[...][...][...][...][...][...]
+		 * [...] j=0...63
+		 */
+		for (int i=0; i<a.size(); i++){
+			if(validRow.get(i)){
+			for(int k=0; k<a.get(i).size() ; k++){
+				for(int j=0; j<64  ; j++){
+					if (stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(k), j)== 1){
 						System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(a.get(i).get(k), j)+" ");
+					}
 				}
 			}
 			System.out.println();
