@@ -3,8 +3,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import LongRemovingBits.domRows;
 import LongRemovingBits.removingBits;
 public class make1DatafileLong {
 

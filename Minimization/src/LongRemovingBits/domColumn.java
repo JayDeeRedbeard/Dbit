@@ -15,7 +15,7 @@ public class domColumn {
 		ArrayList<ArrayList<Integer>> tmp1 = new ArrayList<ArrayList<Integer>>();
 		if(!removingBits.validRowAllFalse()){
 		for (int x=0; x<tmp.get(0).size()*64;x++){
-			System.out.println("Ueberpruefe Spalte"+ x );
+			//System.out.println("Ueberpruefe Spalte"+ x );
 			tmp1=dominatingColumns(tmp,x);	
 			//Die uebergebene ArrayList hat 2 Spalten (beide nicht sortiert, 
 																		//sowie mit moeglich doppelten Eintraegen)
@@ -52,10 +52,13 @@ public class domColumn {
 				d++;
 			}
 		}
-		//System.out.println("d= "+d + " c= "+c);
+		
+		if(stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c)==1){
+			System.out.println("d= "+d + " c= "+c);
+			System.out.println("Ueberpruefe Spalte"+ column );
 		for(int y=0; y<tmp.get(0).size();){
 			for (int k=0; k<tmp.size() && isdominated ; k++){	
-				if(longData.validRow.get(k) && stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c)==1){
+				if(longData.validRow.get(k) && stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(y), e)==1){
 					if( !(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)==1 && stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(y), e)==0) ){	//Entscheidendes Kriterium!!
 						if(!(d==y  && c==e)){
 							//counttrue muss groesser gleich 1 sein,
@@ -74,7 +77,7 @@ public class domColumn {
 				//System.out.println("counttrue= " + counttrue );	
 			}
 			if(counttrue>=1 && isdominated)	{
-				//System.out.println(" Column "+ column + " ist dominiernd auf y= "+y+ " e= "+e);
+				System.out.println(" Column "+ column + " ist dominiernd auf y= "+y+ " e= "+e);
 				tmp1.get(0).add(column);
 				tmp1.get(1).add(y);
 				tmp1.get(2).add(e);
@@ -86,6 +89,7 @@ public class domColumn {
 				y++;
 				e=0;
 			}
+		}
 		}
 		return tmp1;
 	}

@@ -16,7 +16,7 @@ public class essentialBits {
 			for(int row =tmp.size()-1;row>=0; row--){
 				//System.out.println("Row: "+row);
 				if(essent1D.get(row)){
-					//System.out.println("Row: "+row +" ist essentiell");
+					System.out.println("Row: "+row +" ist essentiell");
 					LongRemovingBits.removingBits.removeOneRowTrueColumns(tmp, row);
 					//Test
 						/*for(int y = 0; y<tmp.size(); y++){
@@ -63,7 +63,7 @@ public class essentialBits {
 				}
 				if(counter==1){
 					essentialAry[tmp1]= true;
-					//System.out.println("Reihe "+tmp1 + " true");
+					//System.out.println("Reihe "+tmp1 + "ist essentiell true");
 				}
 				counter=0;
 				c++;

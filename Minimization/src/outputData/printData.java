@@ -8,7 +8,7 @@ import java.util.Scanner;
 import readdata.longData;
 
 public class printData {
-	public static void ausgabeindatei  () throws IOException{
+	public static void ausgabeindatei() throws IOException{
 		File folder = new File(longData.testpfad);
 		String b = "";
 		int counter=0;
