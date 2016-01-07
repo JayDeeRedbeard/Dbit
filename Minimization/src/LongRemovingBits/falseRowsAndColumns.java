@@ -88,8 +88,10 @@ public class falseRowsAndColumns {
 		*/
 		boolean counter=false;
 		for(int i = 0; i<tmp.size(); i++){
-			//System.out.println("i= "+ i +" d= "+d + " c="+ c);
 			if(longData.validRow.get(i)){
+				//System.out.println("i= "+ i +" d= "+d + " c="+ c);
+				//System.out.println("tmp.get(0).size(): "+tmp.get(0).size() );
+				//System.out.println("tmp.size(): "+tmp.size() );
 				if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(i).get(d), c)==1){		//Sobald eine Zeile in der gegeben Spalte true ist, wird False zuruechgegeben
 					counter= true;
 				}

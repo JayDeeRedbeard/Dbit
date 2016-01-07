@@ -13,6 +13,7 @@ public class removingBits {
 			
 			ArrayList<ArrayList<Long>> tmp= new ArrayList<ArrayList<Long>>();
 			tmp=make1DatafileLong.returnbigList();
+			//System.out.println("everyFailurecovered: "+pruefen.solution.datacorrect(tmp));
 			//longData.printLongPattern(tmp);	
 			essentialdominating(tmp);
 			
@@ -111,7 +112,7 @@ public class removingBits {
 					System.out.println("Remove all False Columns: ");
 					falseRowsAndColumns.RemoveFalseColumn(tmp);
 					//writer=longData.printLongPatternwithoutEmptySpace(tmp,writer);
-					
+						
 					writer.append("Remove False Rows: "+ "\n");
 					System.out.println("Remove False Rows: ");
 					falseRowsAndColumns.RemoveFalseRows(tmp);											
