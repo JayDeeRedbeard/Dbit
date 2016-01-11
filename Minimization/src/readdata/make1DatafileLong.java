@@ -5,25 +5,26 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import LongRemovingBits.removingBits;
 public class make1DatafileLong {
-
+		/**
+		 * @return Gibt eine Ueberdeckungstabelle zurueck indem jede Datei untereinander geschrieben wird.
+		 * @throws IOException
+		 */
 		public static ArrayList<ArrayList<Long>> returnbigList() throws IOException{
 			ArrayList<ArrayList<Long>> a = new ArrayList<ArrayList<Long>>();
 			ArrayList<ArrayList<Long>> b = new ArrayList<ArrayList<Long>>();
 			File folder = new File(longData.testpfad);
 			for( File file : folder.listFiles() ){
-					System.out.println( file.getName() );
-					a=pattern(file.getName());
-					System.out.println(a.size());
-					b.addAll(a);
+				System.out.println( file.getName() );
+				a=pattern(file.getName());
+				System.out.println(a.size());
+				b.addAll(a);
 			}
 			return b;
 		}
+		/**Gibt immer ein Testmuster zurueck in einer ArrayList	
+		@return		Gibt eine 2D-ArrayList zurueck die man dann spaeter verarbeiten kann.
+		*/
 		public static ArrayList<ArrayList<Long>> pattern (String testfile) throws IOException{
-			/**Gibt immer ein Testmuster zurueck in einer ArrayList	
-			@version1.1
-			@param int whichpattern 	in welchen Testmuster in der Datei befinden wir uns?	//Wird nun immer auf 0 gesetzt um immer ein 2D-ArrayList zu bekommen.
-			@return						Gibt eine 2D-ArrayList zurueck die man dann spaeter verarbeiten kann.
-			*/
 			ArrayList<ArrayList<Long>> pattern= new ArrayList<ArrayList<Long>>();
 			ArrayList<Long> tmp1= new ArrayList<Long>();
 			int max=readingdata.numberOfFailures(testfile);
@@ -45,7 +46,7 @@ public class make1DatafileLong {
 					k++;
 				}
 			}//Ende Initialisierung von validColumn
-			int counter=0;
+			//int counter=0;
 			String b = "";
 			Scanner s = new Scanner(new File(longData.testpfad +"/"+testfile));				
 			while (s.hasNextLine()){									
@@ -60,7 +61,8 @@ public class make1DatafileLong {
 					//System.out.println((pattern.contains(tmp1)) || (isdominatedRow(pattern,tmp1)));
 					
 					if((pattern.contains(tmp1)) || (isdominatedRow(pattern,tmp1)) ){
-						longData.validRowZwischenspeicher.add(false);
+						//Zwischenspeicher ist da, um keinen Informationsverlust zu haben, da dominierte Zeilen geloescht werden
+						longData.validRowZwischenspeicher.add(false);			
 					} else {
 						pattern.add(tmp1);
 						longData.validRow.add(true);
@@ -74,6 +76,12 @@ public class make1DatafileLong {
 			
 			return pattern;
 		}
+		/** Kontrolliert beim Einlesen, ob es die aktuelle Spalte eine dominierende ist.
+		 * 
+		 * @param tmp		2D ArrayList(Ueberdeckungstabelle)(noch nicht fertige)
+		 * @param tmp1		potentieller Kandidat zur Aufnahme in der Ueberdeckungstabelle
+		 * @return			Gibt zuruck, ob die Spalte dominiert wird.
+		 */
 		public static boolean isdominatedRow(ArrayList<ArrayList<Long>> tmp, ArrayList<Long> tmp1) {
 			int c=0;
 			boolean isdominated= true;

@@ -14,6 +14,8 @@ public class removingBits {
 		//public static String circuits="/home/dj0804/Minimization/";
 		
 		public static void main (String [] args) throws IOException{
+			//Programmablauf
+			
 			long startTime = System.nanoTime();
 			long endTime ;long duration;
 			ArrayList<ArrayList<Long>> tmp; 
@@ -26,6 +28,8 @@ public class removingBits {
 				//longData.testpfad= circuits+"Schaltungen/"+files.getName();
 				longData.protokoll= circuits + "logs/"+files.getName();
 				longData.results= circuits + "results/"+files.getName();
+				longData.validRow=new ArrayList<Boolean>();
+				longData.validColumn=new ArrayList<Long>();
 				
 				tmp=make1DatafileLong.returnbigList();
 				
@@ -52,28 +56,12 @@ public class removingBits {
 				writer.append("time: "+duration+ "\n");
 				writer.close();
 			}
-			/*
-			
-			//System.out.println("everyFailurecovered: "+pruefen.solution.datacorrect(tmp));
-			
-			//longData.printLongPattern(tmp);	
-			essentialdominating(tmp);
-			printData.ausgabeindatei();
-			System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));		
-			System.out.println("Number of False in Solution: "+numberOfFalseinSolution());
-			System.out.println("Number of Trues in Solution: "+numberOfTruesinSolution());
-			System.out.println();
-			System.out.println("validRowAllFalse: "+validRowAllFalse());*/
-			
-			
-			
 		}
+		/** 
+		* @return	Gibt die Anzahl der Trues in Solution zurueck	
+		*/
 		public static int numberOfTruesinSolution(){
-			/** Gibt die Anzahl der Trues in Solution zurueck
-			@author Jan Dennis Reimer		
-			@version1.0
-			@return													Anzahl der D-Bits
-			*/
+			
 			int counter=0;
 			for(int j=0;j<solution.size();j++){
 				if(solution.get(j))
@@ -81,12 +69,10 @@ public class removingBits {
 			}
 			return counter;
 		}
+		/** 
+		@return		Gibt die Anzahl der False in solution zurueck													
+		*/
 		public static int numberOfFalseinSolution(){
-			/** Gibt die Anzahl der False in solution zurueck
-			@author Jan Dennis Reimer		
-			@version1.0
-			@return													Anzahl der D-Bits
-			*/
 			int counter=0;
 			for(int j=0;j<solution.size();j++){
 				if(solution.get(j)==false)
@@ -94,12 +80,10 @@ public class removingBits {
 			}
 			return counter;
 		}
+		/**  
+		@return		Gibt die Anzahl von ValidRows zurueck 				-
+		*/
 		public static int numberOfvalidRows(){
-			/**  ueberpruefung ob in saveRow nur true drin steht. Wenn ja, gebe true zurueck
-			@author Jan Dennis Reimer		
-			@version1.0
-			@return									alles true gebe true zurueck, else false				-
-			*/
 			int counter=0;
 			for (int i=0; i<longData.validRow.size();i++){
 				if(longData.validRow.get(i))
@@ -107,12 +91,10 @@ public class removingBits {
 			}
 			return counter;
 		}
+		/**  
+		@return	Wenn eine Reihe nur aus "false" besteht wird "True zurueckgegeben.				-
+		*/
 		public static boolean validRowAllFalse(){
-			/**  ueberpruefung ob in saveRow nur true drin steht. Wenn ja, gebe true zurueck
-			@author Jan Dennis Reimer		
-			@version1.0
-			@return									alles true gebe true zurueck, else false				-
-			*/
 			int counter=0;
 			for (int i=0; i<longData.validRow.size();i++){
 				if(!longData.validRow.get(i))
@@ -123,9 +105,12 @@ public class removingBits {
 			else 
 				return false;
 				
-		}
-		//Programmablauf 
-		
+		} 
+		/**
+		 * Ruft selbststaendig alle Funktionen auf, um nach den Quine McCluskey Algorithmus eine minimale(nicht optimale) Loesung zu finden
+		 * @param tmp	Bekommt eine 2D-ArrayList uebergeben  		
+		 * @throws IOException
+		 */
 		public static void essentialdominating(ArrayList<ArrayList<Long>> tmp) throws IOException{
 			// Fuer das Protokoll: START
 			
@@ -230,14 +215,12 @@ public class removingBits {
 			}
 			writer.close();
 		}
+		/** Die uebergebene Reihe(Row) soll zur Loesung hinzugefuegt werden. Loeschen von einer Reihe sowie jeweils die dazugehoerigen Spalten.
+		@param tmp		Bekommt die 2D-ArrayList uebergeben	(Ueberdeckungstabelle)
+		@param Row											Die Reihe, die zur Loesung hinzugefuegt werden soll. Und ausserdem geloescht werden soll.
+		@return													2D-ArrayList ohne diese Reihe und Spalten (wird durch ValidRow/ValidColumn ausgeblendet).
+		*/
 		public static void removeOneRowTrueColumns(ArrayList<ArrayList<Long>> tmp, int Row){
-			/** Die uebergebene Reihe(Row) soll zur Loesung hinzugefuegt werden. Loeschen von einer Reihe sowie jeweils die dazugehoerigen Spalten.
-			@author Jan Dennis Reimer		
-			@version1.0
-			@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	(ueberdeckungstabelle)
-			@param int Row											Die Reihe, die zur Loesung hinzugefuegt werden soll. Und ausserdem geloescht werden soll
-			@return													3D-ArrayList ohne diese Reihe und Spalten
-			*/
 			int c=63;
 			for(int i= tmp.get(Row).size()-1; i>=0;){
 				if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(Row).get(i), c)==1){
@@ -252,10 +235,13 @@ public class removingBits {
 			longData.validRow.set(Row, false);
 			solution.set(Row, true);
 		}
+		/** Spalte die geloescht werden soll
+		@param tmp		Bekommt die 2D-ArrayList uebergeben	(ueberdeckungstabelle)
+		@param Column	Spalte column wird geloescht.
+		@return			2D-ArrayList ohne diese Spalte
+		*/
 		public static void removeColumn(ArrayList<ArrayList<Long>> tmp, int column){
 			/** Spalte die geloescht werden soll
-			@author Jan Dennis Reimer		
-			@version1.0
 			@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	(ueberdeckungstabelle)
 			@param int Column										Spalte column wird geloescht.
 			@return													3D-ArrayList ohne diese Spalte
@@ -271,26 +257,18 @@ public class removingBits {
 			}
 			longData.validColumn.set(d,stuff.DirtyLittleHelpers.setBitAtPosition(longData.validColumn.get(d), c, false));
 		}
+
+		/** Spalte die geloescht werden soll
+		@param Column	Spalte column wird geloescht.
+		*/
 		public static void removeColumn(ArrayList<ArrayList<Long>> tmp, int d, int c){
-			/** Spalte die geloescht werden soll
-			@author Jan Dennis Reimer		
-			@version1.0
-			@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	(ueberdeckungstabelle)
-			@param int Column										Spalte column wird geloescht.
-			@return													3D-ArrayList ohne diese Spalte
-			*/
 			longData.validColumn.set(d,stuff.DirtyLittleHelpers.setBitAtPosition(longData.validColumn.get(d), c, false));
 		}
+		/** Reihe die geloescht werden soll.
+		@param row			Reihe row wird geloescht.
+		@param solutionBit	Gibt an, ob es sich um ein D-Bit handelt, dass auch zur Loesung hinzugefuegt werden muss.
+		*/
 		public static void removeRow (ArrayList<ArrayList<Long>> tmp, int row, boolean solutionBit){
-			/** Reihe die geloescht werden soll
-			@author Jan Dennis Reimer		
-			@version1.0
-			@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	(ueberdeckungstabelle)
-			@param int row											Reihe row wird geloescht.
-			@param boolean solutionBit								Gibt an, ob es sich um ein Bit handelt, dass auch zur Loesung hinzugefuegt werden muss.
-			@return													3D-ArrayList ohne diese Spalte
-			*/
-			
 			longData.validRow.set(row, false);
 			if (solutionBit)
 				solution.set(row, true);

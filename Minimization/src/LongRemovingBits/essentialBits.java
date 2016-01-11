@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class essentialBits {
+	/** Es werden alle essentiellen D-Bits zur Loesung hinzugefuegt und danach geloescht(sowohl Zeilen als auch Spalten)
+	@author Jan Dennis Reimer		
+	@version1.0
+	@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 2D-ArrayList uebergeben	(Ueberdeckungstabelle)
+	*/
 	public static void removeAllEssential(ArrayList<ArrayList<Long>> tmp)throws IOException{
-		/** Es werden alle essentiellen D-Bits zur Loesung hinzugefuegt und danach geloescht( mit Spalten)
-		@author Jan Dennis Reimer		
-		@version1.0
-		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	(ueberdeckungstabelle)
-		@return													3D-ArrayList ohne die essentiellen Bits (ueberdeckungstabelle)
-		*/
+		
 		ArrayList<Boolean> essent1D= essential1D(tmp);
 		
 			for(int row =tmp.size()-1;row>=0; row--){
@@ -31,6 +31,10 @@ public class essentialBits {
 				}
 			}
 	}
+	/** Umwandelung von boolean Array zur ArrayList
+	@param boolean[] tmp									Bekommt ein boolean Array übergeben.
+	@return													Gibt eine Boolean ArrayList zurück.
+	*/
 	public static ArrayList<Boolean> BooleanAry1DToArrayList(boolean[] tmp){
 		ArrayList<Boolean> k = new ArrayList<Boolean>();
 		for(int i = 0; i<tmp.length; i++){
@@ -38,17 +42,17 @@ public class essentialBits {
 		}
 		return k;
 	}
+	/** Findet heraus, welches D-Bit essentiell ist und gibt dementsprechend eine Arraylist zurueck
+	@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 2D-ArrayList uebergeben	(Ueberdeckungstabelle)
+	@return													Gibt eine ArrayList zurück, die essentielle D-Bits enthält.
+	*/
 	public static ArrayList<Boolean> essential1D(ArrayList<ArrayList<Long>> tmp) {
-		/** Findet heraus, welches D-Bit essentiell ist und gibt dementsprechend eine Arraylist zurueck
-		@author Jan Dennis Reimer		
-		@version1.0
-		@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	(ueberdeckungstabelle)
-		@return													3D-ArrayList ohne die essentiellen Bits (ueberdeckungstabelle)
-		*/
+		//Start Initialisieren
 		boolean[] essentialAry = new boolean[tmp.size()];		
 		int tmp1=0;
 		int counter=0;
 		int c=0;
+		//Ende Initialisieren
 		if(!removingBits.validRowAllFalse()){
 			for (int d = 0; d<tmp.get(0).size();){
 				for (int row=0; row<tmp.size(); row++){
@@ -75,6 +79,4 @@ public class essentialBits {
 		}
 		return BooleanAry1DToArrayList(essentialAry);
 	}
-	
-	
 }

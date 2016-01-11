@@ -23,13 +23,14 @@ public class longData {
 	
 	public static void main (String [] args) throws IOException{
 		
-		//ArrayList<ArrayList<Long>> a= pattern(readingdata.testfile+".txt");		
-		//printLongPattern(a);
-		
-		//for(int i=0; i<64; i++)
-		//	System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(0), i)+" ");
-		//
 	}
+	/**	Ausgabe der Tabelle in einer Datei
+	 * 
+	 * @param a			2D-Arraylist (Ueberdeckungstabelle)
+	 * @param writer	uebergabe um in der gleichen Datei weiterzuschreiben
+	 * @return			gibt den Writer zurueck um in Datei weiterzuschreiben(kann auch ander implementiert werden)(Diese Variante ist scheisse)
+	 * @throws IOException
+	 */
 	public static PrintWriter printLongPatternwithoutEmptySpace(ArrayList<ArrayList<Long>> a, PrintWriter writer)throws IOException{
 		/**			 k=0  k=1  k=2  k=3	 k=4  k=5
 		 * i=0		[...][...][...][...][...][...]   
@@ -54,7 +55,12 @@ public class longData {
 		writer.append("\n");
 		return writer;
 	}
-	public static void printLongPatternwithoutEmptySpaceohneProtokoll(ArrayList<ArrayList<Long>> a)throws IOException{
+	/**	Ausgabe der Tabelle auf der Konsole
+	 * 
+	 * @param a			2D-Arraylist (Ueberdeckungstabelle)
+	 * @throws IOException
+	 */
+	public static void printLongPatternwithoutEmptySpace(ArrayList<ArrayList<Long>> a)throws IOException{
 		/**			 k=0  k=1  k=2  k=3	 k=4  k=5
 		 * i=0		[...][...][...][...][...][...]   
 		 * i=1		[...][...][...][...][...][...]
@@ -77,6 +83,11 @@ public class longData {
 		}
 		System.out.println();
 	}
+	/**
+	 * Gibt eine Ueberdeckungstabelle zurueck jedoch wied Vaild Colum und validRow beruecksichtigt
+	 * @param a			2D Ueberdeckungstabelle
+	 * @throws IOException
+	 */
 	public static void printLongPattern(ArrayList<ArrayList<Long>> a)throws IOException{
 		/**			 k=0  k=1  k=2  k=3	 k=4  k=5
 		 * i=0		[...][...][...][...][...][...]   
@@ -102,13 +113,13 @@ public class longData {
 		}
 		System.out.println();
 	}
+	/** Kriegt ein String und formt es um, sodass es in der Ueberdeckungstabelle genutzt werden kann.
+	 * @param dbit	Hat die Form : {f1,f2,f4,f3}|1
+	 * @param max	maximale Anzahl von Fehlern
+	 * @return		Boolean ArrayList with [1 1 1 1 0 0 0]	
+	 * @throws IOException
+	 */
 	public static ArrayList<Long> dbitcoveragerow(String dbit,int max)throws IOException{
-		/** gets an D-Bit in the String dbit with {f1,f2,f4,f3}|1
-		returns an Boolean ArrayList with [1 1 1 1 0 0 0]	
-		@version1.0
-		@param String dbit			Hat die Form : {f1,f2,f4,f3}|1	
-		@return ArrayList 			Welches Bit abgedeckt ist
-		*/
 		//int max...Maximale Anzahl an Fehler
 		ArrayList<Long> LongList = new ArrayList<Long>();
 		float a= max/64;
@@ -133,12 +144,13 @@ public class longData {
 		}
 		return LongList;
 	}
+	/** WIRD NICHT MEHR GENUTZT
+	 * Gibt immer ein Testmuster zurueck in einer ArrayList	
+	@param whichpattern 	in welchen Testmuster in der Datei befinden wir uns?	//Wird nun immer auf 0 gesetzt um immer ein 2D-ArrayList zu bekommen.
+	@return						Gibt eine 2D-ArrayList zurueck die man dann spaeter verarbeiten kann.
+	*/
 	public static ArrayList<ArrayList<Long>> pattern (String testfile) throws IOException{
-		/**Gibt immer ein Testmuster zurueck in einer ArrayList	
-		@version1.1
-		@param int whichpattern 	in welchen Testmuster in der Datei befinden wir uns?	//Wird nun immer auf 0 gesetzt um immer ein 2D-ArrayList zu bekommen.
-		@return						Gibt eine 2D-ArrayList zurueck die man dann spaeter verarbeiten kann.
-		*/
+		
 		ArrayList<ArrayList<Long>> pattern= new ArrayList<ArrayList<Long>>();
 		ArrayList<Long> tmp1= new ArrayList<Long>();
 		int max=readingdata.numberOfFailures(testfile);

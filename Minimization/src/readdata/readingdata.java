@@ -29,33 +29,32 @@ public class readingdata {
 		//ArrayList<ArrayList<ArrayList<Boolean>>> booleanList1 = testpatternOneData();
 		//System.out.println(booleanList1.get(3).size());
 	}
-	
+	/** Gibt die Anzahl der Fehler zurueck
+	@author Jan Dennis Reimer		
+	@version1.0
+	@param  		
+	*/
 	public static int numberOfFailures(String testfile) throws IOException {
-		/** Gibt die Anzahl der Fehler zurueck
-		@author Jan Dennis Reimer		
-		@version1.0
-		@param  		
-		*/
 		return (nextPattern(0, testfile)-6);
 	}
+	/**
+	 * Gibt die Anzahl der Outputs fuer das erste Pattern zurueck.
+	@param  testfile welches aktuelle testfile wird benutzt		
+	*/
 	public static int numberOfOutputs(String testfile) throws IOException{
-		/** Gibt die Anzahl der Outputs fuer das erste Pattern zurueck.
-		@author Jan Dennis Reimer		
-		@version1.0
-		@param  		
-		*/
 		// Es reicht aus nur ein Pattern zu betrachten
 		int firstpattern= nextPattern(0,testfile);
 		int secondpattern= nextPattern(firstpattern+1, testfile);
 		int numberOfOutputs= secondpattern-firstpattern-1;
 		return numberOfOutputs;
 	}
+	/** NICHT IN GEBRAUCH 
+	 * Gibt die Anzahl der Testmuster fuer die Datei zurueck.
+	@author Jan Dennis Reimer		
+	@version1.0
+	@param  		
+	*/
 	public static int howmuchtestpattern(String testfile)throws IOException{
-		/** Gibt die Anzahl der Testmuster fuer die Datei zurueck.
-		@author Jan Dennis Reimer		
-		@version1.0
-		@param  		
-		*/
 		int a = 0;
 		int b = 0;
 		while (nextPattern(a, testfile)!= 42352){
@@ -65,12 +64,12 @@ public class readingdata {
 		}
 		return b-1;	
 	}
+	/** Gibt jeweils die Zeilennummer aus nach der das naechste Testmuster losgeht	
+	@param row 	Welche Reihe befinden wir uns gerade.	
+	@return		die Zeilennummer aus dem naechsten Testmuster
+	*/
 	public static int nextPattern(int row, String testfile) throws IOException{
-		/** Gibt jeweils die Zeilennummer aus nach der das naechste Testmuster losgeht	
-		@version1.0
-		@param row 	Welche Reihe befinden wir uns gerade.	
-		@return		die Zeilennummer aus dem naechsten Testmuster
-		*/
+		
 		try{
 			Scanner s = new Scanner(new File(longData.testpfad+"/"+ testfile ) );
 			int i = 1;
@@ -93,13 +92,14 @@ public class readingdata {
 			}
 		return 0;
 		}
+	/** NICHT IN GEBRAUCH
+	 * gets an D-Bit in the String dbit with {f1,f2,f4,f3}|1
+	returns an Boolean ArrayList with [1 1 1 1 0 0 0]	
+	@version1.0
+	@param String dbit			Hat die Form : {f1,f2,f4,f3}|1	
+	@return ArrayList 			Welches Bit abgedeckt ist
+	*/
 	public static ArrayList<Boolean> dbitcoveragerow(String dbit, String testfile)throws IOException{
-		/** gets an D-Bit in the String dbit with {f1,f2,f4,f3}|1
-		returns an Boolean ArrayList with [1 1 1 1 0 0 0]	
-		@version1.0
-		@param String dbit			Hat die Form : {f1,f2,f4,f3}|1	
-		@return ArrayList 			Welches Bit abgedeckt ist
-		*/
 		//int max...Maximale Anzahl an Fehler
 		int max=numberOfFailures(testfile);
 		ArrayList<Boolean> booleanList = new ArrayList<Boolean>();
@@ -112,14 +112,15 @@ public class readingdata {
 		}
 		return booleanList;
 	}
-	
+	/**NICHT IN GEBRAUCH 
+	 * Gibt immer ein Testmuster zurueck in einer ArrayList	
+	@version1.1
+	@param int whichpattern 	in welchen Testmuster in der Datei befinden wir uns?	//Wird nun immer auf 0 gesetzt um immer ein 2D-ArrayList zu bekommen.
+	@return						Gibt eine 2D-ArrayList zurueck die man dann spaeter verarbeiten kann.
+	*/
 	public static ArrayList<ArrayList<Boolean>> pattern (int whichpattern,String testfile) throws IOException{
-		/**Gibt immer ein Testmuster zurueck in einer ArrayList	
-		@version1.1
-		@param int whichpattern 	in welchen Testmuster in der Datei befinden wir uns?	//Wird nun immer auf 0 gesetzt um immer ein 2D-ArrayList zu bekommen.
-		@return						Gibt eine 2D-ArrayList zurueck die man dann spaeter verarbeiten kann.
-		*/
-		int counter=0;
+		
+		//int counter=0;
 		ArrayList<ArrayList<Boolean>> pattern= new ArrayList<ArrayList<Boolean>>();
 		ArrayList<Boolean> tmp1= new ArrayList<Boolean>();
 		String b = "";
@@ -140,7 +141,7 @@ public class readingdata {
 				else{
 					saveRowDoubleDBits.add(true);
 				}
-				counter++;
+			//	counter++;
 			}
 			i++;
 			tmp.close();
@@ -148,15 +149,15 @@ public class readingdata {
 		s.close();
 		return pattern;
 	}
+	/** 
+	 * NICHT IN GEBRAUCH 
+	 * Gebe ein Testmuster zurueck in einer 2D-boolschen ArrayList	
+	//Es wird nun immer nur noch ein pattern geben. die 3. Dimension wird weg gelassen.
+	@param -
+	@return			Um alle Testmuster abzudecken, wird fuer jedes Testmuster eine 2D-ArrayList erstellt 
+					
+	*/
 	public static  ArrayList<ArrayList<Boolean>> testpatternOneData(String testfile)throws IOException{
-		/** Gebe ein Testmuster zurueck in einer 2D-boolschen ArrayList	
-		@version1.0
-		@version1.1
-		//Es wird nun immer nur noch ein pattern geben. die 3. Dimension wird weg gelassen.
-		@param -
-		@return			Um alle Testmuster abzudecken, wird fuer jedes Testmuster eine 2D-ArrayList erstellt 
-						
-		*/
 		return pattern(0, testfile);
 	}
 	

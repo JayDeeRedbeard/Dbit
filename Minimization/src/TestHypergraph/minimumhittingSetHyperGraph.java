@@ -10,8 +10,6 @@ public class minimumhittingSetHyperGraph {
 		
 	}
 	public static ArrayList<Integer> mhsHyperGraphdbits(ArrayList<ArrayList<Long>> tmp) throws IOException{
-		
-		
 		ArrayList<Integer> dbits = new ArrayList<>();
 		for(int i =0; i<tmp.size(); i++){
 			dbits.add(i);

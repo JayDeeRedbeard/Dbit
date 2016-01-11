@@ -1,12 +1,18 @@
 package pruefen;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 import readdata.longData;
 
 public class solution {
+	/**	Gibt die Anzahl der Fehler zurück die ueberdeckt sind durch die Ueberdeckungstabelle
+	 * @param tmp	Bekommt eine 2D-ArrayList uebergeben
+	 * @return		Anzahl der ueberdeckten Fehler
+	 * @throws IOException
+	 */
 	public static int everyFailurecovered(ArrayList<ArrayList<Long>> tmp) throws IOException{
 		boolean covered=false;
 		int counter=0;
@@ -29,9 +35,21 @@ public class solution {
 		}
 		return counter;
 	}
+	/** Ueberprueft am Ende der Minimierung ob alle Fehler ueberdeckt wurden.
+	 * 
+	 * @param tmp 	Bekommt eine 2D-ArrayList uebergeben
+	 * @return		Anzahl der ueberdeckten Fehler
+	 * @throws IOException
+	 */
 	public static int datacorrect(ArrayList<ArrayList<Long>> tmp) throws IOException{
-		PrintWriter writer = new PrintWriter(longData.protokoll+"/coveragefailure.txt");
-        
+		File ausgabeDatei = new File(longData.protokoll+"/coveragefailure.txt");
+		PrintStream writer = null;
+		if ( !ausgabeDatei.exists() )
+			writer = new PrintStream(ausgabeDatei);
+		else {
+			System.out.println("Datei existiert schon.");
+			writer = new PrintStream(ausgabeDatei);
+		}
         writer.append("Start"+ "\n");
         
 		boolean covered=false;

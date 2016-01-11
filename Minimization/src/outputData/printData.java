@@ -8,7 +8,12 @@ import java.util.Scanner;
 import readdata.longData;
 
 public class printData {
+	/**
+	 * Gibt die minimierte Funktion zurück in einer Datei nach dem Format, wie sie eingelesen wurde.
+	 * @throws IOException
+	 */
 	public static void ausgabeindatei() throws IOException{
+		//longData.testpfad hat den Pfad der verschiedenen Scaltungen die getestet werden.
 		File folder = new File(longData.testpfad);
 		String b = "";
 		int counter=0;
@@ -17,7 +22,7 @@ public class printData {
 			for( File file : folder.listFiles() ){
 				System.out.println( file.getName() );
 				a=file.getName();
-				a=a.substring(0, a.length()-4);
+				a=a.substring(0, a.length()-4);					//Durch das Zurechtschneiden kann man das Anhängsel "new.txt" benutzen.
 				File ausgabeDatei = new File(longData.results+"/"+a + "new.txt");
 				PrintStream ausgabe = null;
 				if ( !ausgabeDatei.exists() )
@@ -29,9 +34,10 @@ public class printData {
 				Scanner s = new Scanner(new File(longData.testpfad +"/"+file.getName()));				
 				while (s.hasNextLine()){									
 					Scanner tmp= new Scanner(s.nextLine());
-					b=tmp.nextLine(); 															//Zwischenspeicherung der aktuellen Zeile
-					if(b.contains("{f")){	
-						if(!longData.validRowZwischenspeicher.get(counter)){
+					b=tmp.nextLine(); 										//Zwischenspeicherung der aktuellen Zeile
+					if(b.contains("{f")){									//D-Bit wurde erkannt!
+						//Zwischenspeicher ist da um auch die D-Bits abzudecken die von Anfang an wegen Dominanzen entfernt wurden 
+						if(!longData.validRowZwischenspeicher.get(counter)){									
 							ausgabe.println("-");
 						} else{
 							if( !LongRemovingBits.removingBits.solution.get(counter1) ){
