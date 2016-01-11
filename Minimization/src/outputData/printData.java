@@ -51,7 +51,7 @@ public class printData {
 				s.close();
 				ausgabe.close();
 			}
-		
+			
 		
 	}
 }

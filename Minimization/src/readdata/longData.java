@@ -10,15 +10,17 @@ public class longData {
 	public static ArrayList<Long> validColumn = new ArrayList<Long>();
 	public static ArrayList<Boolean> validRow = new ArrayList<Boolean>();
 	public static ArrayList<Boolean> validRowZwischenspeicher = new ArrayList<Boolean>();
-	
+	public static String testpfad =new String();
+	public static String results = "C:/Users/Dennis/git/Minimization/src/results";
 	//public static String testpfad = "C:/Users/Dennis/git/Minimization/src/TestDaten";
 	//public static String testpfad = "C:/Users/Dennis/git/Minimization/src/b14_1";
-	public static String testpfad = "/home/dj0804/Downloads/minimization/src/src/b18_1";
+	//public static String testpfad = "/home/dj0804/Downloads/minimization/src/src/b17_1";
 	//public static String testpfad = "/home/dj0804/Downloads/minimization/src/src/b14_1";
 	//public static String results = "C:/Users/Dennis/git/Minimization/src/results";
-	public static String results = "/home/dj0804/Downloads/minimization/src/src/results";
-	//public static String protokoll = "C:/Users/Dennis/git/Minimization/src/results/protokoll.txt";
-	public static String protokoll = "/home/dj0804/Downloads/minimization/src/src/results/protokoll.txt";
+	//public static String results = "/home/dj0804/Downloads/minimization/src/src/results";
+	public static String protokoll = "C:/Users/Dennis/git/Minimization/src/results/protokoll.txt";
+	//public static String protokoll = "/home/dj0804/Downloads/minimization/src/src/logs";
+	
 	public static void main (String [] args) throws IOException{
 		
 		//ArrayList<ArrayList<Long>> a= pattern(readingdata.testfile+".txt");		
