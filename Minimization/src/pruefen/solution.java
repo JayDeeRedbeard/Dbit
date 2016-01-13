@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import readdata.longData;
 
 public class solution {
-	/**	Gibt die Anzahl der Fehler zurück die ueberdeckt sind durch die Ueberdeckungstabelle
+	/**	Gibt die Anzahl der Fehler zurueck die ueberdeckt sind durch die Ueberdeckungstabelle
 	 * @param tmp	Bekommt eine 2D-ArrayList uebergeben
 	 * @return		Anzahl der ueberdeckten Fehler
 	 * @throws IOException

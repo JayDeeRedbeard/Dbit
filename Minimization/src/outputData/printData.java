@@ -9,7 +9,7 @@ import readdata.longData;
 
 public class printData {
 	/**
-	 * Gibt die minimierte Funktion zurück in einer Datei nach dem Format, wie sie eingelesen wurde.
+	 * Gibt die minimierte Funktion zurueck in einer Datei nach dem Format, wie sie eingelesen wurde.
 	 * @throws IOException
 	 */
 	public static void ausgabeindatei() throws IOException{
@@ -22,7 +22,7 @@ public class printData {
 			for( File file : folder.listFiles() ){
 				System.out.println( file.getName() );
 				a=file.getName();
-				a=a.substring(0, a.length()-4);					//Durch das Zurechtschneiden kann man das Anhängsel "new.txt" benutzen.
+				a=a.substring(0, a.length()-4);					//Durch das Zurechtschneiden kann man das Anhaengsel "new.txt" benutzen.
 				File ausgabeDatei = new File(longData.results+"/"+a + "new.txt");
 				PrintStream ausgabe = null;
 				if ( !ausgabeDatei.exists() )

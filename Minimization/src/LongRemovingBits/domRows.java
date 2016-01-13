@@ -28,7 +28,7 @@ public class domRows{
 	@param ArrayList<ArrayList<Boolean>> tmp				Bekommt die 2D-ArrayList uebergeben	(ueberdeckungstabelle)
 	@param int row											Es wird jeweils ueberprueft, ob diese Reihe irgendeine andere Reihe dominiert
 	@return													Es wird eine ArrayList zurueckgegeben, wo die erste Spalte jeweils die dominierende Reihe ist.
-															Die 2.Spalte ist dann die nicht dominierende Spalte
+															Die 2.Spalte ist dann die nicht dominierende Reihe
 	*/
 public static ArrayList<ArrayList<Integer>> dominatingRows(ArrayList<ArrayList<Long>> tmp, int row){
 	/* Zum Testen in Main einfuegen.
@@ -104,7 +104,7 @@ public static void removeEqualRows(ArrayList<ArrayList<Long>> tmp){
 				//System.out.println("j= "+j + " z= "+z+ "k= "+k);
 				//System.out.println(tmp.get(j).get(z)+ "\t"+ tmp.get(k).get(z));
 				
-				// Wenn beide Zeilen gleich sind, dann zähle counter hoch
+				// Wenn beide Zeilen gleich sind, dann zaehle counter hoch
 				if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(j).get(d), c)==stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) && j!=k){
 					counter++;
 				}

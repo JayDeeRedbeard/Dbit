@@ -127,9 +127,11 @@ public class longData {
 		int c=0;
 		int d=0;
 		//System.out.println(a + " " + b+ " "+max);
+		//Initialisierung der ArrayList LongList
 		for(int j=0;j<b; j++){
 			LongList.add(0L);
 		}
+		//Ende Initialisierung
 		for(int i=0; i<= max; i++){
 			String x= ""+ i;
 			if (dbit.contains("f"+x+",")||dbit.contains("f"+x+"}")) //Es gibt nur diese 2 Moeglichkeiten

@@ -25,7 +25,7 @@ public class falseRowsAndColumns {
 	/** Gibt zurueck, ob eine Reihe komplett FALSE ist.
 	@param ArrayList<ArrayList<Long>> tmp					Bekommt die 2D-ArrayList uebergeben	
 	@param int row											Hier muss die zu ueberpruefende Reihe eingetragen werden.	
-	@return													Gibt in Boolean zurück, ob die Reihe komplett False ist oder nicht.
+	@return													Gibt in Boolean zurueck, ob die Reihe komplett False ist oder nicht.
 	*/
 	public static boolean rowAllFalse(ArrayList<ArrayList<Long>> tmp, int row){
 		boolean counter=false;	
@@ -49,8 +49,8 @@ public class falseRowsAndColumns {
 		}
 	}
 	/** Berechnung einer ArrayList in der keine Spalte aus False besteht.
-	@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 2D-ArrayList uebergeben	(Ueberdeckungstabelle)
-	@return													2D-ArrayList ohne Spalte, die aus False bestehen
+	@param  tmp		Bekommt die 2D-ArrayList uebergeben	(Ueberdeckungstabelle)
+	@return			2D-ArrayList ohne Spalte, die aus False bestehen
 	*/
 	public static void RemoveFalseColumn(ArrayList<ArrayList<Long>> tmp){
 		int j=0;
@@ -75,9 +75,9 @@ public class falseRowsAndColumns {
 	}
 	/** Gibt zurueck, ob eine Spalte komplett FALSE ist.
 	@param tmp		Bekommt die 2D-ArrayList uebergeben	
-	@param d		Welche Spalte soll getestet werden: d steht für das ansprechen eines Longs in der ArrayList. 	
-	@param c		c steht für das ansprechen eines Bits in dem jeweiligen Long.
-	@return			Gibt in Boolean zurück, ob die Spalte komplett False ist oder nicht.
+	@param d		Welche Spalte soll getestet werden: d steht fuer das ansprechen eines Longs in der ArrayList. 	
+	@param c		c steht fuer das ansprechen eines Bits in dem jeweiligen Long.
+	@return			Gibt in Boolean zurueck, ob die Spalte komplett False ist oder nicht.
 	*/
 	public static boolean columnAllFalse(ArrayList<ArrayList<Long>> tmp, int d, int c){
 		boolean counter=false;

@@ -32,8 +32,8 @@ public class essentialBits {
 			}
 	}
 	/** Umwandelung von boolean Array zur ArrayList
-	@param boolean[] tmp									Bekommt ein boolean Array übergeben.
-	@return													Gibt eine Boolean ArrayList zurück.
+	@param boolean[] tmp									Bekommt ein boolean Array uebergeben.
+	@return													Gibt eine Boolean ArrayList zurueck.
 	*/
 	public static ArrayList<Boolean> BooleanAry1DToArrayList(boolean[] tmp){
 		ArrayList<Boolean> k = new ArrayList<Boolean>();
@@ -44,7 +44,7 @@ public class essentialBits {
 	}
 	/** Findet heraus, welches D-Bit essentiell ist und gibt dementsprechend eine Arraylist zurueck
 	@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 2D-ArrayList uebergeben	(Ueberdeckungstabelle)
-	@return													Gibt eine ArrayList zurück, die essentielle D-Bits enthält.
+	@return													Gibt eine ArrayList zurueck, die essentielle D-Bits enthaelt.
 	*/
 	public static ArrayList<Boolean> essential1D(ArrayList<ArrayList<Long>> tmp) {
 		//Start Initialisieren

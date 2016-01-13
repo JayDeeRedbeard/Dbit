@@ -27,10 +27,6 @@ public class tb_LongRemovingBits {
 				
 				
 				
-				
-				
-				
-				
 				System.out.println();
 				System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
 				System.out.println("Number of False in Solution: "+removingBits.numberOfFalseinSolution());

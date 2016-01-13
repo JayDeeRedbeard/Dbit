@@ -10,8 +10,8 @@ import readdata.make1DatafileLong;
 import java.io.PrintWriter;
 public class removingBits {
 		public static ArrayList<Boolean> solution = new ArrayList<Boolean>();
-		public static String circuits= "C:/Users/Dennis/git/Minimization/";
-		//public static String circuits="/home/dj0804/Minimization/";
+		//public static String circuits= "C:/Users/Dennis/git/Minimization/";
+		public static String circuits="/home/dj0804/workspace/Minimization/";
 		
 		public static void main (String [] args) throws IOException{
 			//Programmablauf
@@ -19,13 +19,14 @@ public class removingBits {
 			long startTime = System.nanoTime();
 			long endTime ;long duration;
 			ArrayList<ArrayList<Long>> tmp; 
-			//File f = new File(circuits+"Schaltungen/");	
-			File f = new File(circuits+"TEST/");
+			File f = new File(circuits+"Schaltungen/");	
+			//File f = new File(circuits+"TEST/");
 			for(File files : f.listFiles()){
+				startTime = System.nanoTime();
 				tmp= new ArrayList<ArrayList<Long>>();
 				System.out.println(files.getName());
-				longData.testpfad= circuits+"TEST/"+files.getName();
-				//longData.testpfad= circuits+"Schaltungen/"+files.getName();
+				//longData.testpfad= circuits+"TEST/"+files.getName();
+				longData.testpfad= circuits+"Schaltungen/"+files.getName();
 				longData.protokoll= circuits + "logs/"+files.getName();
 				longData.results= circuits + "results/"+files.getName();
 				longData.validRow=new ArrayList<Boolean>();

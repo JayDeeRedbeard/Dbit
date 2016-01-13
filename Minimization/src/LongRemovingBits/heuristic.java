@@ -7,7 +7,7 @@ import readdata.longData;
 public class heuristic {
 	/**Gibt eine ArrayList zurueck in der die Anzahl der Trues pro Reihe drin steht 
 	 * @param tmp	Bekommt die 2D-ArrayList uebergeben	
-	 * @return		Gibt eine ArrayList zurück. 0.Spalte: Zeilennummer; 1.Spalte: Anzahl der Trues
+	 * @return		Gibt eine ArrayList zurueck. 0.Spalte: Zeilennummer; 1.Spalte: Anzahl der Trues
 	 */
 	public static ArrayList<ArrayList<Integer>> numberOfTruesRow(ArrayList<ArrayList<Long>> tmp){
 		ArrayList<ArrayList<Integer>> mem= new ArrayList<ArrayList<Integer>>();

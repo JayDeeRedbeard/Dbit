@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import readdata.longData;
 
 public class domColumn {
-	/**  Löscht alle Spalten, die nicht dominierend sind (Nach QuineMcCluskey). Berechnung hierfuer findet in dominatingColumns()statt.
+	/**  Loescht alle Spalten, die nicht dominierend sind (Nach QuineMcCluskey). Berechnung hierfuer findet in dominatingColumns()statt.
 	@param ArrayList<ArrayList<Long>> tmp					Bekommt die 2D-ArrayList(Long) uebergeben	(Ueberdeckungstabelle)
 	@return													2D-ArrayList ohne die Zeilen, die dominiert wurden, also (hier) nur 1.Spalte (Es gibt Spalte 0 und 1) loeschen.
 	*/
