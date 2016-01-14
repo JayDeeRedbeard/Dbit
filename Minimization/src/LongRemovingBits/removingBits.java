@@ -31,6 +31,10 @@ public class removingBits {
 				longData.results= circuits + "results/"+files.getName();
 				longData.validRow=new ArrayList<Boolean>();
 				longData.validColumn=new ArrayList<Long>();
+				longData.validRowZwischenspeicher=new ArrayList<Boolean>();
+				make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
+				make1DatafileLong.numberOfTruesInRow = new ArrayList<Integer>();
+				
 				
 				tmp=make1DatafileLong.returnbigList();
 				

@@ -11,6 +11,7 @@ import readdata.make1DatafileLong;
 public class tb_LongRemovingBits {
 
 	public static void main(String[] args) throws IOException {
+			removingBits.circuits = "C:/Users/Dennis/git/Minimization/";
 			ArrayList<ArrayList<Long>> tmp; 
 			File f = new File(removingBits.circuits+"TEST/Circuits/");
 			for(File files : f.listFiles()){
@@ -25,7 +26,24 @@ public class tb_LongRemovingBits {
 				tmp=make1DatafileLong.returnbigList();
 				longData.printLongPatternwithoutEmptySpace(tmp);
 				
+				int c=0;
+				for(int d =0; d<make1DatafileLong.numberOfTruesInColumn.size();){
+					System.out.print(make1DatafileLong.numberOfTruesInColumn.get(d).get(c) + " ");
+					c++;
+					if(c==64){
+						d++;
+						c=0;
+					}
+				}
+				System.out.println();
+				for(int i =0; i<make1DatafileLong.numberOfTruesInRow.size(); i++){
+					System.out.println(make1DatafileLong.numberOfTruesInRow.get(i));
+				}
 				
+				
+				//removingBits.essentialdominating(tmp);
+				
+				//outputData.printData.ausgabeindatei();
 				
 				System.out.println();
 				System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	

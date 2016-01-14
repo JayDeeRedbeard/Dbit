@@ -12,6 +12,8 @@ public class longData {
 	public static ArrayList<Boolean> validRowZwischenspeicher = new ArrayList<Boolean>();
 	public static String testpfad =new String();
 	public static String results = "C:/Users/Dennis/git/Minimization/src/results";
+	public static Integer truecounter=0;
+	
 	//public static String testpfad = "C:/Users/Dennis/git/Minimization/src/TestDaten";
 	//public static String testpfad = "C:/Users/Dennis/git/Minimization/src/b14_1";
 	//public static String testpfad = "/home/dj0804/Downloads/minimization/src/src/b17_1";
@@ -121,6 +123,9 @@ public class longData {
 	 */
 	public static ArrayList<Long> dbitcoveragerow(String dbit,int max)throws IOException{
 		//int max...Maximale Anzahl an Fehler
+		make1DatafileLong.failureMem=  new ArrayList<ArrayList<Integer>>();
+		make1DatafileLong.failureMem.add(new ArrayList<Integer>());
+		make1DatafileLong.failureMem.add(new ArrayList<Integer>());
 		ArrayList<Long> LongList = new ArrayList<Long>();
 		float a= max/64;
 		int b= (int) a +1;
@@ -134,10 +139,15 @@ public class longData {
 		//Ende Initialisierung
 		for(int i=0; i<= max; i++){
 			String x= ""+ i;
-			if (dbit.contains("f"+x+",")||dbit.contains("f"+x+"}")) //Es gibt nur diese 2 Moeglichkeiten
+			if (dbit.contains("f"+x+",")||dbit.contains("f"+x+"}")){ //Es gibt nur diese 2 Moeglichkeiten
 				LongList.set(d,stuff.DirtyLittleHelpers.setBitAtPosition(LongList.get(d), c, true));
-			else
+				truecounter++;
+				make1DatafileLong.failureMem.get(0).add(d);
+				make1DatafileLong.failureMem.get(1).add(c);
+			}
+			else{
 				LongList.set(d,stuff.DirtyLittleHelpers.setBitAtPosition(LongList.get(d), c, false));
+			}
 			c++;
 			if(c==64){
 				c=0;

@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import LongRemovingBits.removingBits;
 public class make1DatafileLong {
+		public static ArrayList<Integer> numberOfTruesInRow = new ArrayList<Integer>();
+		public static ArrayList<ArrayList<Integer>> numberOfTruesInColumn = new ArrayList<ArrayList<Integer>>();
+		public static ArrayList<ArrayList<Integer>> failureMem = new ArrayList<ArrayList<Integer>>();
 		/**
 		 * @return Gibt eine Ueberdeckungstabelle zurueck indem jede Datei untereinander geschrieben wird.
 		 * @throws IOException
@@ -37,6 +40,10 @@ public class make1DatafileLong {
 			//System.out.println(a+"\t"+ idx);
 			for(int j=0;j<idx; j++){
 				readdata.longData.validColumn.add(0L);
+				numberOfTruesInColumn.add(new ArrayList<Integer>());
+				for (int column=0; column<64; column++){
+					numberOfTruesInColumn.get(j).add(0);
+				}
 			}
 			for(int i=0; i<=max; i++){
 				readdata.longData.validColumn.set(k, stuff.DirtyLittleHelpers.setBitAtPosition(readdata.longData.validColumn.get(k), c, true));
@@ -67,7 +74,13 @@ public class make1DatafileLong {
 						pattern.add(tmp1);
 						longData.validRow.add(true);
 						longData.validRowZwischenspeicher.add(true);
+						numberOfTruesInRow.add(longData.truecounter);
+						for(int index =0; index<failureMem.get(0).size(); index++){
+							numberOfTruesInColumn.get(failureMem.get(0).get(index)).set(failureMem.get(1).get(index),
+									numberOfTruesInColumn.get(failureMem.get(0).get(index)).get(failureMem.get(1).get(index))+1);
+						}
 					}
+					longData.truecounter=0;
 					LongRemovingBits.removingBits.solution.add(false);
 				}
 				tmp.close();
