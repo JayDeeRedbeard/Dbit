@@ -222,14 +222,25 @@ public class removingBits {
 		}
 		/** Die uebergebene Reihe(Row) soll zur Loesung hinzugefuegt werden. Loeschen von einer Reihe sowie jeweils die dazugehoerigen Spalten.
 		@param tmp		Bekommt die 2D-ArrayList uebergeben	(Ueberdeckungstabelle)
-		@param Row											Die Reihe, die zur Loesung hinzugefuegt werden soll. Und ausserdem geloescht werden soll.
+		@param row											Die Reihe, die zur Loesung hinzugefuegt werden soll. Und ausserdem geloescht werden soll.
 		@return													2D-ArrayList ohne diese Reihe und Spalten (wird durch ValidRow/ValidColumn ausgeblendet).
 		*/
-		public static void removeOneRowTrueColumns(ArrayList<ArrayList<Long>> tmp, int Row){
+		public static void removeOneRowTrueColumns(ArrayList<ArrayList<Long>> tmp, int row){
 			int c=63;
-			for(int i= tmp.get(Row).size()-1; i>=0;){
-				if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(Row).get(i), c)==1){
+			for(int i= tmp.get(row).size()-1; i>=0;){
+				if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(i), c)==1){
 					longData.validColumn.set(i,stuff.DirtyLittleHelpers.setBitAtPosition(longData.validColumn.get(i), c, false));
+					// Anpassung von numberOfTruesRow/Column
+					int counter = 0;
+					for (int p = 0; p < tmp.size() && counter <= readdata.make1DatafileLong.numberOfTruesInColumn.get(i).get(c); p++) {
+						if (readdata.longData.validRow.get(p)) {
+							if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(p).get(i), c) == 1) {
+								counter++;
+								readdata.make1DatafileLong.numberOfTruesInRow.set(p,
+										(readdata.make1DatafileLong.numberOfTruesInRow.get(p) - 1));
+							}
+						}
+					}
 				}
 				c--;
 				if (c==0){
@@ -237,8 +248,8 @@ public class removingBits {
 					i--;
 				}
 			}
-			longData.validRow.set(Row, false);
-			solution.set(Row, true);
+			longData.validRow.set(row, false);
+			solution.set(row, true);
 		}
 		/** Spalte die geloescht werden soll
 		@param tmp		Bekommt die 2D-ArrayList uebergeben	(ueberdeckungstabelle)
@@ -255,9 +266,20 @@ public class removingBits {
 			int d=0;
 			for (int i=0; i<column; i++){
 				c++;
-				if(c==63){
+				if(c==64){
 					c=0;
 					d++;
+				}
+			}
+			// Anpassung von numberOfTruesRow/Column
+			int counter = 0;
+			for (int row = 0; row < tmp.size() && counter <= readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c); row++) {
+				if (readdata.longData.validRow.get(row)) {
+					if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c) == 1) {
+						counter++;
+						readdata.make1DatafileLong.numberOfTruesInRow.set(row,
+								(readdata.make1DatafileLong.numberOfTruesInRow.get(row) - 1));
+					}
 				}
 			}
 			longData.validColumn.set(d,stuff.DirtyLittleHelpers.setBitAtPosition(longData.validColumn.get(d), c, false));
@@ -267,6 +289,17 @@ public class removingBits {
 		@param Column	Spalte column wird geloescht.
 		*/
 		public static void removeColumn(ArrayList<ArrayList<Long>> tmp, int d, int c){
+		// Anpassung von numberOfTruesRow/Column
+		int counter = 0;
+		for (int row = 0; row < tmp.size() && counter <= readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c); row++) {
+			if (readdata.longData.validRow.get(row)) {
+				if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c) == 1) {
+					counter++;
+					readdata.make1DatafileLong.numberOfTruesInRow.set(row,
+							(readdata.make1DatafileLong.numberOfTruesInRow.get(row) - 1));
+				}
+			}
+		}
 			longData.validColumn.set(d,stuff.DirtyLittleHelpers.setBitAtPosition(longData.validColumn.get(d), c, false));
 		}
 		/** Reihe die geloescht werden soll.
@@ -274,6 +307,22 @@ public class removingBits {
 		@param solutionBit	Gibt an, ob es sich um ein D-Bit handelt, dass auch zur Loesung hinzugefuegt werden muss.
 		*/
 		public static void removeRow (ArrayList<ArrayList<Long>> tmp, int row, boolean solutionBit){
+			// Anpassung von numberOfTruesRow/Column
+			int c=0;
+			int counter=0;
+			for(int d =0; d<tmp.get(row).size() && counter<= readdata.make1DatafileLong.numberOfTruesInRow.get(row);){
+				if(stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c)==1){
+					if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)==1){
+						counter++;
+						readdata.make1DatafileLong.numberOfTruesInColumn.get(d).set(c, (readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c)-1));
+					}
+				}
+				c++;
+				if(c==64){
+					c=0;
+					d++;
+				}
+			}
 			longData.validRow.set(row, false);
 			if (solutionBit)
 				solution.set(row, true);

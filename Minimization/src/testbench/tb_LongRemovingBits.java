@@ -39,7 +39,23 @@ public class tb_LongRemovingBits {
 				for(int i =0; i<make1DatafileLong.numberOfTruesInRow.size(); i++){
 					System.out.println(make1DatafileLong.numberOfTruesInRow.get(i));
 				}
-				
+				removingBits.removeOneRowTrueColumns(tmp, 2);
+				longData.printLongPatternwithoutEmptySpace(tmp);
+				c=0;
+				for(int d = 0; d<make1DatafileLong.numberOfTruesInColumn.size();){
+					if(stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c)==1){
+						System.out.print(make1DatafileLong.numberOfTruesInColumn.get(d).get(c) + " ");
+					}
+					c++;
+					if(c==64){
+						d++;
+						c=0;
+					}
+				}
+				System.out.println();
+				for(int i =0; i<make1DatafileLong.numberOfTruesInRow.size(); i++){
+					System.out.println(make1DatafileLong.numberOfTruesInRow.get(i));
+				}
 				
 				//removingBits.essentialdominating(tmp);
 				
