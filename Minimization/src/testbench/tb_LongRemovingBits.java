@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import LongRemovingBits.removingBits;
+import outputData.printData;
 import readdata.longData;
 import readdata.make1DatafileLong;
 
@@ -25,41 +26,13 @@ public class tb_LongRemovingBits {
 				
 				tmp=make1DatafileLong.returnbigList();
 				longData.printLongPatternwithoutEmptySpace(tmp);
+				LongRemovingBits.removingBits.essentialdominating(tmp);
 				
-				int c=0;
-				for(int d =0; d<make1DatafileLong.numberOfTruesInColumn.size();){
-					System.out.print(make1DatafileLong.numberOfTruesInColumn.get(d).get(c) + " ");
-					c++;
-					if(c==64){
-						d++;
-						c=0;
-					}
-				}
-				System.out.println();
-				for(int i =0; i<make1DatafileLong.numberOfTruesInRow.size(); i++){
-					System.out.println(make1DatafileLong.numberOfTruesInRow.get(i));
-				}
-				removingBits.removeOneRowTrueColumns(tmp, 2);
+				printData.ausgabeindatei();
+	
+				LongRemovingBits.removingBits.removeColumn(tmp, 0, 2);
 				longData.printLongPatternwithoutEmptySpace(tmp);
-				c=0;
-				for(int d = 0; d<make1DatafileLong.numberOfTruesInColumn.size();){
-					if(stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c)==1){
-						System.out.print(make1DatafileLong.numberOfTruesInColumn.get(d).get(c) + " ");
-					}
-					c++;
-					if(c==64){
-						d++;
-						c=0;
-					}
-				}
-				System.out.println();
-				for(int i =0; i<make1DatafileLong.numberOfTruesInRow.size(); i++){
-					System.out.println(make1DatafileLong.numberOfTruesInRow.get(i));
-				}
-				
-				//removingBits.essentialdominating(tmp);
-				
-				//outputData.printData.ausgabeindatei();
+				printnumberOfTrues();
 				
 				System.out.println();
 				System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
@@ -72,6 +45,25 @@ public class tb_LongRemovingBits {
 				
 			}
 		
+	}
+	public static void printnumberOfTrues(){
+		int c=0;
+		for(int d =0; d<make1DatafileLong.numberOfTruesInColumn.size();){
+			if(stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c)==1){
+				System.out.print(make1DatafileLong.numberOfTruesInColumn.get(d).get(c) + " ");
+			}
+			c++;
+			if(c==64){
+				d++;
+				c=0;
+			}
+		}
+		System.out.println();
+		for(int i =0; i<make1DatafileLong.numberOfTruesInRow.size(); i++){
+			if(readdata.longData.validRow.get(i)){
+				System.out.println(make1DatafileLong.numberOfTruesInRow.get(i));
+			}
+		}
 	}
 	
 	

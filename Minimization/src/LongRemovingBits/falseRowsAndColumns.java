@@ -11,41 +11,14 @@ public class falseRowsAndColumns {
 	@return													2D-ArrayList ohne Reihen, die aus False bestehen.
 	*/
 	public static void RemoveFalseRows(ArrayList<ArrayList<Long>> tmp){
-		
-		int j =0;
-			while(j<tmp.size()){					
-				//System.out.println(rowAllFalse(tmp,j) + " " +j);	//zum Testen
-				if (rowAllFalse(tmp,j)){
-					//System.out.println( " j"+  j);				//zum Testen
-					removingBits.removeRow(tmp,j,false);
-				}
-			j++;
+		int row = 0;
+		while (readdata.make1DatafileLong.numberOfTruesInRow.contains(0)) {
+			row = readdata.make1DatafileLong.numberOfTruesInRow.indexOf(0);
+			if (longData.validRow.get(row)) {
+				LongRemovingBits.removingBits.removeRow(tmp, row, false);
 			}
-	}
-	/** Gibt zurueck, ob eine Reihe komplett FALSE ist.
-	@param ArrayList<ArrayList<Long>> tmp					Bekommt die 2D-ArrayList uebergeben	
-	@param int row											Hier muss die zu ueberpruefende Reihe eingetragen werden.	
-	@return													Gibt in Boolean zurueck, ob die Reihe komplett False ist oder nicht.
-	*/
-	public static boolean rowAllFalse(ArrayList<ArrayList<Long>> tmp, int row){
-		boolean counter=false;	
-		int c=0;
-		for(int d = 0;d<tmp.get(0).size();){
-			if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)==1 && 
-					stuff.DirtyLittleHelpers.getBitAtPosition(longData.validColumn.get(d), c)==1){		//Sobald eine Zeile in der gegeben Spalte true ist, wird False zuruechgegeben
-				counter= true;
-			}
-			c++;
-			if(c==64){
-				d++;
-				c=0;
-			}
-		}
-		if(counter==true){
-			return false;
-		}
-		else{
-			return true;
+			readdata.make1DatafileLong.numberOfTruesInRow.set(row,
+					(readdata.make1DatafileLong.numberOfTruesInRow.get(row) - 1));
 		}
 	}
 	/** Berechnung einer ArrayList in der keine Spalte aus False besteht.

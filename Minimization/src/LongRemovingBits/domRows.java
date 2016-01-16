@@ -3,89 +3,92 @@ import java.util.ArrayList;
 
 import readdata.longData;
 public class domRows{
-	/**  Remove all NOT dominating Rows.
-	@author Jan Dennis Reimer		
-	@version1.0
-	@param ArrayList<ArrayList<Long>> tmp					Bekommt die 2D-ArrayList uebergeben	(Ueberdeckungstabelle)
-	@return													2D-ArrayList ohne die Zeilen, die dominiert wurden, also (hier) nur 1.Spalte (von Spalte 0 und 1) loeschen.
-	 */
-	public static void removeNotDominatingRowsAndEqualRows(ArrayList<ArrayList<Long>> tmp){
-		ArrayList<ArrayList<Integer>> tmp1 = new ArrayList<ArrayList<Integer>>();
-		for (int x=tmp.size()-1; x>=0;x--){
-			if(longData.validRow.get(x)){
-				System.out.println("Reihe "+x+" wird ueberprueft");
-				tmp1=dominatingRows(tmp,x);	
-			}
-			//Removing the not dominating  Rows (nur Spalte 1 loeschen )
-			if(!tmp1.isEmpty()){
-				for(int y=tmp1.get(0).size()-1;y>=0;y--){
-					removingBits.removeRow(tmp,tmp1.get(1).get(y),false);
-				}
-			}
-		}
-	}
 	/**  Finde alle Reihen, die von int row dominiert werden .
 	@param ArrayList<ArrayList<Boolean>> tmp				Bekommt die 2D-ArrayList uebergeben	(ueberdeckungstabelle)
 	@param int row											Es wird jeweils ueberprueft, ob diese Reihe irgendeine andere Reihe dominiert
 	@return													Es wird eine ArrayList zurueckgegeben, wo die erste Spalte jeweils die dominierende Reihe ist.
 															Die 2.Spalte ist dann die nicht dominierende Reihe
 	*/
-public static ArrayList<ArrayList<Integer>> dominatingRows(ArrayList<ArrayList<Long>> tmp, int row){
-	/* Zum Testen in Main einfuegen.
-	ArrayList<ArrayList<Integer>> tmp1= domRows.dominatingRows(tmp,5);
-	for(int j=0;j<tmp1.get(0).size();j++)
-		System.out.println(tmp1.get(0).get(j)+ " "+ tmp1.get(1).get(j));
-	 * */
-	ArrayList<ArrayList<Integer>> tmp1= new ArrayList<ArrayList<Integer>>();
-	ArrayList<Integer> tmp2 = new ArrayList<Integer>();						//tmp2 und 3 zum initailisieren von tmp1.
-	ArrayList<Integer> tmp3 = new ArrayList<Integer>();	
-	tmp1.add(tmp2);tmp1.add(tmp3); 
-	int counttrue=0;
+public static void dominatingRows(ArrayList<ArrayList<Long>> tmp){
+	int counttrueA=0;
+	int counttrueB=0;
 	int c=0;
+	boolean dominationcounterA=false;
+	boolean dominationcounterB=false;
 	boolean isdominated= true;
 	if(!removingBits.validRowAllFalse()){
-	for(int k=0; k<tmp.size(); k++){
-		if(readdata.longData.validRow.get(k)){
-			for(int d=0; d<tmp.get(0).size() && isdominated ;){
-				if(stuff.DirtyLittleHelpers.getBitAtPosition(longData.validColumn.get(d), c)==1){
-					//System.out.println("row= "+row + " k= "+k + " d "+d +" c  "+ c);
-					//System.out.println(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)+ "\t"+ 
-					//	stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) + "\t");
-					if( !(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)==0 && 
-							stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)==1)  && k!=row){	//Entscheidendes Kriterium!!
-						
-						if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)==1){	//counttrue muss groesser als 1 sein,
-							counttrue++;										//da es sonst keine dominierens Zeile sein kann
+		for (int row=tmp.size()-1; row>=0;row--){
+			if(longData.validRow.get(row)){
+				System.out.println("Reihe "+row+" wird ueberprueft");
+			for (int k = 0; k < tmp.size(); k++) {
+				if (readdata.longData.validRow.get(k)) {
+					for (int d = 0; d < tmp.get(0).size() && isdominated;) {
+						if (stuff.DirtyLittleHelpers.getBitAtPosition(longData.validColumn.get(d), c) == 1) {
+							// Entscheidendes Kriterium!! Ueberpruefe ob Reihe A die Reihe B dominiert.
+							if (!(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c) == 0
+									&& stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) == 1)
+									&& k != row
+									&& readdata.make1DatafileLong.numberOfTruesInRow
+											.get(row) >= readdata.make1DatafileLong.numberOfTruesInRow.get(k)
+									&& !dominationcounterA) {
+								
+								if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c) == 1) {
+									counttrueA++;
+									if (counttrueA == readdata.make1DatafileLong.numberOfTruesInRow.get(k)) {
+										isdominated = true;
+									}
+								}
+							} else {
+								dominationcounterA = true;
+							}
+							// Entscheidendes Kriterium!! Ueberpruefe ob Reihe B die Reihe A dominiert.
+							if (!(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c) == 1
+									&& stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) == 0)
+									&& k != row
+									&& readdata.make1DatafileLong.numberOfTruesInRow.get(k) 
+									>= readdata.make1DatafileLong.numberOfTruesInRow.get(row)
+									&& !dominationcounterB) {
+								if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) == 1) {
+									counttrueB++;
+									if (counttrueB == readdata.make1DatafileLong.numberOfTruesInRow.get(row)) {
+										isdominated = true;
+									}
+								}
+							} else {
+								dominationcounterB = true;
+							}
+							if (dominationcounterA && dominationcounterB) {
+								isdominated = false;
+							}
+						}
+						c++;
+						if (c == 64) {
+							d++;
+							c = 0;
 						}
 					}
-					else{
-						//System.out.println(" Reihe "+ row + " ist nicht dominiernd auf "+k);
-						isdominated=false;
+					if (counttrueA >= 1 && !dominationcounterA && isdominated) {
+						System.out.println(" Reihe " + row + " ist dominiernd auf " + k);
+						removingBits.removeRow(tmp, k, false);
+						dominationcounterB=true;							//Damit bei gleichen Zeilen nicht beide geloescht werden
 					}
-					//System.out.println("counttrue= " + counttrue + "\t"+stuff.DirtyLittleHelpers.getBitAtPosition(longData.validColumn.get(d), c));	
-				}
-				c++;
-				if(c==64){
-					d++;
-					c=0;
+					if (counttrueB >= 1 && !dominationcounterB && isdominated) {
+						System.out.println(" Reihe " + k + " ist dominiernd auf " + row);
+						removingBits.removeRow(tmp, row, false);
+					}
+					isdominated = true;
+					dominationcounterA = false;
+					dominationcounterB = false;
+					counttrueA = 0;
+					counttrueB = 0;
+					c = 0;
 				}
 			}
-			if(counttrue>1 && isdominated)	{
-				System.out.println(" Reihe "+ row + " ist dominiernd auf "+k);
-				tmp1.get(0).add(row);
-				tmp1.get(1).add(k);
 			}
-			isdominated=true;
-			counttrue=0;
-			c=0;
+		}
 		}
 	}
-	}
-	return tmp1;
-}
 /** Loeschen von gleichen Reihen aus der Ueberdeckungstabelle
-@author Jan Dennis Reimer		
-@version1.0
 @param ArrayList<ArrayList<ArrayList<Long>>> tmp		Bekommt die 2D-ArrayList uebergeben	(Ueberdeckungstabelle)
 @return													2D-ArrayList ohne gleiche Reihen
 */

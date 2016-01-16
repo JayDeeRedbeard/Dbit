@@ -163,27 +163,27 @@ public class removingBits {
 					duration = (endTime - startTime);
 					writer.append("time: "+duration+ "\n");
 					
-					writer.append("Remove all EssentialBits: "+ "\n");
-					System.out.println("Remove all EssentialBits: ");
-					essentialBits.removeAllEssential(tmp);
-					//writer=longData.printLongPatternwithoutEmptySpace(tmp,writer);
-					
-					endTime = System.nanoTime();
-					duration = (endTime - startTime);
-					writer.append("time: "+duration+ "\n");
+//					writer.append("Remove all EssentialBits: "+ "\n");
+//					System.out.println("Remove all EssentialBits: ");
+//					essentialBits.removeAllEssential(tmp);
+//					//writer=longData.printLongPatternwithoutEmptySpace(tmp,writer);
+//					
+//					endTime = System.nanoTime();
+//					duration = (endTime - startTime);
+//					writer.append("time: "+duration+ "\n");
 
-					writer.append("Remove NOT dominating and Equal Rows: "+ "\n");
-					System.out.println("Remove NOT dominating and Equal Rows: ");
-			 		domRows.removeNotDominatingRowsAndEqualRows(tmp);
-			 		//writer=longData.printLongPatternwithoutEmptySpace(tmp,writer);
-			 		
-			 		endTime = System.nanoTime();
-					duration = (endTime - startTime);
-					writer.append("time: "+duration+ "\n");
+//					writer.append("Remove NOT dominating and Equal Rows: "+ "\n");
+//					System.out.println("Remove NOT dominating and Equal Rows: ");
+//			 		domRows.dominatingRows(tmp);
+//			 		//writer=longData.printLongPatternwithoutEmptySpace(tmp,writer);
+//			 		
+//			 		endTime = System.nanoTime();
+//					duration = (endTime - startTime);
+//					writer.append("time: "+duration+ "\n");
 
 					writer.append("Remove all NOT dominating Columns and Eqaual Columns: "+ "\n");
 					System.out.println("Remove all NOT dominating Columns and Eqaual Columns: ");
-					domColumn.removeNotDominatingColumns(tmp);
+					domColumn.dominatingColumns(tmp);
 					//writer=longData.printLongPatternwithoutEmptySpace(tmp,writer);
 					
 					for(int k=0; k<longData.validRow.size();k++){
@@ -229,21 +229,10 @@ public class removingBits {
 			int c=63;
 			for(int i= tmp.get(row).size()-1; i>=0;){
 				if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(i), c)==1){
-					longData.validColumn.set(i,stuff.DirtyLittleHelpers.setBitAtPosition(longData.validColumn.get(i), c, false));
-					// Anpassung von numberOfTruesRow/Column
-					int counter = 0;
-					for (int p = 0; p < tmp.size() && counter <= readdata.make1DatafileLong.numberOfTruesInColumn.get(i).get(c); p++) {
-						if (readdata.longData.validRow.get(p)) {
-							if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(p).get(i), c) == 1) {
-								counter++;
-								readdata.make1DatafileLong.numberOfTruesInRow.set(p,
-										(readdata.make1DatafileLong.numberOfTruesInRow.get(p) - 1));
-							}
-						}
-					}
+					removeColumn(tmp,i,c);
 				}
 				c--;
-				if (c==0){
+				if (c==-1){
 					c=63;
 					i--;
 				}
@@ -282,6 +271,7 @@ public class removingBits {
 					}
 				}
 			}
+			readdata.make1DatafileLong.numberOfTruesInColumn.get(d).set(c, -1);
 			longData.validColumn.set(d,stuff.DirtyLittleHelpers.setBitAtPosition(longData.validColumn.get(d), c, false));
 		}
 
@@ -291,16 +281,18 @@ public class removingBits {
 		public static void removeColumn(ArrayList<ArrayList<Long>> tmp, int d, int c){
 		// Anpassung von numberOfTruesRow/Column
 		int counter = 0;
+		int temp;
 		for (int row = 0; row < tmp.size() && counter <= readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c); row++) {
 			if (readdata.longData.validRow.get(row)) {
 				if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c) == 1) {
 					counter++;
-					readdata.make1DatafileLong.numberOfTruesInRow.set(row,
-							(readdata.make1DatafileLong.numberOfTruesInRow.get(row) - 1));
+					temp= readdata.make1DatafileLong.numberOfTruesInRow.get(row);
+					readdata.make1DatafileLong.numberOfTruesInRow.set(row,( temp- 1));
 				}
 			}
 		}
-			longData.validColumn.set(d,stuff.DirtyLittleHelpers.setBitAtPosition(longData.validColumn.get(d), c, false));
+		readdata.make1DatafileLong.numberOfTruesInColumn.get(d).set(c, -1);
+		longData.validColumn.set(d,stuff.DirtyLittleHelpers.setBitAtPosition(longData.validColumn.get(d), c, false));
 		}
 		/** Reihe die geloescht werden soll.
 		@param row			Reihe row wird geloescht.
