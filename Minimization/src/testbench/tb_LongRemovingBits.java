@@ -26,12 +26,20 @@ public class tb_LongRemovingBits {
 				
 				tmp=make1DatafileLong.returnbigList();
 				longData.printLongPatternwithoutEmptySpace(tmp);
-				LongRemovingBits.removingBits.essentialdominating(tmp);
 				
+				
+				
+//				domRows.removeEqualRows(tmp);
+//				longData.printLongPatternwithoutEmptySpace(tmp);
+//				System.out.println("Columns");
+//				domColumn.removeEqualColumns(tmp);
+//				longData.printLongPatternwithoutEmptySpace(tmp);
+				
+				LongRemovingBits.removingBits.essentialdominating(tmp);
 				printData.ausgabeindatei();
 	
-				LongRemovingBits.removingBits.removeColumn(tmp, 0, 2);
-				longData.printLongPatternwithoutEmptySpace(tmp);
+				//LongRemovingBits.removingBits.removeColumn(tmp, 0, 2);
+				//longData.printLongPatternwithoutEmptySpace(tmp);
 				printnumberOfTrues();
 				
 				System.out.println();

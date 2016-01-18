@@ -86,7 +86,6 @@ public class make1DatafileLong {
 				tmp.close();
 			}
 			s.close();
-			
 			return pattern;
 		}
 		/** Kontrolliert beim Einlesen, ob es die aktuelle Spalte eine dominierende ist.
