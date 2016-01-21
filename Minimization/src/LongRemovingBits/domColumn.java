@@ -99,7 +99,10 @@ public class domColumn {
 			}
 		}
 	}
-
+/**
+ * Loescht alle gleichen Spalten
+ * @param tmp
+ */
 	public static void removeEqualColumns(ArrayList<ArrayList<Long>> tmp) {
 		// Diese Funktion ist nicht mehr brauchbar! Denn sie wird dominiert du
 		// die oberen Funktion

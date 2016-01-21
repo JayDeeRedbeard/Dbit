@@ -243,7 +243,6 @@ public class removingBits {
 				writer.append("longData.validRow.size(): " + longData.validRow.size() + "\n");
 				System.out.println("numberOfvalidRows: " + numberOfvalidRows(tmp));
 				System.out.println("longData.validRow.size(): " + longData.validRow.size());
-				a++;
 			}
 			endTime = System.nanoTime();
 			duration = (endTime - startTime);
@@ -281,8 +280,7 @@ public class removingBits {
 					i--;
 				}
 			}
-			longData.validRow.set(row, false);
-			solution.set(row, true);
+			removeRow(tmp,row,true);
 		}
 		/** Spalte die geloescht werden soll
 		@param tmp		Bekommt die 2D-ArrayList uebergeben	(ueberdeckungstabelle)
@@ -359,6 +357,7 @@ public class removingBits {
 					d++;
 				}
 			}
+			readdata.make1DatafileLong.numberOfTruesInRow.set(row, -1);
 			longData.validRow.set(row, false);
 			if (solutionBit)
 				solution.set(row, true);

@@ -23,11 +23,12 @@ public class tb_LongRemovingBits {
 				longData.results= removingBits.circuits + "TEST/results/"+files.getName();
 				longData.validRow=new ArrayList<Boolean>();
 				longData.validColumn=new ArrayList<Long>();
+				longData.validRowZwischenspeicher=new ArrayList<Boolean>();
+				make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
+				make1DatafileLong.numberOfTruesInRow = new ArrayList<Integer>();
 				
 				tmp=make1DatafileLong.returnbigList();
 				longData.printLongPatternwithoutEmptySpace(tmp);
-				
-				
 				
 //				domRows.removeEqualRows(tmp);
 //				longData.printLongPatternwithoutEmptySpace(tmp);
