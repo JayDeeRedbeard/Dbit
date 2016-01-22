@@ -47,7 +47,7 @@ public static void dominatingRows(ArrayList<ArrayList<Long>> tmp){
 									// Ueberpruefe ob Reihe B die Reihe A dominiert.
 									if (!dominationcounterB) {
 										//Sobald !dominationcounterB = true ist kann ReiheB nicht mehr auf Reihe A dominiernd sein.
-										// Mit [1 0] ist das Kriterium für eine Dominanz verhindert 
+										// Mit [1 0] ist das Kriterium fuer eine Dominanz verhindert 
 										// Entscheidendes Kriterium!!
 										if (!(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c) == 1
 												&& stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) == 0)
@@ -133,7 +133,7 @@ public static void dominatingRows(ArrayList<ArrayList<Long>> tmp){
 							}
 						}
 						if (counter == removingBits.numberOfvalidColumns(tmp)) {
-							//removingBits.removeRow(tmp, k, false);
+							removingBits.removeRow(tmp, k, false);
 							System.out.println("Reihe k = " +k+" wurde geloescht");
 						}
 						counter = 0;

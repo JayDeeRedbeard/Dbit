@@ -151,11 +151,11 @@ public class make1DatafileLong {
 					}
 				}
 				if (counttrueA >= 1 && !dominationcounterA && isdominated) {
-					System.out.println(" Reihe " + k + " ist dominiernd auf " +"neu" );
+					//System.out.println(" Reihe " + k + " ist dominiernd auf " +"neu" );
 					return true;
 				}
 				if (counttrueB >= 1 && !dominationcounterB && isdominated) {
-					System.out.println(" Reihe " +" neu" + " ist dominiernd auf " +k );
+					//System.out.println(" Reihe " +" neu" + " ist dominiernd auf " +k );
 					removingBits.removeRow(tmp, k, false);
 					return false;
 				}
