@@ -5,9 +5,40 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
+import LongRemovingBits.removingBits;
+import outputData.printData;
 import readdata.longData;
+import readdata.make1DatafileLong;
 
 public class solution {
+	public static void main(String[] args) throws IOException {
+		removingBits.circuits = "C:/Users/Dennis/git/Minimization/";
+		ArrayList<ArrayList<Long>> tmp; 
+		File f = new File(removingBits.circuits+"results/");
+		for(File files : f.listFiles()){
+			tmp= new ArrayList<ArrayList<Long>>();
+			System.out.println(files.getName());
+			//longData.testpfad= removingBits.circuits+"Schaltungen/"+files.getName();
+			longData.protokoll= removingBits.circuits + "logs/"+files.getName();
+			longData.testpfad= removingBits.circuits + "results/"+files.getName();
+			longData.validRow=new ArrayList<Boolean>();
+			longData.validColumn=new ArrayList<Long>();
+			longData.validRowZwischenspeicher=new ArrayList<Boolean>();
+			make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
+			make1DatafileLong.numberOfTruesInRow = new ArrayList<Integer>();
+			
+			tmp=make1DatafileLong.returnbigList();
+			datacorrect(tmp);
+			System.out.println();
+			System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
+			System.out.println("Number of False in Solution: "+removingBits.numberOfFalseinSolution());
+			System.out.println("Number of Trues in Solution: "+removingBits.numberOfTruesinSolution());
+			System.out.println();
+			System.out.println("validRowAllFalse: "+removingBits.validRowAllFalse());
+			System.out.println("everyFailurecovered: "+pruefen.solution.datacorrect(tmp));
+		}
+		
+	}
 	/**	Gibt die Anzahl der Fehler zurueck die ueberdeckt sind durch die Ueberdeckungstabelle
 	 * @param tmp	Bekommt eine 2D-ArrayList uebergeben
 	 * @return		Anzahl der ueberdeckten Fehler
@@ -19,12 +50,10 @@ public class solution {
 		int c=0;
 		for(int d=0; d<tmp.get(0).size() ;){
 			for (int k=0; k<tmp.size() && !covered; k++){
-				if(LongRemovingBits.removingBits.solution.get(k)){
 					if( (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)==1) ){
 						covered=true;
 						counter++;
 					}
-				}
 			}
 			c++;
 			if(c==64){

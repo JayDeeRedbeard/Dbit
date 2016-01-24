@@ -16,7 +16,7 @@ public class make1DatafileLong {
 			ArrayList<ArrayList<Long>> a = new ArrayList<ArrayList<Long>>();
 			ArrayList<ArrayList<Long>> b = new ArrayList<ArrayList<Long>>();
 			int max=0;
-			boolean t = true;
+			boolean t = true; //Um es nur einmal zu berechnen
 			File folder = new File(longData.testpfad);
 			for( File file : folder.listFiles() ){
 				if(t){
