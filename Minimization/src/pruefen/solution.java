@@ -6,7 +6,6 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 
 import LongRemovingBits.removingBits;
-import outputData.printData;
 import readdata.longData;
 import readdata.make1DatafileLong;
 
@@ -39,28 +38,71 @@ public class solution {
 		}
 		
 	}
-	/**	Gibt die Anzahl der Fehler zurueck die ueberdeckt sind durch die Ueberdeckungstabelle
-	 * @param tmp	Bekommt eine 2D-ArrayList uebergeben
-	 * @return		Anzahl der ueberdeckten Fehler
+
+	/**
+	 * Gibt die Anzahl der Fehler zurueck die ueberdeckt sind durch die
+	 * Ueberdeckungstabelle
+	 * 
+	 * @param tmp Bekommt eine 2D-ArrayList uebergeben
+	 * @return Anzahl der ueberdeckten Fehler
 	 * @throws IOException
 	 */
-	public static int everyFailurecovered(ArrayList<ArrayList<Long>> tmp) throws IOException{
-		boolean covered=false;
-		int counter=0;
-		int c=0;
-		for(int d=0; d<tmp.get(0).size() ;){
-			for (int k=0; k<tmp.size() && !covered; k++){
-					if( (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)==1) ){
-						covered=true;
-						counter++;
+	public static int everyFailurecoveredHypergraph(ArrayList<ArrayList<Long>> tmp, ArrayList<Integer> mhs)
+			throws IOException {
+		boolean covered = false;
+		int counter = 0;
+		int c = 0;
+		for (int d = 0; d < tmp.get(0).size();) {
+			if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1) {
+				for (int k = 0; k < tmp.size() && !covered; k++) {
+					if (mhs.contains(k)) {
+						if ((stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) == 1)) {
+							covered = true;
+							counter++;
+						}
 					}
+				}
 			}
 			c++;
-			if(c==64){
+			if (c == 64) {
 				d++;
-				c=0;
+				c = 0;
 			}
-			covered=false;
+			covered = false;
+
+		}
+		return counter;
+	}
+	/**
+	 * Gibt die Anzahl der Fehler zurueck die ueberdeckt sind durch die
+	 * Ueberdeckungstabelle
+	 * 
+	 * @param tmp Bekommt eine 2D-ArrayList uebergeben
+	 * @return Anzahl der ueberdeckten Fehler
+	 * @throws IOException
+	 */
+	public static int everyFailurecovered(ArrayList<ArrayList<Long>> tmp) throws IOException {
+		boolean covered = false;
+		int counter = 0;
+		int c = 0;
+		for (int d = 0; d < tmp.get(0).size();) {
+			if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1) {
+				for (int k = 0; k < tmp.size() && !covered; k++) {
+					if (longData.validRow.get(k)) {
+						if ((stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) == 1)) {
+							covered = true;
+							counter++;
+						}
+					}
+				}
+			}
+				c++;
+				if (c == 64) {
+					d++;
+					c = 0;
+				}
+				covered = false;
+			
 		}
 		return counter;
 	}

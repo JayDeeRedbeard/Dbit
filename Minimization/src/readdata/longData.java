@@ -25,6 +25,20 @@ public class longData {
 	
 	public static void main (String [] args) throws IOException{
 		
+		String s = "{f1,f2,f4,f3}|1";
+		ArrayList<Long> a= dbitcoveragerow(s, 7);
+		int c=0;
+		for (int i=0; i<a.size(); ){
+			System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(a.get(i),c)  + " ");
+			c++;
+			if(c==64){
+				i++;
+				c=0;
+			}
+		}
+		
+		
+		
 	}
 	/**	Ausgabe der Tabelle in einer Datei
 	 * 
@@ -136,22 +150,43 @@ public class longData {
 		for(int j=0;j<b; j++){
 			LongList.add(0L);
 		}
+		dbit=dbit.substring(2, dbit.length()-2);
+		int indexkomma=0;
+		int fault=0;;
+		indexkomma= dbit.indexOf(",");
+		if (indexkomma==-1){
+			indexkomma=dbit.indexOf("}");
+			if(indexkomma==-1){
+				return LongList;
+			}
+		}
 		//Ende Initialisierung
-		for(int i=0; i<= max; i++){
-			String x= ""+ i;
-			if (dbit.contains("f"+x+",")||dbit.contains("f"+x+"}")){ //Es gibt nur diese 2 Moeglichkeiten
-				LongList.set(d,stuff.DirtyLittleHelpers.setBitAtPosition(LongList.get(d), c, true));
-				truecounter++;
-				make1DatafileLong.failureMem.get(0).add(d);
-				make1DatafileLong.failureMem.get(1).add(c);
+//		for(int i=0; i<= max; i++){
+		while(!dbit.isEmpty()){
+			
+			String s=dbit.substring(0, indexkomma);
+			fault= Integer.parseInt(s);
+//			System.out.println(fault);
+			d= (int) fault/64;
+//			System.out.println(d);
+			c= fault%64;
+//			System.out.println(c);
+			LongList.set(d,stuff.DirtyLittleHelpers.setBitAtPosition(LongList.get(d), c, true));
+			truecounter++;
+			make1DatafileLong.failureMem.get(0).add(d);
+			make1DatafileLong.failureMem.get(1).add(c);
+			try{
+			dbit=dbit.substring(indexkomma+2, dbit.length());
+			} catch(Exception e){
+				return LongList;
 			}
-			else{
-				LongList.set(d,stuff.DirtyLittleHelpers.setBitAtPosition(LongList.get(d), c, false));
-			}
-			c++;
-			if(c==64){
-				c=0;
-				d++;
+//			System.out.println(dbit);
+			indexkomma= dbit.indexOf(",");
+			if (indexkomma==-1){
+				indexkomma=dbit.indexOf("}");
+				if(indexkomma==-1){
+					return LongList;
+				}
 			}
 		}
 		return LongList;

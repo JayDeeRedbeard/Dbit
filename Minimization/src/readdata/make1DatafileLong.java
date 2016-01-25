@@ -7,6 +7,7 @@ import LongRemovingBits.removingBits;
 public class make1DatafileLong {
 		public static ArrayList<Integer> numberOfTruesInRow = new ArrayList<Integer>();
 		public static ArrayList<ArrayList<Integer>> numberOfTruesInColumn = new ArrayList<ArrayList<Integer>>();
+		//Speicher fuer numberoftrues:
 		public static ArrayList<ArrayList<Integer>> failureMem = new ArrayList<ArrayList<Integer>>();
 		/**
 		 * @return Gibt eine Ueberdeckungstabelle zurueck indem jede Datei untereinander geschrieben wird.
@@ -64,11 +65,10 @@ public class make1DatafileLong {
 				Scanner tmp= new Scanner(s.nextLine());
 				b=tmp.nextLine(); 															//Zwischenspeicherung der aktuellen Zeile
 				//System.out.println(b.contains("{f")+" "+ b);
+//				if(b.charAt(0)=='{'){  //Dies bringt keine Verbesserung
 				if(b.contains("{f")){	
 					tmp1= readdata.longData.dbitcoveragerow(b,max);
 					//System.out.println(b);
-					//System.out.println("isdominatedRow(pattern,tmp1): "+ isdominatedRow(pattern,tmp1)+ " pattern.contains(tmp1) "+pattern.contains(tmp1));
-					//System.out.println((pattern.contains(tmp1)) || (isdominatedRow(pattern,tmp1)));
 					if(isdominatedRow(pattern,tmp1)){
 						//Zwischenspeicher ist da, um keinen Informationsverlust zu haben, da dominierte Zeilen geloescht werden
 						longData.validRowZwischenspeicher.add(false);			

@@ -38,7 +38,7 @@ public class domColumn {
 												&& !dominationcounterA) {
 											if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) == 1){
 												counttrueA++;
-												if( counttrueA==readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c) ){
+												if(counttrueA==readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c) ){
 													isdominated = true;
 												}
 											}
@@ -107,36 +107,45 @@ public class domColumn {
 		// Diese Funktion ist nicht mehr brauchbar! Denn sie wird dominiert du
 		// die oberen Funktion
 		// Start Initialisieren
-		int counter = 0;
+		int counttrueA=0;
+		boolean isdominated=false;
 		int c = 0;
 		int e = 0;
 		// Ende Initialisieren
 		for (int d = 0; d < tmp.get(0).size();) {
 			if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1) {
 				for (int y = 0; y < tmp.get(0).size();) {
-					if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(y), e) == 1 && !(d==y && c==e)) {
-						for (int row = 0; row < tmp.size(); row++) {
-							if (longData.validRow.get(row)) {
-								// Wenn beide Zeilen gleich sind, dann zaehle
-								// counter hoch
-								if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d),
-										c) == stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(y), e)) {
-									counter++;
+					if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(y), e) == 1
+							&& !(d == y && c == e)) {
+						if (readdata.make1DatafileLong.numberOfTruesInColumn.get(d)
+								.get(c) == readdata.make1DatafileLong.numberOfTruesInColumn.get(y).get(e)) {
+							for (int row = 0; row < tmp.size() && !isdominated; row++) {
+								if (longData.validRow.get(row)) {
+									if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d),
+											c) == 1 && stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d),
+													c) == stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(y), e)) {
+										counttrueA++;
+										if (counttrueA == readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c)) {
+											isdominated = true;
+										}
+									}
 								}
+							}
+							if (isdominated) {
+								System.out.println("Loesche Spalte: y" + y + " e" + e);
+								removingBits.removeColumn(tmp, y, e);
+							}
+							counttrueA = 0;
+							isdominated = false;
+							e++;
+							if (e == 64) {
+								y++;
+								e = 0;
 							}
 						}
 					}
-					if (counter == removingBits.numberOfvalidRows(tmp)) {
-						System.out.println("Loesche Spalte: y"+ y + " e" +e);
-						removingBits.removeColumn(tmp, y, e);
-					}
-					counter = 0;
-					e++;
-					if (e == 64) {
-						y++;
-						e = 0;
-					}
 				}
+				e=0;
 			}
 			c++;
 			if (c == 64) {

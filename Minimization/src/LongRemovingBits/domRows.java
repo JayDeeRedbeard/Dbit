@@ -105,38 +105,49 @@ public static void dominatingRows(ArrayList<ArrayList<Long>> tmp){
 		// Diese Funktion ist nicht mehr brauchbar! Denn sie wird dominiert du
 		// die oberen Funktion
 		// Start Initialisieren
-		int counter = 0;
 		int c = 0;
+		int counttrueA=0;
+		boolean isdominated=false;
 		// Ende Initialisieren
 		if (!removingBits.validRowAllFalse()) {
 			for (int j = 0; j < tmp.size(); j++) {
 				if (longData.validRow.get(j)) {
 					for (int k = 0; k < tmp.size(); k++) {
 						if (longData.validRow.get(k) && j != k) {
-							for (int d = 0; d < tmp.get(0).size();) {
-								if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d),
-										c) == 1) {
-									// Wenn beide Zeilen gleich sind, dann
-									// zaehle
-									// counter hoch
-									if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(j).get(d),
-											c) == stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)) {
-										counter++;
+							if (readdata.make1DatafileLong.numberOfTruesInRow
+									.get(j) == readdata.make1DatafileLong.numberOfTruesInRow.get(k)) {
+								c=0;
+								for (int d = 0; d < tmp.get(0).size() && !isdominated;) {
+									if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d),
+											c) == 1) {
+										// Wenn beide Zeilen gleich sind, dann
+										// zaehle
+										// counter hoch
+										if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(j).get(d),
+												c) == 1 && stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(j).get(d),
+														c) == stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)) {
+											counttrueA++;
+											if (counttrueA == readdata.make1DatafileLong.numberOfTruesInRow
+													.get(k)) {
+												isdominated = true;
+											}
+										}
 									}
-								}
 									c++;
 									if (c == 64) {
 										d++;
 										c = 0;
 									}
-								
+
+								}
 							}
 						}
-						if (counter == removingBits.numberOfvalidColumns(tmp)) {
+						if (isdominated) {
 							removingBits.removeRow(tmp, k, false);
 							System.out.println("Reihe k = " +k+" wurde geloescht");
 						}
-						counter = 0;
+						counttrueA = 0;
+						isdominated = false;
 					}
 				}
 			}

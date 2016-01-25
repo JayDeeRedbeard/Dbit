@@ -23,7 +23,7 @@ public class minimumhittingSetHyperGraph {
 			longData.testpfad= removingBits.circuits+"Schaltungen/"+files.getName();
 			longData.protokoll= removingBits.circuits + "logs/"+files.getName();
 			longData.results= removingBits.circuits + "results/"+files.getName();
-//		
+		
 //		removingBits.circuits = "C:/Users/Dennis/git/Minimization/";
 //		ArrayList<ArrayList<Long>> tmp;
 //		ArrayList<Integer> mhs ;
@@ -41,19 +41,19 @@ public class minimumhittingSetHyperGraph {
 			make1DatafileLong.numberOfTruesInRow = new ArrayList<Integer>();
 			
 			tmp=make1DatafileLong.returnbigList();
-
-			System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
 			
-//			LongRemovingBits.falseRowsAndColumns.RemoveFalseColumn(tmp);
+			LongRemovingBits.falseRowsAndColumns.RemoveFalseColumn(tmp);
 //			LongRemovingBits.domColumn.dominatingColumns(tmp);
-//			LongRemovingBits.falseRowsAndColumns.RemoveFalseRows(tmp);
+			LongRemovingBits.falseRowsAndColumns.RemoveFalseRows(tmp);
+//			LongRemovingBits.domRows.dominatingRows(tmp);
+			System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
 //			longData.printLongPatternwithoutEmptySpace(tmp);
 			mhs=mhsHyperGraphdbits(tmp);
 			
 			outputData.printData.ausgabeindateimhsHyperGraph(mhs);
 			
 			System.out.println();
-			System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
+			System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecoveredHypergraph(tmp,mhs));	
 			System.out.println("Number of False in Solution: "+removingBits.numberOfFalseinSolution());
 			System.out.println("Number of Trues in Solution: "+removingBits.numberOfTruesinSolution());
 			System.out.println();
@@ -110,21 +110,35 @@ public class minimumhittingSetHyperGraph {
 		ArrayList<ArrayList<Integer>> b= new ArrayList<ArrayList<Integer>>();
 		int c=0;
 		int counter=0;
-		for (int d=0; d<tmp.get(0).size();){
-			if(stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1){
-			b.add(new ArrayList<>());
-			for (int k=0; k<tmp.size();k++){
-				if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)==1){
-					b.get(counter).add(k);
+		int row=0;
+		int counttrueA=0;
+		boolean entprell=false;
+//		b.add(new ArrayList<>());
+		for (int d = 0; d < tmp.get(0).size();) {
+			if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1) {
+				b.add(new ArrayList<>());
+				for (int k = 0; k < tmp.size() && !entprell; k++) {
+					if (longData.validRow.get(k)) {
+						if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) == 1) {
+							b.get(counter).add(row);
+							counttrueA++;
+							if(readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c)==counttrueA){
+								entprell=true;
+							}
+						}
+						row++;
+					}
+				}
+				entprell=false;
+				if (!b.get(counter).isEmpty()){
+					counter++;
 				}
 			}
-			if(!b.get(counter).isEmpty())
-				counter++;
-			}
+			row = 0;
 			c++;
-			if(c==64){
+			if (c == 64) {
 				d++;
-				c=0;
+				c = 0;
 			}
 		}
 		return b;
