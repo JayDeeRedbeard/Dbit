@@ -12,10 +12,44 @@ import readdata.make1DatafileLong;
 public class tb_LongRemovingBits {
 
 	public static void main(String[] args) throws IOException {
-			removingBits.circuits = "C:/Users/Dennis/git/Minimization/";
-			ArrayList<ArrayList<Long>> tmp; 
-			File f = new File(removingBits.circuits+"TEST/Circuits/");
-			for(File files : f.listFiles()){
+//			tb_normal();
+			tb_removeColumns();
+	}
+	
+	public static void tb_removeColumns() throws IOException{
+		removingBits.circuits = "C:/Users/Dennis/git/Minimization/";
+		ArrayList<ArrayList<Long>> tmp; 
+		File f = new File(removingBits.circuits+"TEST/Circuits/");
+		for(File files : f.listFiles()){
+			tmp= new ArrayList<ArrayList<Long>>();
+			System.out.println(files.getName());
+			longData.testpfad= removingBits.circuits+"TEST/Circuits/"+files.getName();
+			longData.protokoll= removingBits.circuits + "TEST/logs/"+files.getName();
+			longData.results= removingBits.circuits + "TEST/results/"+files.getName();
+			longData.validRow=new ArrayList<Boolean>();
+			longData.validColumn=new ArrayList<Long>();
+			longData.validRowZwischenspeicher=new ArrayList<Boolean>();
+			make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
+			make1DatafileLong.numberOfTruesInRow = new ArrayList<Integer>();
+			
+			tmp=make1DatafileLong.returnbigList();
+			longData.printLongPattern(tmp);
+			longData.printvalidColumn(tmp);
+			LongRemovingBits.falseRowsAndColumns.RemoveFalseColumn(tmp);
+			longData.printLongPattern(tmp);
+			longData.printvalidColumn(tmp);
+			LongRemovingBits.removeRowsColumns.removeColumns(tmp);
+			longData.printLongPattern(tmp);
+			longData.printvalidColumn(tmp);
+			longData.printnumberofTrues(tmp);
+		}
+	}
+
+	public static void tb_normal() throws IOException{
+		removingBits.circuits = "C:/Users/Dennis/git/Minimization/";
+		ArrayList<ArrayList<Long>> tmp; 
+		File f = new File(removingBits.circuits+"TEST/Circuits/");
+		for(File files : f.listFiles()){
 				tmp= new ArrayList<ArrayList<Long>>();
 				System.out.println(files.getName());
 				longData.testpfad= removingBits.circuits+"TEST/Circuits/"+files.getName();
@@ -38,7 +72,7 @@ public class tb_LongRemovingBits {
 				
 				LongRemovingBits.removingBits.essentialdominating(tmp);
 				printData.ausgabeindatei();
-	
+
 				
 				printnumberOfTrues();
 				
@@ -49,11 +83,9 @@ public class tb_LongRemovingBits {
 				System.out.println();
 				System.out.println("validRowAllFalse: "+removingBits.validRowAllFalse());
 				System.out.println("everyFailurecovered: "+pruefen.solution.datacorrect(tmp));
-			
-				
 			}
-		
-	}
+				
+		}
 	public static void printnumberOfTrues(){
 		int c=0;
 		for(int d =0; d<make1DatafileLong.numberOfTruesInColumn.size();){

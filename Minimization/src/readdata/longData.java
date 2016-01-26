@@ -99,6 +99,30 @@ public class longData {
 		}
 		System.out.println();
 	}
+	public static void printvalidColumn(ArrayList<ArrayList<Long>> a)throws IOException{
+		int c=0;
+		for (int d=0; d<readdata.longData.validColumn.size();){
+			System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c)+" ");
+			c++;
+			if (c == 64) {
+				d++;
+				c = 0;
+			}
+		}
+		System.out.println();
+	}
+	public static void printnumberofTrues(ArrayList<ArrayList<Long>> a)throws IOException{
+		int c=0;
+		for (int d=0; d<readdata.make1DatafileLong.numberOfTruesInColumn.size();){
+			System.out.print(readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c)+" ");
+			c++;
+			if (c == 64) {
+				d++;
+				c = 0;
+			}
+		}
+		System.out.println();
+	}
 	/**
 	 * Gibt eine Ueberdeckungstabelle zurueck jedoch wied Vaild Colum und validRow beruecksichtigt
 	 * @param a			2D Ueberdeckungstabelle
@@ -117,10 +141,10 @@ public class longData {
 			if(validRow.get(i)){
 			for(int k=0; k<a.get(i).size() ; k++){
 				for(int j=0; j<64  ; j++){
-					if (stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(k), j)== 1)
+//					if (stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(k), j)== 1)
 						System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(a.get(i).get(k), j)+" ");
-					else 
-						System.out.print("  ");
+//					else 
+//						System.out.print("  ");
 				}
 			}
 			}

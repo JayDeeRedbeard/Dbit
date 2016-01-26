@@ -153,10 +153,13 @@ public class domColumn {
 								System.out.println("Loesche Spalte: y" + y + " e" + e);
 								removingBits.removeColumn(tmp, y, e);
 							}
+						} else{
+							notequalbreak=true;
 						}
 					}
 					counttrueA = 0;
 					isdominated = false;
+					notequalbreak=false;
 					e++;
 					if (e == 64) {
 						y++;

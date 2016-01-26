@@ -9,8 +9,8 @@ import readdata.make1DatafileLong;
 import java.io.PrintWriter;
 public class removingBits {
 		public static ArrayList<Boolean> solution = new ArrayList<Boolean>();
-		public static String circuits= "C:/Users/Dennis/git/Minimization/";
-//		public static String circuits="/home/dj0804/workspace/Minimization/";
+//		public static String circuits= "C:/Users/Dennis/git/Minimization/";
+		public static String circuits="/home/dj0804/workspace/Minimization/";
 		
 		public static void main (String [] args) throws IOException{
 			//Programmablauf
@@ -38,7 +38,6 @@ public class removingBits {
 				PrintWriter writer = new PrintWriter(longData.protokoll+"/Zusammenfassend.txt");
 				writer.append("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp)+ "\n");
 				System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
-				
 				
 				
 				essentialdominating(tmp);
@@ -114,6 +113,24 @@ public class removingBits {
 			return counter;
 		}
 		/**  
+		@return		Gibt die Anzahl von NOTValidColumns zurueck 				-
+		*/
+		public static int numberOfnotvalidColumns(ArrayList<ArrayList<Long>> tmp){
+			int counter=0;
+			int c=0;
+			for (int d=0; d<tmp.get(0).size();){
+				if(stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 0)
+					counter++;
+				c++;
+				if(c==64){
+					d++;
+					c=0;
+				}
+			}
+			return counter;
+		}
+		
+		/**  
 		@return	Wenn eine Reihe nur aus "false" besteht wird "True zurueckgegeben.				-
 		*/
 		public static boolean validRowAllFalse(){
@@ -146,68 +163,105 @@ public class removingBits {
 
 		int counter = 0;
 		int counter1 = 2;
+		int counter1EqualRows = 2;
+		int counter1FalseRows = 2;
+		int counterColumns=0;
+		int counter1Columns=2;
 		int a = 0;
 		while (!validRowAllFalse()) {
-			while (counter != counter1) {
+			counterColumns = 0;
+			counter1Columns = 2;
+			while (counterColumns != counter1Columns) {
+				// Remove all NOT dominating Columns and Eqaual Columns
+				counter = 0;
+				counter1 = 2;
 				while (counter != counter1) {
-					while (counter != counter1) {
-						writer.append("\n" + "Equal? = " + counter + " " + counter1 + "\n");
-						System.out.println("Equal? = " + counter + " " + counter1);
+					// Remove NOT dominating and Equal Rows
+					counterColumns = 0;
+					counter1Columns = 2;
+					while (counterColumns != counter1Columns) {
+						// Remove Equal Columns
 						counter = 0;
-						writer.append("Schritt: " + a + "\n");
-						
-						if(a>0){
+						counter1EqualRows = 2;
+						while (counter != counter1EqualRows) {
+							// Remove Equal Rows
+							counter = 0;
+							counter1FalseRows = 2;
+							while (counter != counter1FalseRows) {
+								// Remove FalseRows
+								counter = 0;
+								counter1 = 2;
+								while (counterColumns != counter1Columns || counter != counter1) {
+									// Remove all False Columns
+									writer.append("\n" + "Equal? = " + counter + " " + counter1 + "\n");
+									System.out.println("Equal? = " + counter + " " + counter1);
+									
+									writer.append("Schritt: " + a + "\n");
+									System.out.println("Schritt: " + a);
+									
+									if(a>0)	
+										tmp = removeRowsColumns.removeColumns(tmp);
+									
+									counterColumns = removingBits.numberOfvalidColumns(tmp);
+									counter= removingBits.numberOfvalidRows(tmp);
+									
+									if(a==0){
+										writer.append("Remove all False Columns: " + "\n");
+										System.out.println("Remove all False Columns: ");
+										falseRowsAndColumns.RemoveFalseColumn(tmp);
+									}
+									endTime = System.nanoTime();
+									duration = (endTime - startTime);
+									writer.append("time: " + duration + "\n");
+
+									writer.append("Remove all EssentialBits: " + "\n");
+									System.out.println("Remove all EssentialBits: ");
+									essentialBits.removeAllEssential(tmp);
+									// writer=longData.printLongPatternwithoutEmptySpace(tmp,writer);
+
+									counter1 = 0;
+									endTime = System.nanoTime();
+									duration = (endTime - startTime);
+									writer.append("time: " + duration + "\n");
+
+									writer.append("Remove all False Columns: " + "\n");
+									System.out.println("Remove all False Columns: ");
+									falseRowsAndColumns.RemoveFalseColumn(tmp);
+									// writer=longData.printLongPatternwithoutEmptySpace(tmp,writer);
+									counter1Columns = removingBits.numberOfvalidColumns(tmp);
+									counter1 = removingBits.numberOfvalidRows(tmp);
+									a++;
+								}
+								// ENDE Remove all False Columns
+								endTime = System.nanoTime();
+								duration = (endTime - startTime);
+								writer.append("time: " + duration + "\n");
+
+								writer.append("Remove False Rows: " + "\n");
+								System.out.println("Remove False Rows: ");
+								falseRowsAndColumns.RemoveFalseRows(tmp);
+								// writer=longData.printLongPatternwithoutEmptySpace(tmp,writer);
+
+								counter1FalseRows = removingBits.numberOfvalidRows(tmp);
+							}
+							// ENDE Remove False Rows
+
+							endTime = System.nanoTime();
+							duration = (endTime - startTime);
+							writer.append("time: " + duration + "\n");
+
 							writer.append("RemoveEqual Rows: " + "\n");
 							System.out.println("RemoveEqual Rows: ");
 							domRows.removeEqualRows(tmp);
-							
-							writer.append("RemoveEqual Columns: " + "\n");
-							System.out.println("RemoveEqual Columns: ");
-							domColumn.removeEqualColumns(tmp);							
+
+							counter1EqualRows = removingBits.numberOfvalidRows(tmp);
 						}
-						System.out.println("Schritt: " + a);
-						for (int x = 0; x < longData.validRow.size(); x++) {
-							if (longData.validRow.get(x))
-								counter++;
-						}
-						counter1 = 0;
-						endTime = System.nanoTime();
-						duration = (endTime - startTime);
-						writer.append("time: " + duration + "\n");
-
-						writer.append("Remove all False Columns: " + "\n");
-						System.out.println("Remove all False Columns: ");
-						falseRowsAndColumns.RemoveFalseColumn(tmp);
-						// writer=longData.printLongPatternwithoutEmptySpace(tmp,writer);
-
-						endTime = System.nanoTime();
-						duration = (endTime - startTime);
-						writer.append("time: " + duration + "\n");
-
-						writer.append("Remove False Rows: " + "\n");
-						System.out.println("Remove False Rows: ");
-						falseRowsAndColumns.RemoveFalseRows(tmp);
-						// writer=longData.printLongPatternwithoutEmptySpace(tmp,writer);
-
-						endTime = System.nanoTime();
-						duration = (endTime - startTime);
-						writer.append("time: " + duration + "\n");
-
-						writer.append("Remove all EssentialBits: " + "\n");
-						System.out.println("Remove all EssentialBits: ");
-						essentialBits.removeAllEssential(tmp);
-						// writer=longData.printLongPatternwithoutEmptySpace(tmp,writer);
-
-						endTime = System.nanoTime();
-						duration = (endTime - startTime);
-						writer.append("time: " + duration + "\n");
-
-						for (int k = 0; k < longData.validRow.size(); k++) {
-							if (longData.validRow.get(k))
-								counter1++;
-						}
-						a++;
+						writer.append("RemoveEqual Columns: " + "\n");
+						System.out.println("RemoveEqual Columns: ");
+						domColumn.removeEqualColumns(tmp);
+						counter1Columns = removingBits.numberOfvalidColumns(tmp);
 					}
+					// ENDE Remove Equal Columns
 
 					writer.append("Remove NOT dominating and Equal Rows: " + "\n");
 					System.out.println("Remove NOT dominating and Equal Rows: ");
@@ -217,23 +271,17 @@ public class removingBits {
 					endTime = System.nanoTime();
 					duration = (endTime - startTime);
 					writer.append("time: " + duration + "\n");
-					counter1=0;
-					for (int k = 0; k < longData.validRow.size(); k++) {
-						if (longData.validRow.get(k))
-							counter1++;
-					}
+					counter1 = removingBits.numberOfvalidRows(tmp);
 				}
+				// ENDE Remove NOT dominating and Equal Rows
 
 				writer.append("Remove all NOT dominating Columns and Eqaual Columns: " + "\n");
 				System.out.println("Remove all NOT dominating Columns and Eqaual Columns: ");
 				domColumn.dominatingColumns(tmp);
 				// writer=longData.printLongPatternwithoutEmptySpace(tmp,writer);
-				
-				counter1=0;	
-				for (int k = 0; k < longData.validRow.size(); k++) {
-					if (longData.validRow.get(k))
-						counter1++;
-				}
+				counter1Columns = removingBits.numberOfvalidColumns(tmp);
+
+				counter1 = removingBits.numberOfvalidRows(tmp);
 
 				endTime = System.nanoTime();
 				duration = (endTime - startTime);
@@ -244,6 +292,8 @@ public class removingBits {
 				System.out.println("numberOfvalidRows: " + numberOfvalidRows(tmp));
 				System.out.println("longData.validRow.size(): " + longData.validRow.size());
 			}
+			// ENDE Remove all NOT dominating Columns and Eqaual Columns
+
 			endTime = System.nanoTime();
 			duration = (endTime - startTime);
 			writer.append("time: " + duration + "\n");
