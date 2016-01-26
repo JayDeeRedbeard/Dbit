@@ -17,7 +17,7 @@ public class solution {
 		for(File files : f.listFiles()){
 			tmp= new ArrayList<ArrayList<Long>>();
 			System.out.println(files.getName());
-			//longData.testpfad= removingBits.circuits+"Schaltungen/"+files.getName();
+//			longData.testpfad= removingBits.circuits+"results/"+files.getName();
 			longData.protokoll= removingBits.circuits + "logs/"+files.getName();
 			longData.testpfad= removingBits.circuits + "results/"+files.getName();
 			longData.validRow=new ArrayList<Boolean>();
@@ -27,9 +27,7 @@ public class solution {
 			make1DatafileLong.numberOfTruesInRow = new ArrayList<Integer>();
 			
 			tmp=make1DatafileLong.returnbigList();
-			datacorrect(tmp);
 			System.out.println();
-			System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
 			System.out.println("Number of False in Solution: "+removingBits.numberOfFalseinSolution());
 			System.out.println("Number of Trues in Solution: "+removingBits.numberOfTruesinSolution());
 			System.out.println();
@@ -47,32 +45,32 @@ public class solution {
 	 * @return Anzahl der ueberdeckten Fehler
 	 * @throws IOException
 	 */
-	public static int everyFailurecoveredHypergraph(ArrayList<ArrayList<Long>> tmp, ArrayList<Integer> mhs)
+	public static int everyFailurecoveredHypergraph(ArrayList<ArrayList<Long>> tmp)
 			throws IOException {
-		boolean covered = false;
-		int counter = 0;
-		int c = 0;
-		for (int d = 0; d < tmp.get(0).size();) {
-			if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1) {
-				for (int k = 0; k < tmp.size() && !covered; k++) {
-					if (mhs.contains(k)) {
-						if ((stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) == 1)) {
-							covered = true;
-							counter++;
+			boolean covered = false;
+			int counter = 0;
+			int c = 0;
+			for (int d = 0; d < tmp.get(0).size();) {
+//				if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1) {
+					for (int k = 0; k < tmp.size() && !covered; k++) {
+						if (removingBits.solution.get(k)) {
+							if ((stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) == 1)) {
+								covered = true;
+								counter++;
+							}
 						}
 					}
-				}
+//				}
+					c++;
+					if (c == 64) {
+						d++;
+						c = 0;
+					}
+					covered = false;
+				
 			}
-			c++;
-			if (c == 64) {
-				d++;
-				c = 0;
-			}
-			covered = false;
-
+			return counter;
 		}
-		return counter;
-	}
 	/**
 	 * Gibt die Anzahl der Fehler zurueck die ueberdeckt sind durch die
 	 * Ueberdeckungstabelle
@@ -96,13 +94,12 @@ public class solution {
 					}
 				}
 			}
-				c++;
-				if (c == 64) {
-					d++;
-					c = 0;
-				}
-				covered = false;
-			
+			c++;
+			if (c == 64) {
+				d++;
+				c = 0;
+			}
+			covered = false;
 		}
 		return counter;
 	}

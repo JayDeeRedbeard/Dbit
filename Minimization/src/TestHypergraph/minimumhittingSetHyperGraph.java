@@ -44,18 +44,24 @@ public class minimumhittingSetHyperGraph {
 			
 			LongRemovingBits.falseRowsAndColumns.RemoveFalseColumn(tmp);
 //			LongRemovingBits.domColumn.dominatingColumns(tmp);
-			LongRemovingBits.falseRowsAndColumns.RemoveFalseRows(tmp);
+//			LongRemovingBits.falseRowsAndColumns.RemoveFalseRows(tmp);
 //			LongRemovingBits.domRows.dominatingRows(tmp);
 			System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
 //			longData.printLongPatternwithoutEmptySpace(tmp);
 			mhs=mhsHyperGraphdbits(tmp);
+//			mhs.remove(mhs.size()-1);
+//			outputData.printData.ausgabeindateimhsHyperGraph(mhs);
 			
-			outputData.printData.ausgabeindateimhsHyperGraph(mhs);
-			
+			for(int i=0; i<removingBits.solution.size();i++){
+				if(mhs.contains(i)){
+					removingBits.solution.set(i,true);
+				}
+			}
+			outputData.printData.ausgabeindatei();
 			System.out.println();
-			System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecoveredHypergraph(tmp,mhs));	
+			System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecoveredHypergraph(tmp));	
 			System.out.println("Number of False in Solution: "+removingBits.numberOfFalseinSolution());
-			System.out.println("Number of Trues in Solution: "+removingBits.numberOfTruesinSolution());
+		 	System.out.println("Number of Trues in Solution: "+removingBits.numberOfTruesinSolution());
 			System.out.println();
 			System.out.println("validRowAllFalse: "+removingBits.validRowAllFalse());
 			System.out.println("everyFailurecovered: "+pruefen.solution.datacorrect(tmp));
@@ -64,11 +70,12 @@ public class minimumhittingSetHyperGraph {
 		}
 	}
 	public static ArrayList<Integer> mhsHyperGraphdbits(ArrayList<ArrayList<Long>> tmp) throws IOException{
+		
 		ArrayList<Integer> dbits = new ArrayList<>();
 		for(int i =0; i<tmp.size(); i++){
 			dbits.add(i);
 		}
-		ArrayList<ArrayList<Integer>> faults = readdataHyperGraph(tmp);
+		ArrayList<ArrayList<Integer>> faults = faults(tmp);
 		
 		System.out.println(faults);
 		HyperGraph<Integer> graph = new IncidenceHyperGraph<Integer>();
@@ -76,13 +83,13 @@ public class minimumhittingSetHyperGraph {
 	
 		// VERTICES
 		for(int i = 0; i < dbits.size(); i++) {
-			HyperGraphVertex<Integer> v = new HyperGraphVertex<Integer>(dbits.get(i));
-			vertexSet.add(v);
+//			HyperGraphVertex<Integer> v = new HyperGraphVertex<Integer>(dbits.get(i));
+			vertexSet.add(new HyperGraphVertex<Integer>(dbits.get(i)));
 		}
 	
 		// EDGES
 		for(int i = 0; i < faults.size(); i++) {
-			HyperEdge<Integer> edge = new HyperEdge<>();
+			HyperEdge<Integer> edge = new HyperEdge<Integer>();
 			for(int j = 0; j < faults.get(i).size(); j++) {
 				for(HyperGraphVertex<Integer> v : vertexSet) {
 					if(v.value() == faults.get(i).get(j) ) {
@@ -90,7 +97,6 @@ public class minimumhittingSetHyperGraph {
 					}
 				}
 			}
-			
 			graph.addEdge(edge);
 		}
 	
@@ -105,7 +111,7 @@ public class minimumhittingSetHyperGraph {
 		//Log4j zum Loggen+
 		return null;
 	}
-	public static ArrayList<ArrayList<Integer>> readdataHyperGraph(ArrayList<ArrayList<Long>> tmp)throws IOException{
+	public static ArrayList<ArrayList<Integer>> faults(ArrayList<ArrayList<Long>> tmp)throws IOException{
 		
 		ArrayList<ArrayList<Integer>> b= new ArrayList<ArrayList<Integer>>();
 		int c=0;
@@ -115,10 +121,10 @@ public class minimumhittingSetHyperGraph {
 		boolean entprell=false;
 //		b.add(new ArrayList<>());
 		for (int d = 0; d < tmp.get(0).size();) {
-			if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1) {
+			if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1){
 				b.add(new ArrayList<>());
-				for (int k = 0; k < tmp.size() && !entprell; k++) {
-					if (longData.validRow.get(k)) {
+				for (int k = 0; k < tmp.size() && !entprell; k++){
+					if (longData.validRow.get(k)){
 						if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) == 1) {
 							b.get(counter).add(row);
 							counttrueA++;

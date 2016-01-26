@@ -1,5 +1,4 @@
 package LongRemovingBits;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,8 +9,8 @@ import readdata.make1DatafileLong;
 import java.io.PrintWriter;
 public class removingBits {
 		public static ArrayList<Boolean> solution = new ArrayList<Boolean>();
-		//public static String circuits= "C:/Users/Dennis/git/Minimization/";
-		public static String circuits="/home/dj0804/workspace/Minimization/";
+		public static String circuits= "C:/Users/Dennis/git/Minimization/";
+//		public static String circuits="/home/dj0804/workspace/Minimization/";
 		
 		public static void main (String [] args) throws IOException{
 			//Programmablauf
@@ -35,17 +34,20 @@ public class removingBits {
 				make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
 				make1DatafileLong.numberOfTruesInRow = new ArrayList<Integer>();
 				
-				
 				tmp=make1DatafileLong.returnbigList();
+				PrintWriter writer = new PrintWriter(longData.protokoll+"/Zusammenfassend.txt");
+				writer.append("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp)+ "\n");
+				System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
+				
+				
 				
 				essentialdominating(tmp);
 				
 				printData.ausgabeindatei();
 				
-				PrintWriter writer = new PrintWriter(longData.protokoll+"/Zusammenfassend.txt");
+				writer.append("everyFailurecovered: "+pruefen.solution.everyFailurecoveredHypergraph(tmp)+ "\n");
+				System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecoveredHypergraph(tmp));	
 		        writer.append("Start "+files.getName()+ "\n");
-		        writer.append("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp)+ "\n");
-				System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
 				writer.append("Number of False in Solution: "+numberOfFalseinSolution()+ "\n");
 				System.out.println("Number of False in Solution: "+numberOfFalseinSolution());
 		        writer.append("Number of Trues in Solution: "+numberOfTruesinSolution()+ "\n");
@@ -54,8 +56,6 @@ public class removingBits {
 				System.out.println();
 				writer.append("validRowAllFalse: "+validRowAllFalse()+ "\n");
 				System.out.println("validRowAllFalse: "+validRowAllFalse());
-				writer.append("everyFailurecovered: "+pruefen.solution.datacorrect(tmp)+ "\n");
-				System.out.println("everyFailurecovered: "+pruefen.solution.datacorrect(tmp));
 				endTime = System.nanoTime();
 				duration = (endTime - startTime);
 				writer.append("time: "+duration+ "\n");

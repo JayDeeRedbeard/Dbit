@@ -43,7 +43,7 @@ public static void dominatingRows(ArrayList<ArrayList<Long>> tmp){
 										} else {
 											dominationcounterA = true;
 										}
-									}
+										}
 									// Ueberpruefe ob Reihe B die Reihe A dominiert.
 									if (!dominationcounterB) {
 										//Sobald !dominationcounterB = true ist kann ReiheB nicht mehr auf Reihe A dominiernd sein.
@@ -102,12 +102,13 @@ public static void dominatingRows(ArrayList<ArrayList<Long>> tmp){
 @return													2D-ArrayList ohne gleiche Reihen
 */
 	public static void removeEqualRows(ArrayList<ArrayList<Long>> tmp) {
-		// Diese Funktion ist nicht mehr brauchbar! Denn sie wird dominiert du
-		// die oberen Funktion
 		// Start Initialisieren
 		int c = 0;
 		int counttrueA=0;
-		boolean isdominated=false;
+		//Zu Kontrolle ob Sie gleich sind.
+		boolean isequal=false; 
+		//Zum fruehzeitigen Abbruch der Schleife 
+		boolean notequalbreak=false;
 		// Ende Initialisieren
 		if (!removingBits.validRowAllFalse()) {
 			for (int j = 0; j < tmp.size(); j++) {
@@ -117,20 +118,24 @@ public static void dominatingRows(ArrayList<ArrayList<Long>> tmp){
 							if (readdata.make1DatafileLong.numberOfTruesInRow
 									.get(j) == readdata.make1DatafileLong.numberOfTruesInRow.get(k)) {
 								c=0;
-								for (int d = 0; d < tmp.get(0).size() && !isdominated;) {
+								for (int d = 0; d < tmp.get(0).size() && !isequal && !notequalbreak;) {
 									if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d),
 											c) == 1) {
 										// Wenn beide Zeilen gleich sind, dann
 										// zaehle
 										// counter hoch
-										if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(j).get(d),
-												c) == 1 && stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(j).get(d),
-														c) == stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)) {
-											counttrueA++;
-											if (counttrueA == readdata.make1DatafileLong.numberOfTruesInRow
-													.get(k)) {
-												isdominated = true;
+										if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(j).get(d),c) 
+												== stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d),c)) {
+											if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(j).get(d), c) == 1) {
+												counttrueA++;
+												//Breche ab, wenn alle Trues erkannt wurden, denn dann sind die Reihen gleich
+												if (counttrueA == readdata.make1DatafileLong.numberOfTruesInRow
+														.get(k)) {
+													isequal = true;
+												}
 											}
+										}else{
+											notequalbreak=true;
 										}
 									}
 									c++;
@@ -142,12 +147,13 @@ public static void dominatingRows(ArrayList<ArrayList<Long>> tmp){
 								}
 							}
 						}
-						if (isdominated) {
+						if (isequal) {
 							removingBits.removeRow(tmp, k, false);
-							System.out.println("Reihe k = " +k+" wurde geloescht");
+							System.out.println("j:"+ j+ " Reihe k = " +k+" wurde geloescht");
 						}
 						counttrueA = 0;
-						isdominated = false;
+						isequal = false;
+						notequalbreak=false;
 					}
 				}
 			}

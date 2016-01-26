@@ -39,8 +39,7 @@ public class tb_LongRemovingBits {
 				LongRemovingBits.removingBits.essentialdominating(tmp);
 				printData.ausgabeindatei();
 	
-				//LongRemovingBits.removingBits.removeColumn(tmp, 0, 2);
-				//longData.printLongPatternwithoutEmptySpace(tmp);
+				
 				printnumberOfTrues();
 				
 				System.out.println();
