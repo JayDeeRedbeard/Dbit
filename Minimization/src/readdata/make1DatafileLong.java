@@ -9,13 +9,14 @@ public class make1DatafileLong {
 		public static ArrayList<ArrayList<Integer>> numberOfTruesInColumn = new ArrayList<ArrayList<Integer>>();
 		//Speicher fuer numberoftrues:
 		public static ArrayList<ArrayList<Integer>> failureMem = new ArrayList<ArrayList<Integer>>();
+		
 		/**
 		 * @return Gibt eine Ueberdeckungstabelle zurueck indem jede Datei untereinander geschrieben wird.
 		 * @throws IOException
 		 */
-		public static ArrayList<ArrayList<Long>> returnbigList() throws IOException{
-			ArrayList<ArrayList<Long>> a = new ArrayList<ArrayList<Long>>();
-			ArrayList<ArrayList<Long>> b = new ArrayList<ArrayList<Long>>();
+		public static ArrayList<DBit> returnbigList() throws IOException{
+			ArrayList<DBit> a = new ArrayList<DBit>();
+			ArrayList<DBit> b = new ArrayList<DBit>();
 			int max=0;
 			boolean t = true; //Um es nur einmal zu berechnen
 			File folder = new File(longData.testpfad);
@@ -34,11 +35,13 @@ public class make1DatafileLong {
 		/**Gibt immer ein Testmuster zurueck in einer ArrayList	
 		@return		Gibt eine 2D-ArrayList zurueck die man dann spaeter verarbeiten kann.
 		*/
-		public static ArrayList<ArrayList<Long>> pattern (String testfile, int max) throws IOException{
-			ArrayList<ArrayList<Long>> pattern= new ArrayList<ArrayList<Long>>();
+		public static ArrayList<DBit> pattern (String testfile, int max) throws IOException{
+			ArrayList<DBit> pattern= new ArrayList<DBit>();
 			ArrayList<Long> tmp1= new ArrayList<Long>();
 			int c=0;
 			int k=0;
+			DBit DB ;
+			int counter=0;
 			//Initialisierung von validColumn
 			float a= max/64;
 			int idx= (int) a +1;
@@ -69,19 +72,24 @@ public class make1DatafileLong {
 				if(b.contains("{f")){	
 					tmp1= readdata.longData.dbitcoveragerow(b,max);
 					//System.out.println(b);
-					if(isdominatedRow(pattern,tmp1)){
-						//Zwischenspeicher ist da, um keinen Informationsverlust zu haben, da dominierte Zeilen geloescht werden
-						longData.validRowZwischenspeicher.add(false);			
+					DB = new DBit(counter, true,tmp1);
+					if (isdominatedRow(pattern, DB)) {
+						// Zwischenspeicher ist da, um keinen
+						// Informationsverlust zu haben, da dominierte Zeilen
+						// geloescht werden
+						longData.validRowZwischenspeicher.add(false);
 					} else {
-						pattern.add(tmp1);
-						longData.validRow.add(true);
+						pattern.add(DB);
+//						longData.validRow.add(true);
 						longData.validRowZwischenspeicher.add(true);
 						numberOfTruesInRow.add(longData.truecounter);
-						for(int index =0; index<failureMem.get(0).size(); index++){
+						for (int index = 0; index < failureMem.get(0).size(); index++) {
 							numberOfTruesInColumn.get(failureMem.get(0).get(index)).set(failureMem.get(1).get(index),
-									numberOfTruesInColumn.get(failureMem.get(0).get(index)).get(failureMem.get(1).get(index))+1);
+									numberOfTruesInColumn.get(failureMem.get(0).get(index))
+											.get(failureMem.get(1).get(index)) + 1);
 						}
 					}
+					counter++;
 					longData.truecounter=0;
 					LongRemovingBits.removingBits.solution.add(false);
 				}
@@ -97,8 +105,9 @@ public class make1DatafileLong {
 	 * @param tmp	2D ArrayList(Ueberdeckungstabelle)(noch nicht fertige)
 	 * @param tmp1 	potentieller Kandidat zur Aufnahme in der Ueberdeckungstabelle           
 	 * @return 		Gibt zuruck, ob die Spalte dominiert wird.
+	 * @throws IOException 
 	 */
-	public static boolean isdominatedRow(ArrayList<ArrayList<Long>> tmp, ArrayList<Long> tmp1) {
+	public static boolean isdominatedRow(ArrayList<DBit> tmp, DBit tmp1) throws IOException {
 		int c = 0;
 		int counttrueA=0;
 		int counttrueB=0;
@@ -106,18 +115,18 @@ public class make1DatafileLong {
 		boolean dominationcounterA=false;
 		boolean dominationcounterB=false;
 		for (int k = 0; k < tmp.size(); k++) {
-			if (longData.validRow.get(k)) {
-				for (int d = 0; d < tmp.get(0).size() && isdominated;) {
+			if (tmp.get(k).getValid()) {
+				for (int d = 0; d < tmp.get(0).getList().size() && isdominated;) {
 					if (!dominationcounterA) {
-						if (!(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) == 1
-								&& stuff.DirtyLittleHelpers.getBitAtPosition(tmp1.get(d), c) == 0) && 
+						if (!(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).getList().get(d), c) == 1
+								&& stuff.DirtyLittleHelpers.getBitAtPosition(tmp1.getList().get(d), c) == 0) && 
 								readdata.make1DatafileLong.numberOfTruesInRow.get(k) >= 
 								longData.truecounter) {
-							if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d),
+							if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).getList().get(d),
 									c) == 1) {
 								counttrueA++;
 								if (counttrueA == readdata.make1DatafileLong.numberOfTruesInRow
-										.get(k)) {
+										.get(k) ) {
 									isdominated = true;
 								}
 							}	
@@ -126,11 +135,11 @@ public class make1DatafileLong {
 						}
 					}
 					if (!dominationcounterB) {
-						if (!(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) == 0
-								&& stuff.DirtyLittleHelpers.getBitAtPosition(tmp1.get(d), c) == 1) 
+						if (!(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).getList().get(d), c) == 0
+								&& stuff.DirtyLittleHelpers.getBitAtPosition(tmp1.getList().get(d), c) == 1) 
 								&& readdata.make1DatafileLong.numberOfTruesInRow.get(k) 
 								<= longData.truecounter) {
-							if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp1.get(d),c) == 1) {
+							if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp1.getList().get(d),c) == 1) {
 								counttrueB++;
 								if (counttrueB == longData.truecounter) {
 									isdominated = true;

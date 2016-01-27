@@ -6,16 +6,17 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 
 import LongRemovingBits.removingBits;
+import readdata.DBit;
 import readdata.longData;
 import readdata.make1DatafileLong;
 
 public class solution {
 	public static void main(String[] args) throws IOException {
 		removingBits.circuits = "C:/Users/Dennis/git/Minimization/";
-		ArrayList<ArrayList<Long>> tmp; 
+		ArrayList<DBit> tmp; 
 		File f = new File(removingBits.circuits+"results/");
 		for(File files : f.listFiles()){
-			tmp= new ArrayList<ArrayList<Long>>();
+			tmp= new ArrayList<DBit>();
 			System.out.println(files.getName());
 //			longData.testpfad= removingBits.circuits+"results/"+files.getName();
 			longData.protokoll= removingBits.circuits + "logs/"+files.getName();
@@ -31,7 +32,7 @@ public class solution {
 			System.out.println("Number of False in Solution: "+removingBits.numberOfFalseinSolution());
 			System.out.println("Number of Trues in Solution: "+removingBits.numberOfTruesinSolution());
 			System.out.println();
-			System.out.println("validRowAllFalse: "+removingBits.validRowAllFalse());
+			System.out.println("validRowAllFalse: "+removingBits.validRowAllFalse(tmp));
 			System.out.println("everyFailurecovered: "+pruefen.solution.datacorrect(tmp));
 		}
 		
@@ -45,16 +46,16 @@ public class solution {
 	 * @return Anzahl der ueberdeckten Fehler
 	 * @throws IOException
 	 */
-	public static int everyFailurecoveredHypergraph(ArrayList<ArrayList<Long>> tmp)
+	public static int everyFailurecoveredHypergraph(ArrayList<DBit> tmp)
 			throws IOException {
 			boolean covered = false;
 			int counter = 0;
 			int c = 0;
-			for (int d = 0; d < tmp.get(0).size();) {
+			for (int d = 0; d < tmp.get(0).getList().size();) {
 //				if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1) {
 					for (int k = 0; k < tmp.size() && !covered; k++) {
 						if (removingBits.solution.get(k)) {
-							if ((stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) == 1)) {
+							if ((stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).getList().get(d), c) == 1)) {
 								covered = true;
 								counter++;
 							}
@@ -79,15 +80,15 @@ public class solution {
 	 * @return Anzahl der ueberdeckten Fehler
 	 * @throws IOException
 	 */
-	public static int everyFailurecovered(ArrayList<ArrayList<Long>> tmp) throws IOException {
+	public static int everyFailurecovered(ArrayList<DBit> tmp) throws IOException {
 		boolean covered = false;
 		int counter = 0;
 		int c = 0;
-		for (int d = 0; d < tmp.get(0).size();) {
+		for (int d = 0; d < tmp.get(0).getList().size();) {
 			if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1) {
 				for (int k = 0; k < tmp.size() && !covered; k++) {
-					if (longData.validRow.get(k)) {
-						if ((stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) == 1)) {
+					if (tmp.get(k).getValid()) {
+						if ((stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).getList().get(d), c) == 1)) {
 							covered = true;
 							counter++;
 						}
@@ -109,7 +110,7 @@ public class solution {
 	 * @return		Anzahl der ueberdeckten Fehler
 	 * @throws IOException
 	 */
-	public static int datacorrect(ArrayList<ArrayList<Long>> tmp) throws IOException{
+	public static int datacorrect(ArrayList<DBit> tmp) throws IOException{
 		File ausgabeDatei = new File(longData.protokoll+"/coveragefailure.txt");
 		PrintStream writer = null;
 		if ( !ausgabeDatei.exists() )
@@ -123,9 +124,9 @@ public class solution {
 		boolean covered=false;
 		int counter=0;
 		int c=0;
-		for(int d=0; d<tmp.get(0).size() ;){
+		for(int d=0; d<tmp.get(0).getList().size() ;){
 			for (int k=0; k<tmp.size() && !covered; k++){
-					if( (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c)==1)  ){
+					if( (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).getList().get(d), c)==1)  ){
 						covered=true;
 						counter++;
 					}

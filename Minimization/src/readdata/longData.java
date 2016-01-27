@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class longData {
 	public static ArrayList<Long> validColumn = new ArrayList<Long>();
 	public static ArrayList<Boolean> validRow = new ArrayList<Boolean>();
+	public static ArrayList<Boolean> validRow_tmp = new ArrayList<Boolean>();
 	public static ArrayList<Boolean> validRowZwischenspeicher = new ArrayList<Boolean>();
 	public static String testpfad =new String();
 	public static String results = "C:/Users/Dennis/git/Minimization/src/results";
@@ -47,7 +48,7 @@ public class longData {
 	 * @return			gibt den Writer zurueck um in Datei weiterzuschreiben(kann auch ander implementiert werden)(Diese Variante ist scheisse)
 	 * @throws IOException
 	 */
-	public static PrintWriter printLongPatternwithoutEmptySpace(ArrayList<ArrayList<Long>> a, PrintWriter writer)throws IOException{
+	public static PrintWriter printLongPatternwithoutEmptySpace(ArrayList<DBit> a, PrintWriter writer)throws IOException{
 		/**			 k=0  k=1  k=2  k=3	 k=4  k=5
 		 * i=0		[...][...][...][...][...][...]   
 		 * i=1		[...][...][...][...][...][...]
@@ -57,10 +58,10 @@ public class longData {
 		 */
 		for (int i=0; i<a.size(); i++){
 			if(validRow.get(i)){
-			for(int k=0; k<a.get(i).size() ; k++){
+			for(int k=0; k<a.get(i).getList().size() ; k++){
 				for(int j=0; j<64  ; j++){
 					if (stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(k), j)== 1){
-						writer.append(stuff.DirtyLittleHelpers.getBitAtPosition(a.get(i).get(k), j)+" ");
+						writer.append(stuff.DirtyLittleHelpers.getBitAtPosition(a.get(i).getList().get(k), j)+" ");
 					}
 				}
 			}
@@ -76,7 +77,7 @@ public class longData {
 	 * @param a			2D-Arraylist (Ueberdeckungstabelle)
 	 * @throws IOException
 	 */
-	public static void printLongPatternwithoutEmptySpace(ArrayList<ArrayList<Long>> a)throws IOException{
+	public static void printLongPatternwithoutEmptySpace(ArrayList<DBit> a)throws IOException{
 		/**			 k=0  k=1  k=2  k=3	 k=4  k=5
 		 * i=0		[...][...][...][...][...][...]   
 		 * i=1		[...][...][...][...][...][...]
@@ -85,11 +86,11 @@ public class longData {
 		 * [...] j=0...63
 		 */
 		for (int i=0; i<a.size(); i++){
-			if(validRow.get(i)){
-			for(int k=0; k<a.get(i).size() ; k++){
+			if(a.get(i).getValid()){
+			for(int k=0; k<a.get(i).getList().size() ; k++){
 				for(int j=0; j<64  ; j++){
 					if (stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(k), j)== 1){
-						System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(a.get(i).get(k), j)+" ");
+						System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(a.get(i).getList().get(k), j)+" ");
 					}
 				}
 			}
@@ -99,7 +100,7 @@ public class longData {
 		}
 		System.out.println();
 	}
-	public static void printvalidColumn(ArrayList<ArrayList<Long>> a)throws IOException{
+	public static void printvalidColumn(ArrayList<DBit> a)throws IOException{
 		int c=0;
 		for (int d=0; d<readdata.longData.validColumn.size();){
 			System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c)+" ");
@@ -111,7 +112,7 @@ public class longData {
 		}
 		System.out.println();
 	}
-	public static void printnumberofTrues(ArrayList<ArrayList<Long>> a)throws IOException{
+	public static void printnumberofTrues(ArrayList<DBit> a)throws IOException{
 		int c=0;
 		for (int d=0; d<readdata.make1DatafileLong.numberOfTruesInColumn.size();){
 			System.out.print(readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c)+" ");
@@ -128,7 +129,7 @@ public class longData {
 	 * @param a			2D Ueberdeckungstabelle
 	 * @throws IOException
 	 */
-	public static void printLongPattern(ArrayList<ArrayList<Long>> a)throws IOException{
+	public static void printLongPattern(ArrayList<DBit> a)throws IOException{
 		/**			 k=0  k=1  k=2  k=3	 k=4  k=5
 		 * i=0		[...][...][...][...][...][...]   
 		 * i=1		[...][...][...][...][...][...]
@@ -139,10 +140,10 @@ public class longData {
 		
 		for (int i=0; i<a.size(); i++){
 			if(validRow.get(i)){
-			for(int k=0; k<a.get(i).size() ; k++){
+			for(int k=0; k<a.get(i).getList().size() ; k++){
 				for(int j=0; j<64  ; j++){
 //					if (stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(k), j)== 1)
-						System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(a.get(i).get(k), j)+" ");
+						System.out.print(stuff.DirtyLittleHelpers.getBitAtPosition(a.get(i).getList().get(k), j)+" ");
 //					else 
 //						System.out.print("  ");
 				}
@@ -220,9 +221,9 @@ public class longData {
 	@param whichpattern 	in welchen Testmuster in der Datei befinden wir uns?	//Wird nun immer auf 0 gesetzt um immer ein 2D-ArrayList zu bekommen.
 	@return						Gibt eine 2D-ArrayList zurueck die man dann spaeter verarbeiten kann.
 	*/
-	public static ArrayList<ArrayList<Long>> pattern (String testfile) throws IOException{
+	public static ArrayList<DBit> pattern (String testfile) throws IOException{
 		
-		ArrayList<ArrayList<Long>> pattern= new ArrayList<ArrayList<Long>>();
+		ArrayList<DBit> pattern= new ArrayList<DBit>();
 		ArrayList<Long> tmp1= new ArrayList<Long>();
 		int max=readingdata.numberOfFailures(testfile);
 		int c=0;
@@ -254,7 +255,8 @@ public class longData {
 			if(b.contains("{f")){	
 				tmp1= dbitcoveragerow(b,max);
 				if(!pattern.contains(tmp1)){
-					pattern.add(tmp1);
+					
+					pattern.add(new DBit(1,  true, tmp1));//AUFGEPASST
 					validRow.add(true);
 					validRowZwischenspeicher.add(true);
 				} else {

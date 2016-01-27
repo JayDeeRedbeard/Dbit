@@ -6,6 +6,7 @@ import java.util.Set;
 
 import LongRemovingBits.removingBits;
 import hypergraph.*;
+import readdata.DBit;
 import readdata.longData;
 import readdata.make1DatafileLong;
 
@@ -13,11 +14,11 @@ public class minimumhittingSetHyperGraph {
 
 	public static void main(String[] args) throws IOException {
 		removingBits.circuits = "C:/Users/Dennis/git/Minimization/";
-		ArrayList<ArrayList<Long>> tmp; 
+		ArrayList<DBit> tmp; 
 		ArrayList<Integer> mhs ;
 		File f = new File(removingBits.circuits+"Schaltungen/");
 		for(File files : f.listFiles()){
-			tmp= new ArrayList<ArrayList<Long>>();
+			tmp= new ArrayList<DBit>();
 			mhs=new ArrayList<Integer>();
 			System.out.println(files.getName());
 			longData.testpfad= removingBits.circuits+"Schaltungen/"+files.getName();
@@ -25,11 +26,11 @@ public class minimumhittingSetHyperGraph {
 			longData.results= removingBits.circuits + "results/"+files.getName();
 		
 //		removingBits.circuits = "C:/Users/Dennis/git/Minimization/";
-//		ArrayList<ArrayList<Long>> tmp;
+//		ArrayList<DBit> tmp;
 //		ArrayList<Integer> mhs ;
 //		File f = new File(removingBits.circuits+"TEST/Circuits/");
 //		for(File files : f.listFiles()){
-//			tmp= new ArrayList<ArrayList<Long>>();
+//			tmp= new ArrayList<DBit>();
 //			System.out.println(files.getName());
 //			longData.testpfad= removingBits.circuits+"TEST/Circuits/"+files.getName();
 //			longData.protokoll= removingBits.circuits + "TEST/logs/"+files.getName();
@@ -63,13 +64,13 @@ public class minimumhittingSetHyperGraph {
 			System.out.println("Number of False in Solution: "+removingBits.numberOfFalseinSolution());
 		 	System.out.println("Number of Trues in Solution: "+removingBits.numberOfTruesinSolution());
 			System.out.println();
-			System.out.println("validRowAllFalse: "+removingBits.validRowAllFalse());
+			System.out.println("validRowAllFalse: "+removingBits.validRowAllFalse(tmp));
 			System.out.println("everyFailurecovered: "+pruefen.solution.datacorrect(tmp));
 		
 			
 		}
 	}
-	public static ArrayList<Integer> mhsHyperGraphdbits(ArrayList<ArrayList<Long>> tmp) throws IOException{
+	public static ArrayList<Integer> mhsHyperGraphdbits(ArrayList<DBit> tmp) throws IOException{
 		
 		ArrayList<Integer> dbits = new ArrayList<>();
 		for(int i =0; i<tmp.size(); i++){
@@ -111,7 +112,7 @@ public class minimumhittingSetHyperGraph {
 		//Log4j zum Loggen+
 		return null;
 	}
-	public static ArrayList<ArrayList<Integer>> faults(ArrayList<ArrayList<Long>> tmp)throws IOException{
+	public static ArrayList<ArrayList<Integer>> faults(ArrayList<DBit> tmp)throws IOException{
 		
 		ArrayList<ArrayList<Integer>> b= new ArrayList<ArrayList<Integer>>();
 		int c=0;
@@ -120,12 +121,12 @@ public class minimumhittingSetHyperGraph {
 		int counttrueA=0;
 		boolean entprell=false;
 //		b.add(new ArrayList<>());
-		for (int d = 0; d < tmp.get(0).size();) {
+		for (int d = 0; d < tmp.get(0).getList().size();) {
 			if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1){
 				b.add(new ArrayList<>());
 				for (int k = 0; k < tmp.size() && !entprell; k++){
 					if (longData.validRow.get(k)){
-						if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).get(d), c) == 1) {
+						if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).getList().get(d), c) == 1) {
 							b.get(counter).add(row);
 							counttrueA++;
 							if(readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c)==counttrueA){

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import LongRemovingBits.removingBits;
 import outputData.printData;
+import readdata.DBit;
 import readdata.longData;
 import readdata.make1DatafileLong;
 
@@ -12,16 +13,19 @@ import readdata.make1DatafileLong;
 public class tb_LongRemovingBits {
 
 	public static void main(String[] args) throws IOException {
-//			tb_normal();
-			tb_removeColumns();
+		ArrayList<Object> obj= new ArrayList<Object>();
+		
+		
+		tb_normal();
+//		tb_removeColumns();
 	}
 	
 	public static void tb_removeColumns() throws IOException{
 		removingBits.circuits = "C:/Users/Dennis/git/Minimization/";
-		ArrayList<ArrayList<Long>> tmp; 
+		ArrayList<DBit> tmp; 
 		File f = new File(removingBits.circuits+"TEST/Circuits/");
 		for(File files : f.listFiles()){
-			tmp= new ArrayList<ArrayList<Long>>();
+			tmp= new ArrayList<DBit>();
 			System.out.println(files.getName());
 			longData.testpfad= removingBits.circuits+"TEST/Circuits/"+files.getName();
 			longData.protokoll= removingBits.circuits + "TEST/logs/"+files.getName();
@@ -38,7 +42,7 @@ public class tb_LongRemovingBits {
 			LongRemovingBits.falseRowsAndColumns.RemoveFalseColumn(tmp);
 			longData.printLongPattern(tmp);
 			longData.printvalidColumn(tmp);
-			LongRemovingBits.removeRowsColumns.removeColumns(tmp);
+			LongRemovingBits.removeRowsColumns.removeColumnsfromList(tmp);
 			longData.printLongPattern(tmp);
 			longData.printvalidColumn(tmp);
 			longData.printnumberofTrues(tmp);
@@ -47,10 +51,10 @@ public class tb_LongRemovingBits {
 
 	public static void tb_normal() throws IOException{
 		removingBits.circuits = "C:/Users/Dennis/git/Minimization/";
-		ArrayList<ArrayList<Long>> tmp; 
+		ArrayList<DBit> tmp; 
 		File f = new File(removingBits.circuits+"TEST/Circuits/");
 		for(File files : f.listFiles()){
-				tmp= new ArrayList<ArrayList<Long>>();
+				tmp= new ArrayList<DBit>();
 				System.out.println(files.getName());
 				longData.testpfad= removingBits.circuits+"TEST/Circuits/"+files.getName();
 				longData.protokoll= removingBits.circuits + "TEST/logs/"+files.getName();
@@ -63,12 +67,8 @@ public class tb_LongRemovingBits {
 				
 				tmp=make1DatafileLong.returnbigList();
 				longData.printLongPatternwithoutEmptySpace(tmp);
+				System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
 				
-//				domRows.removeEqualRows(tmp);
-//				longData.printLongPatternwithoutEmptySpace(tmp);
-//				System.out.println("Columns");
-//				domColumn.removeEqualColumns(tmp);
-//				longData.printLongPatternwithoutEmptySpace(tmp);
 				
 				LongRemovingBits.removingBits.essentialdominating(tmp);
 				printData.ausgabeindatei();
@@ -77,12 +77,12 @@ public class tb_LongRemovingBits {
 				printnumberOfTrues();
 				
 				System.out.println();
-				System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
+				
 				System.out.println("Number of False in Solution: "+removingBits.numberOfFalseinSolution());
 				System.out.println("Number of Trues in Solution: "+removingBits.numberOfTruesinSolution());
 				System.out.println();
-				System.out.println("validRowAllFalse: "+removingBits.validRowAllFalse());
-				System.out.println("everyFailurecovered: "+pruefen.solution.datacorrect(tmp));
+				System.out.println("validRowAllFalse: "+removingBits.validRowAllFalse(tmp));
+//				System.out.println("everyFailurecovered: "+pruefen.solution.datacorrect(tmp));
 			}
 				
 		}

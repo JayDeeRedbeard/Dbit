@@ -4,35 +4,33 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import outputData.printData;
-import readdata.longData;
+import readdata.*;
 import readdata.make1DatafileLong;
 import java.io.PrintWriter;
 public class removingBits {
 		public static ArrayList<Boolean> solution = new ArrayList<Boolean>();
-//		public static String circuits= "C:/Users/Dennis/git/Minimization/";
-		public static String circuits="/home/dj0804/workspace/Minimization/";
+		public static String circuits= "C:/Users/Dennis/git/Minimization/";
+//		public static String circuits="/home/dj0804/workspace/Minimization/";
 		
 		public static void main (String [] args) throws IOException{
 			//Programmablauf
 			
 			long startTime = System.nanoTime();
 			long endTime ;long duration;
-			ArrayList<ArrayList<Long>> tmp; 
+			ArrayList<DBit> tmp; 
 			File f = new File(circuits+"Schaltungen/");	
 			//File f = new File(circuits+"TEST/");
 			for(File files : f.listFiles()){
 				startTime = System.nanoTime();
-				tmp= new ArrayList<ArrayList<Long>>();
+				tmp= new ArrayList<DBit>();
 				System.out.println(files.getName());
 				//longData.testpfad= circuits+"TEST/"+files.getName();
 				longData.testpfad= circuits+"Schaltungen/"+files.getName();
 				longData.protokoll= circuits + "logs/"+files.getName();
 				longData.results= circuits + "results/"+files.getName();
-				longData.validRow=new ArrayList<Boolean>();
 				longData.validColumn=new ArrayList<Long>();
 				longData.validRowZwischenspeicher=new ArrayList<Boolean>();
 				make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
-				make1DatafileLong.numberOfTruesInRow = new ArrayList<Integer>();
 				
 				tmp=make1DatafileLong.returnbigList();
 				PrintWriter writer = new PrintWriter(longData.protokoll+"/Zusammenfassend.txt");
@@ -53,8 +51,8 @@ public class removingBits {
 				System.out.println("Number of Trues in Solution: "+numberOfTruesinSolution());
 		        writer.append("\n");
 				System.out.println();
-				writer.append("validRowAllFalse: "+validRowAllFalse()+ "\n");
-				System.out.println("validRowAllFalse: "+validRowAllFalse());
+				writer.append("validRowAllFalse: "+validRowAllFalse(tmp)+ "\n");
+				System.out.println("validRowAllFalse: "+validRowAllFalse(tmp));
 				endTime = System.nanoTime();
 				duration = (endTime - startTime);
 				writer.append("time: "+duration+ "\n");
@@ -87,10 +85,10 @@ public class removingBits {
 		/**  
 		@return		Gibt die Anzahl von ValidRows zurueck 				-
 		*/
-		public static int numberOfvalidRows(ArrayList<ArrayList<Long>> tmp){
+		public static int numberOfvalidRows(ArrayList<DBit> tmp){
 			int counter=0;
 			for (int i=0; i<tmp.size();i++){
-				if(longData.validRow.get(i))
+				if(tmp.get(i).getValid())
 					counter++;
 			}
 			return counter;
@@ -98,10 +96,10 @@ public class removingBits {
 		/**  
 		@return		Gibt die Anzahl von ValidColumns zurueck 				-
 		*/
-		public static int numberOfvalidColumns(ArrayList<ArrayList<Long>> tmp){
+		public static int numberOfvalidColumns(ArrayList<DBit> tmp){
 			int counter=0;
 			int c=0;
-			for (int d=0; d<tmp.get(0).size();){
+			for (int d=0; d<tmp.get(0).getList().size();){
 				if(stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1)
 					counter++;
 				c++;
@@ -115,10 +113,10 @@ public class removingBits {
 		/**  
 		@return		Gibt die Anzahl von NOTValidColumns zurueck 				-
 		*/
-		public static int numberOfnotvalidColumns(ArrayList<ArrayList<Long>> tmp){
+		public static int numberOfnotvalidColumns(ArrayList<DBit> tmp){
 			int counter=0;
 			int c=0;
-			for (int d=0; d<tmp.get(0).size();){
+			for (int d=0; d<tmp.get(0).getList().size();){
 				if(stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 0)
 					counter++;
 				c++;
@@ -133,13 +131,13 @@ public class removingBits {
 		/**  
 		@return	Wenn eine Reihe nur aus "false" besteht wird "True zurueckgegeben.				-
 		*/
-		public static boolean validRowAllFalse(){
+		public static boolean validRowAllFalse(ArrayList<DBit> tmp){
 			int counter=0;
-			for (int i=0; i<longData.validRow.size();i++){
-				if(!longData.validRow.get(i))
+			for (int i=0; i<tmp.size();i++){
+				if(!tmp.get(i).getValid())
 					counter++;
 			}
-			if(longData.validRow.size()==counter)
+			if(tmp.size()==counter)
 				return true;
 			else 
 				return false;
@@ -150,7 +148,7 @@ public class removingBits {
 		 * @param tmp	Bekommt eine 2D-ArrayList uebergeben  		
 		 * @throws IOException
 		 */
-		public static void essentialdominating(ArrayList<ArrayList<Long>> tmp) throws IOException{
+		public static void essentialdominating(ArrayList<DBit> tmp) throws IOException{
 		// Fuer das Protokoll: START
 
 		PrintWriter writer = new PrintWriter(longData.protokoll + "/protokoll.txt");
@@ -168,7 +166,7 @@ public class removingBits {
 		int counterColumns=0;
 		int counter1Columns=2;
 		int a = 0;
-		while (!validRowAllFalse()) {
+		while (!validRowAllFalse(tmp)) {
 			counterColumns = 0;
 			counter1Columns = 2;
 			while (counterColumns != counter1Columns) {
@@ -199,8 +197,11 @@ public class removingBits {
 									writer.append("Schritt: " + a + "\n");
 									System.out.println("Schritt: " + a);
 									
-									if(a>0)	
-										tmp = removeRowsColumns.removeColumns(tmp);
+									if(a>0)	{
+										tmp = removeRowsColumns.removeColumnsfromList(tmp);
+//										tmp = removeRowsColumns.removeRowsfromList(tmp);
+									}
+									System.out.println("validRowAllFalse: "+removingBits.validRowAllFalse(tmp));
 									
 									counterColumns = removingBits.numberOfvalidColumns(tmp);
 									counter= removingBits.numberOfvalidRows(tmp);
@@ -318,10 +319,10 @@ public class removingBits {
 		@param row											Die Reihe, die zur Loesung hinzugefuegt werden soll. Und ausserdem geloescht werden soll.
 		@return													2D-ArrayList ohne diese Reihe und Spalten (wird durch ValidRow/ValidColumn ausgeblendet).
 		*/
-		public static void removeOneRowTrueColumns(ArrayList<ArrayList<Long>> tmp, int row){
+		public static void removeOneRowTrueColumns(ArrayList<DBit> tmp, int row){
 			int c=63;
-			for(int i= tmp.get(row).size()-1; i>=0;){
-				if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(i), c)==1){
+			for(int i= tmp.get(row).getList().size()-1; i>=0;){
+				if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).getList().get(i), c)==1){
 					removeColumn(tmp,i,c);
 				}
 				c--;
@@ -337,7 +338,7 @@ public class removingBits {
 		@param Column	Spalte column wird geloescht.
 		@return			2D-ArrayList ohne diese Spalte
 		*/
-		public static void removeColumn(ArrayList<ArrayList<Long>> tmp, int column){
+		public static void removeColumn(ArrayList<DBit> tmp, int column){
 			/** Spalte die geloescht werden soll
 			@param ArrayList<ArrayList<ArrayList<Boolean>>> tmp		Bekommt die 3D-ArrayList uebergeben	(ueberdeckungstabelle)
 			@param int Column										Spalte column wird geloescht.
@@ -355,8 +356,8 @@ public class removingBits {
 			// Anpassung von numberOfTruesRow/Column
 			int counter = 0;
 			for (int row = 0; row < tmp.size() && counter <= readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c); row++) {
-				if (readdata.longData.validRow.get(row)) {
-					if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c) == 1) {
+				if (tmp.get(row).getValid()) {
+					if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).getList().get(d), c) == 1) {
 						counter++;
 						readdata.make1DatafileLong.numberOfTruesInRow.set(row,
 								(readdata.make1DatafileLong.numberOfTruesInRow.get(row) - 1));
@@ -370,13 +371,13 @@ public class removingBits {
 		/** Spalte die geloescht werden soll
 		@param Column	Spalte column wird geloescht.
 		*/
-		public static void removeColumn(ArrayList<ArrayList<Long>> tmp, int d, int c){
+		public static void removeColumn(ArrayList<DBit> tmp, int d, int c){
 		// Anpassung von numberOfTruesRow/Column
 		int counter = 0;
-		int temp;
+		int temp=0;
 		for (int row = 0; row < tmp.size() && counter <= readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c); row++) {
-			if (readdata.longData.validRow.get(row)) {
-				if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c) == 1) {
+			if (tmp.get(row).getValid()) {	
+				if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).getList().get(d), c) == 1) {
 					counter++;
 					temp= readdata.make1DatafileLong.numberOfTruesInRow.get(row);
 					readdata.make1DatafileLong.numberOfTruesInRow.set(row,( temp- 1));
@@ -390,13 +391,23 @@ public class removingBits {
 		@param row			Reihe row wird geloescht.
 		@param solutionBit	Gibt an, ob es sich um ein D-Bit handelt, dass auch zur Loesung hinzugefuegt werden muss.
 		*/
-		public static void removeRow (ArrayList<ArrayList<Long>> tmp, int row, boolean solutionBit){
+		public static void removeRow (ArrayList<DBit> tmp, int row, boolean solutionBit){
 			// Anpassung von numberOfTruesRow/Column
 			int c=0;
 			int counter=0;
-			for(int d =0; d<tmp.get(row).size() && counter<= readdata.make1DatafileLong.numberOfTruesInRow.get(row);){
+//			int offset=0;
+//			int offset1=0;
+//			for (int i=0; i<=row;i++){
+//				if(!readdata.longData.validRow.get(i))
+//					offset1++;
+//			}
+//			for (int i=0; i<=row+offset1;i++){
+//				if(!readdata.longData.validRow_tmp.get(i))
+//					offset++;
+//			}
+			for(int d =0; d<tmp.get(row).getList().size() && counter<= readdata.make1DatafileLong.numberOfTruesInRow.get(row);){
 				if(stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c)==1){
-					if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).get(d), c)==1){
+					if(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).getList().get(d), c)==1){
 						counter++;
 						readdata.make1DatafileLong.numberOfTruesInColumn.get(d).set(c, (readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c)-1));
 					}
@@ -408,8 +419,9 @@ public class removingBits {
 				}
 			}
 			readdata.make1DatafileLong.numberOfTruesInRow.set(row, -1);
-			longData.validRow.set(row, false);
 			if (solutionBit)
-				solution.set(row, true);
+				solution.set(tmp.get(row).getValue(), true);
+			tmp.remove(row);
+			readdata.make1DatafileLong.numberOfTruesInRow.remove(row);
 		}
 	}
