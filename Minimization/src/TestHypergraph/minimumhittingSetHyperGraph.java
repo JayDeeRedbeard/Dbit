@@ -35,7 +35,6 @@ public class minimumhittingSetHyperGraph {
 //			longData.testpfad= removingBits.circuits+"TEST/Circuits/"+files.getName();
 //			longData.protokoll= removingBits.circuits + "TEST/logs/"+files.getName();
 //			longData.results= removingBits.circuits + "TEST/results/"+files.getName();
-			longData.validRow=new ArrayList<Boolean>();
 			longData.validColumn=new ArrayList<Long>();
 			longData.validRowZwischenspeicher=new ArrayList<Boolean>();
 			make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
@@ -50,22 +49,22 @@ public class minimumhittingSetHyperGraph {
 			System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
 //			longData.printLongPatternwithoutEmptySpace(tmp);
 			mhs=mhsHyperGraphdbits(tmp);
-//			mhs.remove(mhs.size()-1);
-//			outputData.printData.ausgabeindateimhsHyperGraph(mhs);
+			
 			
 			for(int i=0; i<removingBits.solution.size();i++){
 				if(mhs.contains(i)){
 					removingBits.solution.set(i,true);
 				}
 			}
-			outputData.printData.ausgabeindatei();
+			outputData.printData.ausgabeindateimhsHyperGraph(mhs);
+//			outputData.printData.ausgabeindatei();
 			System.out.println();
-			System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecoveredHypergraph(tmp));	
+//			System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecoveredHypergraph(tmp));	
 			System.out.println("Number of False in Solution: "+removingBits.numberOfFalseinSolution());
 		 	System.out.println("Number of Trues in Solution: "+removingBits.numberOfTruesinSolution());
 			System.out.println();
 			System.out.println("validRowAllFalse: "+removingBits.validRowAllFalse(tmp));
-			System.out.println("everyFailurecovered: "+pruefen.solution.datacorrect(tmp));
+//			System.out.println("everyFailurecovered: "+pruefen.solution.datacorrect(tmp));
 		
 			
 		}
@@ -78,7 +77,7 @@ public class minimumhittingSetHyperGraph {
 		}
 		ArrayList<ArrayList<Integer>> faults = faults(tmp);
 		
-		System.out.println(faults);
+//		System.out.println(faults);
 		HyperGraph<Integer> graph = new IncidenceHyperGraph<Integer>();
 		Set<HyperGraphVertex<Integer>> vertexSet = graph.vertexSet();
 	
@@ -117,31 +116,28 @@ public class minimumhittingSetHyperGraph {
 		ArrayList<ArrayList<Integer>> b= new ArrayList<ArrayList<Integer>>();
 		int c=0;
 		int counter=0;
-		int row=0;
 		int counttrueA=0;
 		boolean entprell=false;
-//		b.add(new ArrayList<>());
+		//Gehe jede Spalte in der Liste durch und kontrolliere ob die Spalte Valid ist
 		for (int d = 0; d < tmp.get(0).getList().size();) {
 			if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1){
 				b.add(new ArrayList<>());
-				for (int k = 0; k < tmp.size() && !entprell; k++){
-					if (longData.validRow.get(k)){
-						if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).getList().get(d), c) == 1) {
-							b.get(counter).add(row);
-							counttrueA++;
-							if(readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c)==counttrueA){
-								entprell=true;
-							}
+				//Suche in jeder Spalte nach "trues"
+				for (int k = 0; k < tmp.size() && !entprell; k++) {
+					if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).getList().get(d), c) == 1) {
+						b.get(counter).add(k);
+						counttrueA++;
+						if (readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c) == counttrueA) {
+							entprell = true;
 						}
-						row++;
 					}
 				}
 				entprell=false;
+				//Nur wenn die vorherige Int.List leer ist soll zur nächsten liste gegangen werden
 				if (!b.get(counter).isEmpty()){
 					counter++;
 				}
 			}
-			row = 0;
 			c++;
 			if (c == 64) {
 				d++;

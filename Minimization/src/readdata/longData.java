@@ -8,8 +8,8 @@ import java.util.Scanner;
 
 public class longData {
 	public static ArrayList<Long> validColumn = new ArrayList<Long>();
-	public static ArrayList<Boolean> validRow = new ArrayList<Boolean>();
-	public static ArrayList<Boolean> validRow_tmp = new ArrayList<Boolean>();
+//	public static ArrayList<Boolean> validRow = new ArrayList<Boolean>();
+//	public static ArrayList<Boolean> validRow_tmp = new ArrayList<Boolean>();
 	public static ArrayList<Boolean> validRowZwischenspeicher = new ArrayList<Boolean>();
 	public static String testpfad =new String();
 	public static String results = "C:/Users/Dennis/git/Minimization/src/results";
@@ -57,7 +57,7 @@ public class longData {
 		 * [...] j=0...63
 		 */
 		for (int i=0; i<a.size(); i++){
-			if(validRow.get(i)){
+			if(a.get(i).getValid()){
 			for(int k=0; k<a.get(i).getList().size() ; k++){
 				for(int j=0; j<64  ; j++){
 					if (stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(k), j)== 1){
@@ -139,7 +139,7 @@ public class longData {
 		 */
 		
 		for (int i=0; i<a.size(); i++){
-			if(validRow.get(i)){
+			if(a.get(i).getValid()){
 			for(int k=0; k<a.get(i).getList().size() ; k++){
 				for(int j=0; j<64  ; j++){
 //					if (stuff.DirtyLittleHelpers.getBitAtPosition(validColumn.get(k), j)== 1)
@@ -257,7 +257,6 @@ public class longData {
 				if(!pattern.contains(tmp1)){
 					
 					pattern.add(new DBit(1,  true, tmp1));//AUFGEPASST
-					validRow.add(true);
 					validRowZwischenspeicher.add(true);
 				} else {
 					validRowZwischenspeicher.add(false);

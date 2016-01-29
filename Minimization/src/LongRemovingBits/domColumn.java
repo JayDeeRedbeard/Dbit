@@ -125,6 +125,7 @@ public class domColumn {
 		int c = 0;
 		int e = 0;
 		// Ende Initialisieren
+		if (!removingBits.validRowAllFalse(tmp)) {
 		for (int d = 0; d < tmp.get(0).getList().size();) {
 			if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1) {
 				for (int y = 0; y < tmp.get(0).getList().size();) {
@@ -173,6 +174,7 @@ public class domColumn {
 				d++;
 				c = 0;
 			}
+		}
 		}
 	}
 }

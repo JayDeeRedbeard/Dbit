@@ -13,8 +13,6 @@ import readdata.make1DatafileLong;
 public class tb_LongRemovingBits {
 
 	public static void main(String[] args) throws IOException {
-		ArrayList<Object> obj= new ArrayList<Object>();
-		
 		
 		tb_normal();
 //		tb_removeColumns();
@@ -30,7 +28,6 @@ public class tb_LongRemovingBits {
 			longData.testpfad= removingBits.circuits+"TEST/Circuits/"+files.getName();
 			longData.protokoll= removingBits.circuits + "TEST/logs/"+files.getName();
 			longData.results= removingBits.circuits + "TEST/results/"+files.getName();
-			longData.validRow=new ArrayList<Boolean>();
 			longData.validColumn=new ArrayList<Long>();
 			longData.validRowZwischenspeicher=new ArrayList<Boolean>();
 			make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
@@ -59,7 +56,6 @@ public class tb_LongRemovingBits {
 				longData.testpfad= removingBits.circuits+"TEST/Circuits/"+files.getName();
 				longData.protokoll= removingBits.circuits + "TEST/logs/"+files.getName();
 				longData.results= removingBits.circuits + "TEST/results/"+files.getName();
-				longData.validRow=new ArrayList<Boolean>();
 				longData.validColumn=new ArrayList<Long>();
 				longData.validRowZwischenspeicher=new ArrayList<Boolean>();
 				make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
@@ -73,8 +69,7 @@ public class tb_LongRemovingBits {
 				LongRemovingBits.removingBits.essentialdominating(tmp);
 				printData.ausgabeindatei();
 
-				
-				printnumberOfTrues();
+				printnumberOfTrues(tmp);
 				
 				System.out.println();
 				
@@ -86,7 +81,7 @@ public class tb_LongRemovingBits {
 			}
 				
 		}
-	public static void printnumberOfTrues(){
+	public static void printnumberOfTrues(ArrayList<DBit> tmp){
 		int c=0;
 		for(int d =0; d<make1DatafileLong.numberOfTruesInColumn.size();){
 			if(stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c)==1){
@@ -100,7 +95,7 @@ public class tb_LongRemovingBits {
 		}
 		System.out.println();
 		for(int i =0; i<make1DatafileLong.numberOfTruesInRow.size(); i++){
-			if(readdata.longData.validRow.get(i)){
+			if(tmp.get(i).getValid()){
 				System.out.println(make1DatafileLong.numberOfTruesInRow.get(i));
 			}
 		}

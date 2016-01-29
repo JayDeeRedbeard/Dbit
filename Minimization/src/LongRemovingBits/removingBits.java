@@ -99,15 +99,17 @@ public class removingBits {
 		public static int numberOfvalidColumns(ArrayList<DBit> tmp){
 			int counter=0;
 			int c=0;
-			for (int d=0; d<tmp.get(0).getList().size();){
-				if(stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1)
+		if (!removingBits.validRowAllFalse(tmp)) {
+			for (int d = 0; d < tmp.get(0).getList().size();) {
+				if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1)
 					counter++;
 				c++;
-				if(c==64){
+				if (c == 64) {
 					d++;
-					c=0;
+					c = 0;
 				}
 			}
+		}
 			return counter;
 		}
 		/**  
@@ -198,8 +200,8 @@ public class removingBits {
 									System.out.println("Schritt: " + a);
 									
 									if(a>0)	{
-										tmp = removeRowsColumns.removeColumnsfromList(tmp);
-//										tmp = removeRowsColumns.removeRowsfromList(tmp);
+//										tmp = removeRowsColumns.removeColumnsfromList(tmp);
+										tmp = removeRowsColumns.removeRowsfromList(tmp);
 									}
 									System.out.println("validRowAllFalse: "+removingBits.validRowAllFalse(tmp));
 									
@@ -288,10 +290,10 @@ public class removingBits {
 				duration = (endTime - startTime);
 				writer.append("time: " + duration + "\n");
 
-				writer.append("numberOfvalidRows: " + numberOfvalidRows(tmp) + "\n");
-				writer.append("longData.validRow.size(): " + longData.validRow.size() + "\n");
+//				writer.append("numberOfvalidRows: " + numberOfvalidRows(tmp) + "\n");
+//				writer.append("longData.validRow.size(): " + longData.validRow.size() + "\n");
 				System.out.println("numberOfvalidRows: " + numberOfvalidRows(tmp));
-				System.out.println("longData.validRow.size(): " + longData.validRow.size());
+//				System.out.println("longData.validRow.size(): " + longData.validRow.size());
 			}
 			// ENDE Remove all NOT dominating Columns and Eqaual Columns
 
@@ -421,7 +423,6 @@ public class removingBits {
 			readdata.make1DatafileLong.numberOfTruesInRow.set(row, -1);
 			if (solutionBit)
 				solution.set(tmp.get(row).getValue(), true);
-			tmp.remove(row);
-			readdata.make1DatafileLong.numberOfTruesInRow.remove(row);
+			tmp.get(row).setValid(false);
 		}
 	}
