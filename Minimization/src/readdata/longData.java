@@ -166,13 +166,14 @@ public class longData {
 		make1DatafileLong.failureMem.add(new ArrayList<Integer>());
 		make1DatafileLong.failureMem.add(new ArrayList<Integer>());
 		ArrayList<Long> LongList = new ArrayList<Long>();
-		float a= max/64;
-		int b= (int) a +1;
+//		max=max*64;
+//		float a= max/64;
+//		int b= (int) a +1;
 		int c=0;
 		int d=0;
 		//System.out.println(a + " " + b+ " "+max);
 		//Initialisierung der ArrayList LongList
-		for(int j=0;j<b; j++){
+		for(int j=0;j<max; j++){
 			LongList.add(0L);
 		}
 		dbit=dbit.substring(2, dbit.length()-2);

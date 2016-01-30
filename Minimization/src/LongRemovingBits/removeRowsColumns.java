@@ -35,7 +35,6 @@ public class removeRowsColumns {
 		if (!removingBits.validRowAllFalse(tmp)) {
 		if (removingBits.numberOfnotvalidColumns(tmp) > 64) {
 			while (!finish) {
-				
 				for (d = d_temp; d < tmp.get(0).getList().size() && !breakcounter;) {
 					if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 0) {
 						breakcounter = true;
@@ -100,14 +99,35 @@ public class removeRowsColumns {
 			}
 			removecounter=counter/64;
 			System.out.println("Removecounter= "+ removecounter);
-			while(removecounter>0){
-				readdata.longData.validColumn.remove(readdata.longData.validColumn.size()-1);
+//			while(removecounter>0){
+			removecounter=0;
+			System.out.println(readdata.longData.validColumn.get(readdata.longData.validColumn.size()-1) + " #Index= "+ (readdata.longData.validColumn.size()-1));
+//			for (int i=0; i<readdata.longData.validColumn.size();i++){
+//				if(readdata.longData.validColumn.get(readdata.longData.validColumn.size()-1)==(0L)){
+//					removecounter++;
+//				}
+//			}
+//			
+			while(readdata.longData.validColumn.get(readdata.longData.validColumn.size()-1)==(0L) && (readdata.longData.validColumn.size()-1>0) ){
 				readdata.make1DatafileLong.numberOfTruesInColumn.remove(readdata.make1DatafileLong.numberOfTruesInColumn.size()-1);
+				System.out.println("Letzten Long geloescht: "+(readdata.longData.validColumn.size()-1) );
+				System.out.println("tmp.get(0).getList().size(): "+tmp.get(0).getList().size());
 				for(int row=0; row<tmp.size();row++){
-					tmp.get(row).getList().remove(tmp.get(row).getList().size()-1);
+					tmp1= new ArrayList<Long>();
+					tmp1=tmp.get(row).getList();
+//					System.out.println("Size tmp1: "+tmp1.size());
+					tmp1.remove(tmp1.size()-1);
+					DB=new DBit(tmp.get(row).getValue(), true, tmp1);
+					tmp.set(row,DB);
 				}
+				System.out.println("tmp.get(0).getList().size(): "+tmp.get(0).getList().size());
+				tmp1= new ArrayList<Long>();
+				tmp1=readdata.longData.validColumn;
+				tmp1.remove(tmp1.size()-1);
+				readdata.longData.validColumn=tmp1;
 				removecounter--;
-			}
+			} 
+			
 //			System.out.println("readdata.longData.validColumn.get(readdata.longData.validColumn.size()-1)==(0L): " + (readdata.longData.validColumn.get(readdata.longData.validColumn.size()-1)==0L));
 //			if(readdata.longData.validColumn.get(readdata.longData.validColumn.size()-1)==(0L)){
 //				readdata.longData.validColumn.remove(readdata.longData.validColumn.size()-1);

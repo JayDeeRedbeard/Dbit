@@ -19,17 +19,44 @@ public class make1DatafileLong {
 			ArrayList<DBit> b = new ArrayList<DBit>();
 			int max=0;
 			boolean t = true; //Um es nur einmal zu berechnen
+			int c=0;
+			int k=0;
+			float abc;
+			int idx=0;;
 			File folder = new File(longData.testpfad);
 			for( File file : folder.listFiles() ){
 				if(t){
 					max=readingdata.numberOfFailures(file.getName());
+					
+					//Initialisierung von validColumn
+					abc= max/64;
+					idx= (int) abc +1;
+					//System.out.println(a+"\t"+ idx);
+					for(int j=0;j<idx; j++){
+						readdata.longData.validColumn.add(0L);
+						numberOfTruesInColumn.add(new ArrayList<Integer>());
+						for (int column=0; column<64; column++){
+							numberOfTruesInColumn.get(j).add(0);
+						}
+					}
+					for(int i=0; i<=max; i++){
+						readdata.longData.validColumn.set(k, stuff.DirtyLittleHelpers.setBitAtPosition(readdata.longData.validColumn.get(k), c, true));
+						c++;
+						if(c==64 ){
+							c=0;
+							k++;
+						}
+					}//Ende Initialisierung von validColumn
 					t=false;
 				}
 				System.out.println( file.getName() );
-				a=pattern(file.getName(), max);
-				System.out.println(a.size());
+				a=pattern(file.getName(), idx);
+				System.out.println("#D-Bits hinzugefuegt: "+a.size());
 				b.addAll(a);
+//				System.out.println("ValidColumn: " + readdata.longData.validColumn.size() + " #Columns: "+ a.get(0).getList().size() );
+				
 			}
+			System.out.println("D-Bits: "+b.size());
 			return b;
 		}
 		/**Gibt immer ein Testmuster zurueck in einer ArrayList	
@@ -38,29 +65,8 @@ public class make1DatafileLong {
 		public static ArrayList<DBit> pattern (String testfile, int max) throws IOException{
 			ArrayList<DBit> pattern= new ArrayList<DBit>();
 			ArrayList<Long> tmp1= new ArrayList<Long>();
-			int c=0;
-			int k=0;
 			DBit DB ;
 			int counter=0;
-			//Initialisierung von validColumn
-			float a= max/64;
-			int idx= (int) a +1;
-			//System.out.println(a+"\t"+ idx);
-			for(int j=0;j<idx; j++){
-				readdata.longData.validColumn.add(0L);
-				numberOfTruesInColumn.add(new ArrayList<Integer>());
-				for (int column=0; column<64; column++){
-					numberOfTruesInColumn.get(j).add(0);
-				}
-			}
-			for(int i=0; i<=max; i++){
-				readdata.longData.validColumn.set(k, stuff.DirtyLittleHelpers.setBitAtPosition(readdata.longData.validColumn.get(k), c, true));
-				c++;
-				if(c==64 ){
-					c=0;
-					k++;
-				}
-			}//Ende Initialisierung von validColumn
 			//int counter=0;
 			String b = "";
 			Scanner s = new Scanner(new File(longData.testpfad +"/"+testfile));				

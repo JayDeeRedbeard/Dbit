@@ -11,8 +11,9 @@ import readdata.longData;
 import readdata.make1DatafileLong;
 
 public class minimumhittingSetHyperGraph {
-
+	
 	public static void main(String[] args) throws IOException {
+		removingBits.circuits = "/home/dj0804/workspace/Minimization/";
 		removingBits.circuits = "C:/Users/Dennis/git/Minimization/";
 		ArrayList<DBit> tmp; 
 		ArrayList<Integer> mhs ;
@@ -25,7 +26,7 @@ public class minimumhittingSetHyperGraph {
 			longData.protokoll= removingBits.circuits + "logs/"+files.getName();
 			longData.results= removingBits.circuits + "results/"+files.getName();
 		
-//		removingBits.circuits = "C:/Users/Dennis/git/Minimization/";
+
 //		ArrayList<DBit> tmp;
 //		ArrayList<Integer> mhs ;
 //		File f = new File(removingBits.circuits+"TEST/Circuits/");
@@ -51,7 +52,7 @@ public class minimumhittingSetHyperGraph {
 			mhs=mhsHyperGraphdbits(tmp);
 			
 			
-			for(int i=0; i<removingBits.solution.size();i++){
+			for(int i=0; i<tmp.size();i++){
 				if(mhs.contains(i)){
 					removingBits.solution.set(i,true);
 				}
@@ -75,29 +76,44 @@ public class minimumhittingSetHyperGraph {
 		for(int i =0; i<tmp.size(); i++){
 			dbits.add(i);
 		}
+		System.out.println(dbits);
 		ArrayList<ArrayList<Integer>> faults = faults(tmp);
 		
-//		System.out.println(faults);
 		HyperGraph<Integer> graph = new IncidenceHyperGraph<Integer>();
 		Set<HyperGraphVertex<Integer>> vertexSet = graph.vertexSet();
 	
 		// VERTICES
+		
 		for(int i = 0; i < dbits.size(); i++) {
-//			HyperGraphVertex<Integer> v = new HyperGraphVertex<Integer>(dbits.get(i));
-			vertexSet.add(new HyperGraphVertex<Integer>(dbits.get(i)));
+			HyperGraphVertex<Integer> v = new HyperGraphVertex<Integer>(dbits.get(i));
+			vertexSet.add(v);
 		}
-	
+		int counter=0;
 		// EDGES
+		System.out.println("faults.size():"+faults.size());
 		for(int i = 0; i < faults.size(); i++) {
 			HyperEdge<Integer> edge = new HyperEdge<Integer>();
 			for(int j = 0; j < faults.get(i).size(); j++) {
 				for(HyperGraphVertex<Integer> v : vertexSet) {
-					if(v.value() == faults.get(i).get(j) ) {
+					if((int)v.value() == faults.get(i).get(j) ) {
 						edge.add(v);
-					}
+						System.out.println("Wurde gefunden");
+						counter++;
+					} 
+				}
+				System.out.println(counter);
+				if(counter==0){
+					System.out.println("nicht gefunden!!!");
+//					System.out.println(faults.get(i).get(j));
+				}
+				counter=0;
+				if(edge.size() != faults.get(i).size()) {
+					System.err.println("Edge not built correctly");
 				}
 			}
-			graph.addEdge(edge);
+			if(!edge.isEmpty()) {
+				graph.addEdge(edge);
+			}
 		}
 	
 		try {
@@ -117,25 +133,33 @@ public class minimumhittingSetHyperGraph {
 		int c=0;
 		int counter=0;
 		int counttrueA=0;
-		boolean entprell=false;
+//		boolean entprell=false;
+		System.out.println("# D-Bits: " + tmp.size());
 		//Gehe jede Spalte in der Liste durch und kontrolliere ob die Spalte Valid ist
 		for (int d = 0; d < tmp.get(0).getList().size();) {
 			if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1){
-				b.add(new ArrayList<>());
+				ArrayList<Integer> f = new ArrayList<>();
 				//Suche in jeder Spalte nach "trues"
-				for (int k = 0; k < tmp.size() && !entprell; k++) {
+				for (int k = 0; k < tmp.size(); k++) {
 					if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).getList().get(d), c) == 1) {
-						b.get(counter).add(k);
-						counttrueA++;
-						if (readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c) == counttrueA) {
-							entprell = true;
-						}
+//						b.get(counter).add(k);
+						f.add(k);
+						
+//						counttrueA++;
+//						if (readdata.make1DatafileLong.numberOfTruesInColumn.get(d).get(c) == counttrueA) {
+//							break;
+//						}
 					}
 				}
-				entprell=false;
-				//Nur wenn die vorherige Int.List leer ist soll zur nächsten liste gegangen werden
-				if (!b.get(counter).isEmpty()){
-					counter++;
+//				entprell=false;
+				//Nur wenn die vorherige Int.List leer ist soll zur nï¿½chsten liste gegangen werden
+//				if (!b.get(counter).isEmpty()){
+//					counter++;
+//				}
+				counttrueA=0;
+				System.out.println("dbits for fault " + (d * 64 + c) + ": " + f);
+				if(!f.isEmpty()) {
+					b.add(f);
 				}
 			}
 			c++;
