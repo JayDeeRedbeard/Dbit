@@ -37,12 +37,23 @@ public class tb_LongRemovingBits {
 			longData.printLongPattern(tmp);
 			longData.printvalidColumn(tmp);
 			LongRemovingBits.falseRowsAndColumns.RemoveFalseColumn(tmp);
-			longData.printLongPattern(tmp);
+			longData.printLongPatternwithoutEmptySpace(tmp);
 			longData.printvalidColumn(tmp);
-			LongRemovingBits.removeRowsColumns.removeColumnsfromList(tmp);
+			tmp=LongRemovingBits.removeRowsColumns.removeColumnsfromList(tmp);
 			longData.printLongPattern(tmp);
 			longData.printvalidColumn(tmp);
 			longData.printnumberofTrues(tmp);
+			LongRemovingBits.essentialBits.removeAllEssential(tmp);
+			longData.printLongPattern(tmp);
+			longData.printvalidColumn(tmp);
+			longData.printnumberofTrues(tmp);
+			
+			tmp=LongRemovingBits.removeRowsColumns.removeColumnsfromList(tmp);
+			longData.printLongPatternwithoutEmptySpace(tmp);
+			longData.printvalidColumn(tmp);
+			longData.printnumberofTrues(tmp);
+			
+			
 		}
 	}
 
@@ -65,8 +76,8 @@ public class tb_LongRemovingBits {
 				longData.printLongPatternwithoutEmptySpace(tmp);
 				System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
 				
-				
 				LongRemovingBits.removingBits.essentialdominating(tmp);
+				
 				printData.ausgabeindatei();
 
 				printnumberOfTrues(tmp);

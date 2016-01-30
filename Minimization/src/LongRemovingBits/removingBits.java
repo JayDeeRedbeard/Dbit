@@ -200,8 +200,8 @@ public class removingBits {
 									System.out.println("Schritt: " + a);
 									
 									if(a>0)	{
-										tmp = removeRowsColumns.removeColumnsfromList(tmp);
-										tmp = removeRowsColumns.removeRowsfromList(tmp);
+//										tmp = removeRowsColumns.removeRowsfromList(tmp);
+//										tmp = removeRowsColumns.removeColumnsfromList(tmp);
 									}
 									System.out.println("validRowAllFalse: "+removingBits.validRowAllFalse(tmp));
 									

@@ -166,7 +166,6 @@ public class longData {
 		make1DatafileLong.failureMem.add(new ArrayList<Integer>());
 		make1DatafileLong.failureMem.add(new ArrayList<Integer>());
 		ArrayList<Long> LongList = new ArrayList<Long>();
-//		max=max*64;
 //		float a= max/64;
 //		int b= (int) a +1;
 		int c=0;

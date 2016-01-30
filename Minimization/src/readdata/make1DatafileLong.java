@@ -22,12 +22,12 @@ public class make1DatafileLong {
 			int c=0;
 			int k=0;
 			float abc;
-			int idx=0;;
+			int idx=0;
 			File folder = new File(longData.testpfad);
 			for( File file : folder.listFiles() ){
 				if(t){
 					max=readingdata.numberOfFailures(file.getName());
-					
+					t=false;
 					//Initialisierung von validColumn
 					abc= max/64;
 					idx= (int) abc +1;
@@ -47,16 +47,14 @@ public class make1DatafileLong {
 							k++;
 						}
 					}//Ende Initialisierung von validColumn
-					t=false;
 				}
 				System.out.println( file.getName() );
 				a=pattern(file.getName(), idx);
 				System.out.println("#D-Bits hinzugefuegt: "+a.size());
 				b.addAll(a);
-//				System.out.println("ValidColumn: " + readdata.longData.validColumn.size() + " #Columns: "+ a.get(0).getList().size() );
+				System.out.println("ValidColumn: " + readdata.longData.validColumn.size() + " #Columns: "+ a.get(0).getList().size() );
 				
 			}
-			System.out.println("D-Bits: "+b.size());
 			return b;
 		}
 		/**Gibt immer ein Testmuster zurueck in einer ArrayList	
