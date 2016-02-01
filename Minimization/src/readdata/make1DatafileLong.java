@@ -9,6 +9,7 @@ public class make1DatafileLong {
 		public static ArrayList<ArrayList<Integer>> numberOfTruesInColumn = new ArrayList<ArrayList<Integer>>();
 		//Speicher fuer numberoftrues:
 		public static ArrayList<ArrayList<Integer>> failureMem = new ArrayList<ArrayList<Integer>>();
+		public static int counter =0;
 		
 		/**
 		 * @return Gibt eine Ueberdeckungstabelle zurueck indem jede Datei untereinander geschrieben wird.
@@ -27,6 +28,7 @@ public class make1DatafileLong {
 			for( File file : folder.listFiles() ){
 				if(t){
 					max=readingdata.numberOfFailures(file.getName());
+					
 					t=false;
 					//Initialisierung von validColumn
 					abc= max/64;
@@ -47,12 +49,14 @@ public class make1DatafileLong {
 							k++;
 						}
 					}//Ende Initialisierung von validColumn
+					System.out.println("#Fehler: "+ max );
+					System.out.println("#d: "+ idx );
 				}
 				System.out.println( file.getName() );
 				a=pattern(file.getName(), idx);
 				System.out.println("#D-Bits hinzugefuegt: "+a.size());
 				b.addAll(a);
-				System.out.println("ValidColumn: " + readdata.longData.validColumn.size() + " #Columns: "+ a.get(0).getList().size() );
+//				System.out.println("ValidColumn: " + readdata.longData.validColumn.size() + " #Columns: "+ a.get(0).getList().size() );
 				
 			}
 			return b;
@@ -64,35 +68,31 @@ public class make1DatafileLong {
 			ArrayList<DBit> pattern= new ArrayList<DBit>();
 			ArrayList<Long> tmp1= new ArrayList<Long>();
 			DBit DB ;
-			int counter=0;
-			//int counter=0;
 			String b = "";
 			Scanner s = new Scanner(new File(longData.testpfad +"/"+testfile));				
 			while (s.hasNextLine()){									
 				Scanner tmp= new Scanner(s.nextLine());
 				b=tmp.nextLine(); 															//Zwischenspeicherung der aktuellen Zeile
-				//System.out.println(b.contains("{f")+" "+ b);
-//				if(b.charAt(0)=='{'){  //Dies bringt keine Verbesserung
 				if(b.contains("{f")){	
 					tmp1= readdata.longData.dbitcoveragerow(b,max);
 					//System.out.println(b);
 					DB = new DBit(counter, true,tmp1);
-					if (isdominatedRow(pattern, DB)) {
+//					if (isdominatedRow(pattern, DB)) {
 						// Zwischenspeicher ist da, um keinen
 						// Informationsverlust zu haben, da dominierte Zeilen
 						// geloescht werden
-						longData.validRowZwischenspeicher.add(false);
-					} else {
+//						longData.validRowZwischenspeicher.add(false);
+//					} else {
 						pattern.add(DB);
 //						longData.validRow.add(true);
-						longData.validRowZwischenspeicher.add(true);
+//						longData.validRowZwischenspeicher.add(true);
 						numberOfTruesInRow.add(longData.truecounter);
 						for (int index = 0; index < failureMem.get(0).size(); index++) {
 							numberOfTruesInColumn.get(failureMem.get(0).get(index)).set(failureMem.get(1).get(index),
 									numberOfTruesInColumn.get(failureMem.get(0).get(index))
 											.get(failureMem.get(1).get(index)) + 1);
 						}
-					}
+//					}
 					counter++;
 					longData.truecounter=0;
 					LongRemovingBits.removingBits.solution.add(false);

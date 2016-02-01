@@ -22,7 +22,7 @@ public class solution {
 			longData.protokoll= removingBits.circuits + "logs/"+files.getName();
 			longData.testpfad= removingBits.circuits + "results/"+files.getName();
 			longData.validColumn=new ArrayList<Long>();
-			longData.validRowZwischenspeicher=new ArrayList<Boolean>();
+//			longData.validRowZwischenspeicher=new ArrayList<Boolean>();
 			make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
 			make1DatafileLong.numberOfTruesInRow = new ArrayList<Integer>();
 			

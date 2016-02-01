@@ -2,10 +2,11 @@ package LongRemovingBits;
 import java.util.ArrayList;
 
 import readdata.DBit;
+import readdata.longData;
 
 public class domColumn {
 	/**  Finde alle Spalten, die dominiert werden von column.
-	@param ArrayList<DBit> tmp					Bekommt die 2D-ArrayList(Long) uebergeben	(Ueberdeckungstabelle)
+	@param ArrayList<ArrayList<Long>> tmp					Bekommt die 2D-ArrayList(Long) uebergeben	(Ueberdeckungstabelle)
 	@param int column										Es wird jeweils ueberprueft, ob diese Spalte irgendeine andere Spalte dominiert
 	@return													Es wird eine ArrayList zurueckgegeben, wo die 0. Spalte jeweils die dominierende Spalte ist.
 															Die 1.Spalte ist dann die nicht dominierende Spalte
@@ -27,7 +28,7 @@ public class domColumn {
 					for (int y = 0; y < tmp.get(0).getList().size();) {
 						if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(y), e) == 1) {
 							for (int k = 0; k < tmp.size() && isdominated; k++) {
-							 	if (tmp.get(k).getValid() && !(d == y && c == e) ) {
+							 	if (tmp.get(k).getValid()&& !(d == y && c == e) ) {
 									// Entscheidendes Kriterium!! Ueberpruefe ob Spalte A die Spalte B dominiert.
 									if (!dominationcounterA) {
 										if (!(stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).getList().get(d), c) == 1

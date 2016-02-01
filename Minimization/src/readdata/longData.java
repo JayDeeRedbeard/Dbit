@@ -10,7 +10,7 @@ public class longData {
 	public static ArrayList<Long> validColumn = new ArrayList<Long>();
 //	public static ArrayList<Boolean> validRow = new ArrayList<Boolean>();
 //	public static ArrayList<Boolean> validRow_tmp = new ArrayList<Boolean>();
-	public static ArrayList<Boolean> validRowZwischenspeicher = new ArrayList<Boolean>();
+//	public static ArrayList<Boolean> validRowZwischenspeicher = new ArrayList<Boolean>();
 	public static String testpfad =new String();
 	public static String results = "C:/Users/Dennis/git/Minimization/src/results";
 	public static Integer truecounter=0;
@@ -257,9 +257,9 @@ public class longData {
 				if(!pattern.contains(tmp1)){
 					
 					pattern.add(new DBit(1,  true, tmp1));//AUFGEPASST
-					validRowZwischenspeicher.add(true);
+//					validRowZwischenspeicher.add(true);
 				} else {
-					validRowZwischenspeicher.add(false);
+//					validRowZwischenspeicher.add(false);
 				}
 				LongRemovingBits.removingBits.solution.add(false);
 			}	

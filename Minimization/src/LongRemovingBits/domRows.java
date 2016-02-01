@@ -54,7 +54,7 @@ public static void dominatingRows(ArrayList<DBit> tmp){
 												&& stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).getList().get(d), c) == 0)
 												&& k != row && readdata.make1DatafileLong.numberOfTruesInRow.get(
 														k) >= readdata.make1DatafileLong.numberOfTruesInRow.get(row)) {
-												if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).getList().get(d), c) == 1) {
+											if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).getList().get(d), c) == 1) {
 												counttrueB++;
 												if (counttrueB == readdata.make1DatafileLong.numberOfTruesInRow
 														.get(row)) {
@@ -99,7 +99,7 @@ public static void dominatingRows(ArrayList<DBit> tmp){
 		}
 	}
 /** Loeschen von gleichen Reihen aus der Ueberdeckungstabelle
-@param ArrayList<ArrayList<DBit>> tmp		Bekommt die 2D-ArrayList uebergeben	(Ueberdeckungstabelle)
+@param ArrayList<ArrayList<ArrayList<Long>>> tmp		Bekommt die 2D-ArrayList uebergeben	(Ueberdeckungstabelle)
 @return													2D-ArrayList ohne gleiche Reihen
 */
 	public static void removeEqualRows(ArrayList<DBit> tmp) {
@@ -113,7 +113,7 @@ public static void dominatingRows(ArrayList<DBit> tmp){
 		// Ende Initialisieren
 		if (!removingBits.validRowAllFalse(tmp)) {
 			for (int j = 0; j < tmp.size(); j++) {
-				if (tmp.get(j).getValid()) {
+				if (tmp.get(j).getValid() ) {
 					for (int k = 0; k < tmp.size(); k++) {
 						if (tmp.get(k).getValid() && j != k) {
 							if (readdata.make1DatafileLong.numberOfTruesInRow

@@ -18,7 +18,7 @@ public class printData {
 		File folder = new File(longData.testpfad);
 		String b = "";
 		int counter=0;
-		int counter1=0;
+		int countActiveDbits=0;
 		String a ="";
 			for( File file : folder.listFiles() ){
 				System.out.println( file.getName() );
@@ -37,24 +37,19 @@ public class printData {
 					Scanner tmp= new Scanner(s.nextLine());
 					b=tmp.nextLine(); 										//Zwischenspeicherung der aktuellen Zeile
 					if(b.contains("{f")){									//D-Bit wurde erkannt!
-						//Zwischenspeicher ist da um auch die D-Bits abzudecken die von Anfang an wegen Dominanzen entfernt wurden 
-						if(!longData.validRowZwischenspeicher.get(counter)){									
+						if(!LongRemovingBits.removingBits.solution.get(counter)){
 							ausgabe.println("-");
 						} else{
-							if( !LongRemovingBits.removingBits.solution.get(counter1) ){
-								ausgabe.println("-");
-							} else{
-								ausgabe.println(b);
-							}
-							counter1++;
+							ausgabe.println(b);
+							countActiveDbits++;
 						}
 						counter++;
 					} else {
 						ausgabe.println(b);
-						
 					}
 					tmp.close();
 				}
+				System.out.println("D-Bits"+countActiveDbits);
 				s.close();
 				ausgabe.close();
 			}
@@ -65,7 +60,6 @@ public class printData {
 		File folder = new File(longData.testpfad);
 		String b = "";
 		int counter=0;
-		int counter1=0;
 		int countActiveDbits=0;
 		String a ="";
 			for( File file : folder.listFiles() ){
@@ -86,21 +80,15 @@ public class printData {
 					b=tmp.nextLine(); 										//Zwischenspeicherung der aktuellen Zeile
 					if(b.contains("{f")){									//D-Bit wurde erkannt!
 						//Zwischenspeicher ist da um auch die D-Bits abzudecken die von Anfang an wegen Dominanzen entfernt wurden 
-						if(!longData.validRowZwischenspeicher.get(counter)){									
+						if(!mhs.contains(counter)){
 							ausgabe.println("-");
 						} else{
-							if(!mhs.contains(counter1)){
-								ausgabe.println("-");
-							} else{
-								ausgabe.println(b);
-								countActiveDbits++;
-							}
-							counter1++;
+							ausgabe.println(b);
+							countActiveDbits++;
 						}
 						counter++;
 					} else {
 						ausgabe.println(b);
-						
 					}
 					tmp.close();
 				}
