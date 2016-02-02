@@ -13,7 +13,7 @@ public class longData {
 //	public static ArrayList<Boolean> validRowZwischenspeicher = new ArrayList<Boolean>();
 	public static String testpfad =new String();
 	public static String results = "C:/Users/Dennis/git/Minimization/src/results";
-	public static Integer truecounter=0;
+	public static int truecounter=0;
 	
 	//public static String testpfad = "C:/Users/Dennis/git/Minimization/src/TestDaten";
 	//public static String testpfad = "C:/Users/Dennis/git/Minimization/src/b14_1";

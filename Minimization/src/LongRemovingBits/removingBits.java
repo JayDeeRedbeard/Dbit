@@ -16,7 +16,7 @@ public class removingBits {
 			//Programmablauf
 			
 			long startTime = System.nanoTime();
-			long endTime ;long duration;
+			long endTime ;float duration;
 			ArrayList<DBit> tmp; 
 			File f = new File(circuits+"Schaltungen/");	
 			//File f = new File(circuits+"TEST/");
@@ -55,8 +55,9 @@ public class removingBits {
 				writer.append("validRowAllFalse: "+validRowAllFalse(tmp)+ "\n");
 				System.out.println("validRowAllFalse: "+validRowAllFalse(tmp));
 				endTime = System.nanoTime();
-				duration = (endTime - startTime);
+				duration = (float) (endTime - startTime)/(1000000000)/60;
 				writer.append("time: "+duration+ "\n");
+				System.out.println(duration);
 				writer.close();
 			}
 		}
@@ -159,7 +160,7 @@ public class removingBits {
 			writer.append("Start");
 			long startTime = System.nanoTime();
 			long endTime;
-			long duration;
+			float duration;
 			// ENDE
 
 			int counter = 0;
@@ -217,7 +218,7 @@ public class removingBits {
 											falseRowsAndColumns.RemoveFalseColumn(tmp);
 										}
 										endTime = System.nanoTime();
-										duration = (endTime - startTime);
+										duration = (float) (endTime - startTime)/(1000000000)/60;
 										writer.append("time: " + duration + "\n");
 
 										writer.append("Remove all EssentialBits: " + "\n");
@@ -226,7 +227,7 @@ public class removingBits {
 
 										counter1 = 0;
 										endTime = System.nanoTime();
-										duration = (endTime - startTime);
+										duration = (float) (endTime - startTime)/(1000000000)/60;
 										writer.append("time: " + duration + "\n");
 
 										writer.append("Remove all False Columns: " + "\n");
@@ -239,7 +240,7 @@ public class removingBits {
 									}
 									// ENDE Remove all False Columns
 									endTime = System.nanoTime();
-									duration = (endTime - startTime);
+									duration = (float) (endTime - startTime)/(1000000000)/60;
 									writer.append("time: " + duration + "\n");
 
 									writer.append("Remove False Rows: " + "\n");
@@ -252,7 +253,7 @@ public class removingBits {
 								// ENDE Remove False Rows
 
 								endTime = System.nanoTime();
-								duration = (endTime - startTime);
+								duration = (float) (endTime - startTime)/(1000000000)/60;
 								writer.append("time: " + duration + "\n");
 
 								writer.append("RemoveEqual Rows: " + "\n");
@@ -261,6 +262,10 @@ public class removingBits {
 
 								counter1EqualRows = removingBits.numberOfvalidRows(tmp);
 							}
+							endTime = System.nanoTime();
+							duration = (float) (endTime - startTime)/(1000000000)/60;
+							writer.append("time: " + duration + "\n");
+							
 							writer.append("RemoveEqual Columns: " + "\n");
 							System.out.println("RemoveEqual Columns: ");
 							domColumn.removeEqualColumns(tmp);
@@ -274,7 +279,7 @@ public class removingBits {
 
 
 						endTime = System.nanoTime();
-						duration = (endTime - startTime);
+						duration = (float) (endTime - startTime)/(1000000000)/60;
 						writer.append("time: " + duration + "\n");
 						counter1 = removingBits.numberOfvalidRows(tmp);
 					}
@@ -289,7 +294,7 @@ public class removingBits {
 					counter1 = removingBits.numberOfvalidRows(tmp);
 
 					endTime = System.nanoTime();
-					duration = (endTime - startTime);
+					duration = (float) (endTime - startTime)/(1000000000)/60;
 					writer.append("time: " + duration + "\n");
 
 					writer.append("numberOfvalidRows: " + numberOfvalidRows(tmp) + "\n");
@@ -298,7 +303,7 @@ public class removingBits {
 				// ENDE Remove all NOT dominating Columns and Eqaual Columns
 
 				endTime = System.nanoTime();
-				duration = (endTime - startTime);
+				duration = (float) (endTime - startTime)/(1000000000)/60;
 				writer.append("time: " + duration + "\n");
 
 				writer.append("removeBitWithMostTrues: " + "\n");
@@ -311,7 +316,7 @@ public class removingBits {
 				System.out.println("numberOfvalidRows: " + numberOfvalidRows(tmp));
 
 				endTime = System.nanoTime();
-				duration = (endTime - startTime);
+				duration = (float) (endTime - startTime)/(1000000000)/60;
 				writer.append("time: " + duration + "\n");
 			}
 			writer.close();

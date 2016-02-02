@@ -29,26 +29,13 @@ public class tb_printData {
 			make1DatafileLong.numberOfTruesInRow = new ArrayList<Integer>();
 
 			tmp = make1DatafileLong.returnbigList();
-			longData.printLongPatternwithoutEmptySpace(tmp);
-			longData.printnumberofTrues(tmp);
-			tmp = removeRowsColumns.removeRowsfromList(tmp);
-			System.out.println("Remove all False Columns: ");
-			falseRowsAndColumns.RemoveFalseColumn(tmp);
-			longData.printLongPattern(tmp);
-			longData.printvalidColumn(tmp);
-			tmp = removeRowsColumns.removeColumnsfromList(tmp);
-			longData.printLongPattern(tmp);
-			longData.printvalidColumn(tmp);
-			longData.printnumberofTrues(tmp);
+			
 			longData.printLongPatternwithoutEmptySpace(tmp);
 			
+			tmp = new ArrayList<DBit>();
+			tmp = make1DatafileLong.returnbigListwithdomination();
 			
-			tmp = removeRowsColumns.removeRowsfromList(tmp);
 			longData.printLongPatternwithoutEmptySpace(tmp);
-			System.out.println("Remove NOT dominating and Equal Rows: ");
-			domRows.dominatingRows(tmp);
-			longData.printLongPatternwithoutEmptySpace(tmp);
-			
 		}
 
 	}
