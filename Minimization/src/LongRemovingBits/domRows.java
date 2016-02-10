@@ -78,12 +78,14 @@ public static void dominatingRows(ArrayList<DBit> tmp){
 							if (counttrueA >= 1 && !dominationcounterA && isdominated) {
 								System.out.println(" Reihe " + row + " ist dominiernd auf " + k);
 								removingBits.removeRow(tmp, k, false);
+								LongRemovingBits.removingBits.counterremoveRows++;
 								// Damit bei gleichen Zeilen nicht beide geloescht  werden
 								dominationcounterB = true;
 															
 							}
 							if (counttrueB >= 1 && !dominationcounterB && isdominated) {
 								System.out.println(" Reihe " + k + " ist dominiernd auf " + row);
+								LongRemovingBits.removingBits.counterremoveRows++;
 								removingBits.removeRow(tmp, row, false);
 							}
 							isdominated = true;
@@ -114,6 +116,7 @@ public static void dominatingRows(ArrayList<DBit> tmp){
 		if (!removingBits.validRowAllFalse(tmp)) {
 			for (int j = 0; j < tmp.size(); j++) {
 				if (tmp.get(j).getValid() ) {
+					
 					for (int k = 0; k < tmp.size(); k++) {
 						if (tmp.get(k).getValid() && j != k) {
 							if (readdata.make1DatafileLong.numberOfTruesInRow
@@ -151,6 +154,7 @@ public static void dominatingRows(ArrayList<DBit> tmp){
 						if (isequal) {
 							removingBits.removeRow(tmp, k, false);
 							System.out.println("j:"+ j+ " Reihe k = " +k+" wurde geloescht");
+							LongRemovingBits.removingBits.counterremoveRows++;
 						}
 						counttrueA = 0;
 						isequal = false;

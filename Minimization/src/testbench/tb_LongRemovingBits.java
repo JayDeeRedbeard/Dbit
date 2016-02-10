@@ -29,7 +29,6 @@ public class tb_LongRemovingBits {
 			longData.protokoll= removingBits.circuits + "TEST/logs/"+files.getName();
 			longData.results= removingBits.circuits + "TEST/results/"+files.getName();
 			longData.validColumn=new ArrayList<Long>();
-//			longData.validRowZwischenspeicher=new ArrayList<Boolean>();
 			make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
 			make1DatafileLong.numberOfTruesInRow = new ArrayList<Integer>();
 			
@@ -68,11 +67,10 @@ public class tb_LongRemovingBits {
 				longData.protokoll= removingBits.circuits + "TEST/logs/"+files.getName();
 				longData.results= removingBits.circuits + "TEST/results/"+files.getName();
 				longData.validColumn=new ArrayList<Long>();
-//				longData.validRowZwischenspeicher=new ArrayList<Boolean>();
 				make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
 				make1DatafileLong.numberOfTruesInRow = new ArrayList<Integer>();
 				
-				tmp=make1DatafileLong.returnbigList();
+				tmp=make1DatafileLong.returnbigListwithdomination();
 				longData.printLongPatternwithoutEmptySpace(tmp);
 				System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
 				

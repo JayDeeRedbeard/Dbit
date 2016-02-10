@@ -39,6 +39,7 @@ public class heuristic {
 			while(!counter && !mem.isEmpty() && a>=0){
 				if(tmp.get(mem.get(0).get(a)).getValid() ){
 					LongRemovingBits.removingBits.removeOneRowTrueColumns(tmp, mem.get(0).get(a));
+					LongRemovingBits.removingBits.counterremoveRows++;
 					counter=true;
 				} else{
 					a--;

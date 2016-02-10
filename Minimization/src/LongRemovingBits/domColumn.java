@@ -84,10 +84,12 @@ public class domColumn {
 							if (counttrueA >= 1 && isdominated && !dominationcounterA) {
 								System.out.println(" Column  d= " + d + " c= " + c + " ist dominiernd auf y= " + y + " e= " + e);
 								removingBits.removeColumn(tmp, y, e);
+								LongRemovingBits.removingBits.counterremoveColumns++;
 								dominationcounterB = true;
 							}
 							if (counttrueB >= 1 && isdominated && !dominationcounterB) {
 								System.out.println(" Column y= " + y + " e= " + e + " ist dominiernd auf c= " + d + " c= " + c);
+								LongRemovingBits.removingBits.counterremoveColumns++;
 								removingBits.removeColumn(tmp, d, c);
 							}
 							isdominated = true;
@@ -154,6 +156,7 @@ public class domColumn {
 							if (isdominated) {
 								System.out.println("Loesche Spalte: y" + y + " e" + e);
 								removingBits.removeColumn(tmp, y, e);
+								LongRemovingBits.removingBits.counterremoveColumns++;
 							}
 						} else{
 							notequalbreak=true;

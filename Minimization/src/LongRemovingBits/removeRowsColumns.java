@@ -132,17 +132,7 @@ public class removeRowsColumns {
 					readdata.longData.validColumn = tmp1;
 					removecounter--;
 				}
-
-				// System.out.println("readdata.longData.validColumn.get(readdata.longData.validColumn.size()-1)==(0L):
-				// " +
-				// (readdata.longData.validColumn.get(readdata.longData.validColumn.size()-1)==0L));
-				// if(readdata.longData.validColumn.get(readdata.longData.validColumn.size()-1)==(0L)){
-				// readdata.longData.validColumn.remove(readdata.longData.validColumn.size()-1);
-				// readdata.make1DatafileLong.numberOfTruesInColumn.remove(readdata.make1DatafileLong.numberOfTruesInColumn.size()-1);
-				// for(int row=0; row<tmp.size();row++){
-				// tmp.get(row).getList().remove(tmp.get(row).getList().size()-1);
-				// }
-				// }
+//			readdata.longData.validColumn.get(index)
 
 			}
 		}

@@ -1,9 +1,13 @@
 package readdata;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.zip.GZIPInputStream;
 
 public class readingdata {
 	/** Dies ist ein Program zum Einlesen der Testdaten vom Fachgebiet DATE um die Minimierung der D-Bits vorzunehmen
@@ -71,21 +75,21 @@ public class readingdata {
 	public static int nextPattern(int row, String testfile) throws IOException{
 		
 		try{
-			Scanner s = new Scanner(new File(longData.testpfad+"/"+ testfile ) );
 			int i = 1;
 			boolean temp=true;
-			while (s.hasNextLine()) {
-				Scanner a = new Scanner(s.nextLine());
-				if(s.next().equals("Pattern")&& row<= i && temp==true){
+			GZIPInputStream gzip = new GZIPInputStream(new FileInputStream(longData.testpfad +"/"+testfile));
+			BufferedReader s = new BufferedReader(new InputStreamReader(gzip));
+			String b;
+			while ((b = s.readLine()) != null){
+				if(b.contains("Pattern") && row<= i && temp==true){
 					//System.out.println(i);
 					temp=false;
-					a.close();
 					return i+1;
 				}
 				i++;
-				a.close();
-			} 
+			}
 			s.close();
+			gzip.close();
 		}
 			catch (NoSuchElementException e){	
 				return 42352; //Wichtig fuer die Funktion howmuchtestpattern()

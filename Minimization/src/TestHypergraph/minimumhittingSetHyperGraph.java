@@ -40,6 +40,8 @@ public class minimumhittingSetHyperGraph {
 //			longData.validRowZwischenspeicher=new ArrayList<Boolean>();
 			make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
 			make1DatafileLong.numberOfTruesInRow = new ArrayList<Integer>();
+			long startTime = System.nanoTime();
+			long endTime ;float duration;
 			
 			tmp=make1DatafileLong.returnbigList();
 			
@@ -57,6 +59,9 @@ public class minimumhittingSetHyperGraph {
 				}
 			}
 			outputData.printData.ausgabeindatei();
+			endTime = System.nanoTime();
+			duration = (float) (endTime - startTime)/(1000000000)/60;
+			System.out.println(duration);
 			System.out.println();
 			System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecoveredHypergraph(tmp));	
 			System.out.println("Number of False in Solution: "+removingBits.numberOfFalseinSolution());
