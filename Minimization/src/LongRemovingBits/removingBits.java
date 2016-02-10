@@ -271,7 +271,7 @@ public class removingBits {
 								domRows.removeEqualRows(tmp);
 								
 								counter1EqualRows = removingBits.numberOfvalidRows(tmp);
-								if(counterremoveRows<(numberOfValidBeginningRows*0.065)){
+								if(counterremoveRows<(numberOfValidBeginningRows*0.05)){
 									counter1EqualRows=counter;
 								}else{
 									counter1EqualRows = removingBits.numberOfvalidRows(tmp);
@@ -285,7 +285,7 @@ public class removingBits {
 							System.out.println("RemoveEqual Columns: ");
 							domColumn.removeEqualColumns(tmp);
 							
-							if(counterremoveColumns<(numberOfValidBeginningColumns*0.065)){
+							if(counterremoveColumns<(numberOfValidBeginningColumns*0.05)){
 								counter1Columns=counterColumns;
 							}else{
 								counter1Columns = removingBits.numberOfvalidColumns(tmp);
@@ -297,7 +297,7 @@ public class removingBits {
 						System.out.println("Remove NOT dominating and Equal Rows: ");
 						domRows.dominatingRows(tmp);
 						
-						if(counterremoveRows<(numberOfValidBeginningRows*0.065)){
+						if(counterremoveRows<(numberOfValidBeginningRows*0.05)){
 							counter1=counter;
 						}else{
 							counter1 = removingBits.numberOfvalidRows(tmp);
@@ -321,7 +321,7 @@ public class removingBits {
 					duration = (float) (endTime - startTime)/(1000000000)/60;
 					writer.append("time: " + duration + "\n");
 					
-					if(counterremoveColumns<(numberOfValidBeginningColumns*0.065)){
+					if(counterremoveColumns<(numberOfValidBeginningColumns*0.05)){
 						counter1Columns=counterColumns;
 					} else{
 						counter1 = removingBits.numberOfvalidRows(tmp);
@@ -338,8 +338,10 @@ public class removingBits {
 				writer.append("removeBitWithMostTrues: " + "\n");
 				System.out.println("removeBitWithMostTrues: ");
 				
-				while(counterremoveRows<(numberOfValidBeginningRows*0.003)){
+				while(counterremoveRows<(numberOfValidBeginningRows*0.0001)){
+					System.out.println("removeBitWithMostTrues");
 					heuristic.removeBitWithMostTrues(tmp);
+					essentialBits.removeAllEssential(tmp);
 				}
 				// writer=longData.printLongPatternwithoutEmptySpace(tmp,writer);
 				counter = 0;

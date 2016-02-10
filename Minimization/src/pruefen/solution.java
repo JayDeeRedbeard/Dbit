@@ -13,16 +13,16 @@ import readdata.make1DatafileLong;
 public class solution {
 	public static void main(String[] args) throws IOException {
 		removingBits.circuits = "C:/Users/Dennis/git/Minimization/";
+		removingBits.circuits = "/home/dj0804/workspace/Minimization/";
 		ArrayList<DBit> tmp; 
-		File f = new File(removingBits.circuits+"results/");
+		File f = new File(removingBits.circuits+"TEST/results/");
 		for(File files : f.listFiles()){
 			tmp= new ArrayList<DBit>();
 			System.out.println(files.getName());
 //			longData.testpfad= removingBits.circuits+"results/"+files.getName();
-			longData.protokoll= removingBits.circuits + "logs/"+files.getName();
-			longData.testpfad= removingBits.circuits + "results/"+files.getName();
+			longData.protokoll= removingBits.circuits + "TEST/logs/"+files.getName();
+			longData.testpfad= removingBits.circuits + "TEST/results/"+files.getName();
 			longData.validColumn=new ArrayList<Long>();
-//			longData.validRowZwischenspeicher=new ArrayList<Boolean>();
 			make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
 			make1DatafileLong.numberOfTruesInRow = new ArrayList<Integer>();
 			

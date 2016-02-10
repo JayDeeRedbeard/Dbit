@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 
+import LongRemovingBits.domRows;
+import LongRemovingBits.removeRowsColumns;
 import LongRemovingBits.removingBits;
 import hypergraph.*;
 import readdata.DBit;
@@ -48,8 +50,13 @@ public class minimumhittingSetHyperGraph {
 			LongRemovingBits.falseRowsAndColumns.RemoveFalseColumn(tmp);
 //			LongRemovingBits.domColumn.dominatingColumns(tmp);
 //			LongRemovingBits.falseRowsAndColumns.RemoveFalseRows(tmp);
-//			LongRemovingBits.domRows.dominatingRows(tmp);
 //			longData.printLongPatternwithoutEmptySpace(tmp);
+			tmp = removeRowsColumns.removeColumnsfromList(tmp);
+			domRows.removeEqualRows(tmp);
+			tmp = removeRowsColumns.removeRowsfromList(tmp);
+			LongRemovingBits.domRows.dominatingRows(tmp);
+			tmp = removeRowsColumns.removeRowsfromList(tmp);
+			
 			mhs=mhsHyperGraphdbits(tmp);
 			
 			

@@ -70,8 +70,8 @@ public class tb_LongRemovingBits {
 				make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
 				make1DatafileLong.numberOfTruesInRow = new ArrayList<Integer>();
 				
-				tmp=make1DatafileLong.returnbigListwithdomination();
-				longData.printLongPatternwithoutEmptySpace(tmp);
+				tmp=make1DatafileLong.returnbigList();
+//				longData.printLongPatternwithoutEmptySpace(tmp);
 				System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
 				
 				LongRemovingBits.removingBits.essentialdominating(tmp);
