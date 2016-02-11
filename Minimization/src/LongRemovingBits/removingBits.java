@@ -304,11 +304,11 @@ public class removingBits {
 							System.out.println("RemoveEqual Columns: ");
 							domColumn.removeEqualColumns(tmp);
 							
-							if(counterremoveColumns<(numberOfValidBeginningColumns*0.04)){
-								counter1Columns=counterColumns;
-							}else{
+//							if(counterremoveColumns<(numberOfValidBeginningColumns*0.04)){
+//								counter1Columns=counterColumns;
+//							}else{
 								counter1Columns = removingBits.numberOfvalidColumns(tmp);
-							}
+//							}
 						}
 						// ENDE Remove Equal Columns
 
