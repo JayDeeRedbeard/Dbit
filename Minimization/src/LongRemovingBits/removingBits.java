@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import outputData.printData;
 import readdata.*;
-import readdata.make1DatafileLong;
+
 import java.io.PrintWriter;
 public class removingBits {
 		public static ArrayList<Boolean> solution = new ArrayList<Boolean>();
@@ -33,7 +33,7 @@ public class removingBits {
 				longData.validColumn=new ArrayList<Long>();
 				make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
 				
-				tmp=make1DatafileLong.returnbigList();
+				tmp=make1DatafileLong.patternwithdomination();
 				
 				PrintWriter writer = new PrintWriter(longData.protokoll+"/Zusammenfassend.txt");
 				writer.append("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp)+ "\n");
@@ -147,6 +147,29 @@ public class removingBits {
 				return false;
 				
 		} 
+		/**  
+		@return	Wenn eine Reihe nur aus "false" besteht wird "True zurueckgegeben.				-
+		*/
+		public static boolean validColumnAllFalse(){
+			int counter=0;
+			int c=0;
+			for (int d=0; d<longData.validColumn.size();){
+				if (stuff.DirtyLittleHelpers.getBitAtPosition(longData.validColumn.get(d),
+						c) == 1) {
+					counter++;
+				}
+				c++;
+				if (c == 64) {
+					d++;
+					c = 0;
+				}
+			}
+			if(counter==0)
+				return true;
+			else 
+				return false;
+				
+		} 
 		/**
 		 * Ruft selbststaendig alle Funktionen auf, um nach den Quine McCluskey Algorithmus eine minimale(nicht optimale) Loesung zu finden
 		 * @param tmp	Bekommt eine 2D-ArrayList uebergeben  		
@@ -172,7 +195,7 @@ public class removingBits {
 			int a = 0;
 			int numberOfValidBeginningRows=0;
 			int numberOfValidBeginningColumns=0;
-			while (!validRowAllFalse(tmp)) {
+			while (!validRowAllFalse(tmp) || !validColumnAllFalse()) {
 				counterColumns = 0;
 				counter1Columns = 2;
 				while (counterColumns != counter1Columns) {
@@ -268,14 +291,10 @@ public class removingBits {
 								
 								writer.append("RemoveEqual Rows: " + "\n");
 								System.out.println("RemoveEqual Rows: ");
-								domRows.removeEqualRows(tmp);
+//								domRows.removeEqualRows(tmp);
+								Dmasking.removeEqualRows(tmp);
 								
 								counter1EqualRows = removingBits.numberOfvalidRows(tmp);
-								if(counterremoveRows<(numberOfValidBeginningRows*0.05)){
-									counter1EqualRows=counter;
-								}else{
-									counter1EqualRows = removingBits.numberOfvalidRows(tmp);
-								}
 							}
 							endTime = System.nanoTime();
 							duration = (float) (endTime - startTime)/(1000000000)/60;
@@ -285,7 +304,7 @@ public class removingBits {
 							System.out.println("RemoveEqual Columns: ");
 							domColumn.removeEqualColumns(tmp);
 							
-							if(counterremoveColumns<(numberOfValidBeginningColumns*0.05)){
+							if(counterremoveColumns<(numberOfValidBeginningColumns*0.04)){
 								counter1Columns=counterColumns;
 							}else{
 								counter1Columns = removingBits.numberOfvalidColumns(tmp);
@@ -295,9 +314,9 @@ public class removingBits {
 
 						writer.append("Remove NOT dominating and Equal Rows: " + "\n");
 						System.out.println("Remove NOT dominating and Equal Rows: ");
-						domRows.dominatingRows(tmp);
-						
-						if(counterremoveRows<(numberOfValidBeginningRows*0.05)){
+//						domRows.dominatingRows(tmp);
+						Dmasking.dominatingRows(tmp);
+						if(counterremoveRows<(numberOfValidBeginningRows*0.04)){
 							counter1=counter;
 						}else{
 							counter1 = removingBits.numberOfvalidRows(tmp);
@@ -321,7 +340,7 @@ public class removingBits {
 					duration = (float) (endTime - startTime)/(1000000000)/60;
 					writer.append("time: " + duration + "\n");
 					
-					if(counterremoveColumns<(numberOfValidBeginningColumns*0.05)){
+					if(counterremoveColumns<(numberOfValidBeginningColumns*0.04)){
 						counter1Columns=counterColumns;
 					} else{
 						counter1 = removingBits.numberOfvalidRows(tmp);
@@ -338,7 +357,7 @@ public class removingBits {
 				writer.append("removeBitWithMostTrues: " + "\n");
 				System.out.println("removeBitWithMostTrues: ");
 				
-				while(counterremoveRows<(numberOfValidBeginningRows*0.0001)){
+				while(counterremoveRows<(numberOfValidBeginningRows*0.05)){
 					System.out.println("removeBitWithMostTrues");
 					heuristic.removeBitWithMostTrues(tmp);
 					essentialBits.removeAllEssential(tmp);

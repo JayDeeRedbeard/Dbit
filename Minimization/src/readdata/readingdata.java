@@ -77,12 +77,12 @@ public class readingdata {
 		try{
 			int i = 1;
 			boolean temp=true;
-			GZIPInputStream gzip = new GZIPInputStream(new FileInputStream(longData.testpfad +"/"+testfile));
+			String b="";
+			GZIPInputStream gzip = new GZIPInputStream(new FileInputStream(longData.testpfad + "/" + testfile));
 			BufferedReader s = new BufferedReader(new InputStreamReader(gzip));
-			String b;
 			while ((b = s.readLine()) != null){
 				if(b.contains("Pattern") && row<= i && temp==true){
-					//System.out.println(i);
+					System.out.println(i);
 					temp=false;
 					return i+1;
 				}
@@ -94,6 +94,9 @@ public class readingdata {
 			catch (NoSuchElementException e){	
 				return 42352; //Wichtig fuer die Funktion howmuchtestpattern()
 			}
+		catch (Exception e){	
+			return 42352; //Wichtig fuer die Funktion howmuchtestpattern()
+		}
 		return 0;
 		}
 	/** NICHT IN GEBRAUCH

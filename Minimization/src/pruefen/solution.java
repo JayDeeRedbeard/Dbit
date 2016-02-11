@@ -13,7 +13,7 @@ import readdata.make1DatafileLong;
 public class solution {
 	public static void main(String[] args) throws IOException {
 		removingBits.circuits = "C:/Users/Dennis/git/Minimization/";
-		removingBits.circuits = "/home/dj0804/workspace/Minimization/";
+//		removingBits.circuits = "/home/dj0804/workspace/Minimization/";
 		ArrayList<DBit> tmp; 
 		File f = new File(removingBits.circuits+"TEST/results/");
 		for(File files : f.listFiles()){

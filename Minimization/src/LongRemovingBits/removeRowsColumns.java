@@ -133,7 +133,6 @@ public class removeRowsColumns {
 					removecounter--;
 				}
 //			readdata.longData.validColumn.get(index)
-
 			}
 		}
 		return tmp;

@@ -116,7 +116,6 @@ public static void dominatingRows(ArrayList<DBit> tmp){
 		if (!removingBits.validRowAllFalse(tmp)) {
 			for (int j = 0; j < tmp.size(); j++) {
 				if (tmp.get(j).getValid() ) {
-					
 					for (int k = 0; k < tmp.size(); k++) {
 						if (tmp.get(k).getValid() && j != k) {
 							if (readdata.make1DatafileLong.numberOfTruesInRow
