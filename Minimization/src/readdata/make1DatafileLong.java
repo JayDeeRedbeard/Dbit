@@ -111,7 +111,7 @@ public class make1DatafileLong {
 		/**Gibt immer ein Testmuster zurueck in einer ArrayList	
 		@return		Gibt eine 2D-ArrayList zurueck die man dann spaeter verarbeiten kann.
 		*/
-		public static ArrayList<DBit> patternwithdomination () throws IOException{
+		public static ArrayList<DBit> patternwithdomination (long startTime) throws IOException{
 			ArrayList<DBit> b = new ArrayList<DBit>();
 			int max=0;
 			boolean t = true; //Um es nur einmal zu berechnen
@@ -119,6 +119,8 @@ public class make1DatafileLong {
 			int k=0;
 			float abc;
 			int idx=0;
+			long endTime ;float duration;
+			boolean stopdomination=true;
 			String testfile;
 			File folder = new File(longData.testpfad);
 			for( File file : folder.listFiles() ){
@@ -163,11 +165,10 @@ public class make1DatafileLong {
 						tmp1 = readdata.longData.dbitcoveragerow(bc, max);
 //						System.out.println(bc + " " + max);
 						DB = new DBit(counter, true, tmp1);
-						if ( /*isequalRow(b, DB) ||*/ isdominatedRow(b, DB)) {
-							
-						} else {
-//							if(isdominatedRow(b, DB)){
-//							}else{
+						if(stopdomination){
+							if ( isdominatedRow(b, DB)) {
+								
+							} else {
 								b.add(DB);
 								numberOfTruesInRow.add(longData.truecounter);
 								for (int index = 0; index < failureMem.get(0).size(); index++) {
@@ -176,11 +177,25 @@ public class make1DatafileLong {
 										numberOfTruesInColumn.get(failureMem.get(0).get(index))
 												.get(failureMem.get(1).get(index)) + 1);
 								}
-//							}
+							}
+						} else{
+							b.add(DB);
+							numberOfTruesInRow.add(longData.truecounter);
+							for (int index = 0; index < failureMem.get(0).size(); index++) {
+								numberOfTruesInColumn.get(failureMem.get(0).get(index)).set(
+									failureMem.get(1).get(index),
+									numberOfTruesInColumn.get(failureMem.get(0).get(index))
+											.get(failureMem.get(1).get(index)) + 1);
+							}
 						}
 						counter++;
 						longData.truecounter = 0;
 						LongRemovingBits.removingBits.solution.add(false);
+						endTime = System.nanoTime();
+						duration = (float) (endTime - startTime)/(1000000000)/60;
+						if (duration> 12*60){
+							stopdomination=false;
+						}
 					}
 				}
 				s.close();
@@ -197,14 +212,17 @@ public class make1DatafileLong {
 		for (int row=0; row<tmp.size(); row++){
 //			System.out.println(" HALLO");
 			if (tmp.get(row).getValid()) {
-				for (int d = 0; d < tmp.get(row).getList().size(); d++) {
-					if (tmp.get(row).getList().get(d)== tmp1.getList().get(d)) {
-						counter++;
+				if (readdata.make1DatafileLong.numberOfTruesInRow
+						.get(row) == longData.truecounter){
+					for (int d = 0; d < tmp.get(row).getList().size(); d++) {
+						if (tmp.get(row).getList().get(d)== tmp1.getList().get(d)) {
+							counter++;
+						}
 					}
-				}
-				if ((tmp.get(row).getList().size())==counter){
-					System.out.println("Reihe "+ row + " is equal with new");
-					return true;
+					if ((tmp.get(row).getList().size())==counter){
+	//					System.out.println("Reihe "+ row + " is equal with new");
+						return true;
+					}
 				}
 			}
 			counter=0;
@@ -223,9 +241,9 @@ public class make1DatafileLong {
 		int counttrueA = 0;
 		int counttrueB = 0;
 		Long var;
-		int dominationcounterA = 0;
+		boolean dominationcounterA = false;
 		boolean dominationA = true;
-		int dominationcounterB = 0;
+		boolean dominationcounterB = false;
 		boolean dominationB = true;
 		
 		boolean isdominated = true;
@@ -238,9 +256,9 @@ public class make1DatafileLong {
 										.get(row) >= longData.truecounter && dominationA) {
 									if (var == (tmp1.getList().get(d) & longData.validColumn.get(d)) ) { //  row// dominierend																	
 										counttrueA++;
-										if (var==0){
-//											dominationcounterA++;
-										}
+//										if (var!=0){
+//											dominationcounterA=true;
+//										}
 									}
 								} else {
 									dominationA=false;
@@ -249,9 +267,9 @@ public class make1DatafileLong {
 										.get(row) <= longData.truecounter && dominationB) {
 									if (var == (tmp.get(row).getList().get(d) & longData.validColumn.get(d))) { //  neu	// dominierend								
 										counttrueB++;
-										if (var==0){
-//											dominationcounterB++;
-										}
+//										if (var!=0){
+//											dominationcounterA=true;
+//										}
 									}
 								} else{
 									dominationB=false;
@@ -261,25 +279,25 @@ public class make1DatafileLong {
 									break;
 								}
 							}
-							if (counttrueB == tmp.get(0).getList().size() && isdominated && dominationcounterB!=tmp.get(0).getList().size() && dominationB) {
+							if (counttrueB == tmp.get(0).getList().size() && isdominated && !dominationcounterB && dominationB) {
 //								System.out.println(" Reihe " + k + " ist dominiernd auf " + row);
-								LongRemovingBits.removingBits.counterremoveRows++;
+//								LongRemovingBits.removingBits.counterremoveRows++;
 								removingBits.removeRow(tmp, row, false);
 								// Damit bei gleichen Zeilen nicht beide geloescht werden
 								isdominated = false;	
 							}
-							if (counttrueA == tmp.get(0).getList().size() && isdominated && dominationcounterA!= tmp.get(0).getList().size() && dominationA) {
+							if (counttrueA == tmp.get(0).getList().size() && isdominated && !dominationcounterA && dominationA) {
 //								System.out.println(" Reihe " + row + " ist dominiernd auf " + neu);
-								LongRemovingBits.removingBits.counterremoveRows++;
+//								LongRemovingBits.removingBits.counterremoveRows++;
 								return true;
 							}
 						}
 				isdominated=true;
 				counttrueA = 0;
 				counttrueB = 0;
-				dominationcounterA = 0;
+				dominationcounterA = false;
 				dominationA = true;
-				dominationcounterB = 0;
+				dominationcounterB = false;
 				dominationB = true;
 			}
 //		}

@@ -19,26 +19,19 @@ public class heuristic {
 		}
 		boolean counter = false;
 		int a= mem.get(0).size()-1;
-		int temp1, temp2;
-		if(!removingBits.validRowAllFalse(tmp)){
+		if(!removingBits.validFalse(tmp)){
 			//Sortierung der ArrayList. Ganz vorne in der ArrayList befindet sich das D-Bit mit den meisten "Trues".
-			//Beginn BubbleSort
-			for(int i=0; i<mem.get(0).size(); i++){
-					for(int k= i+1; k <mem.get(0).size(); k++){
-							if((mem.get(1).get(k)).compareTo(mem.get(1).get(i)) < 0){
-								temp1 = mem.get(1).get(i);
-								temp2 = mem.get(0).get(i);
-								mem.get(1).set(i, mem.get(1).get(k));
-								mem.get(0).set(i, mem.get(0).get(k));
-								mem.get(1).set(k,temp1);
-								mem.get(0).set(k,temp2);
-							}
-					}
-//				System.out.println(mem.get(0).get(i)+ " "+mem.get(1).get(i));   
-			}//BubbleSort End
+			if(removingBits.stopdomination){
+				qSort(mem.get(1), mem.get(0), 0, tmp.size()-1);
+			}else{
+				if(tmp.size()<40000){
+					qSort(mem.get(1), mem.get(0), 0, tmp.size()-1);
+				}
+			}
 			while(!counter && !mem.isEmpty() && a>=0){
 				if(tmp.get(mem.get(0).get(a)).getValid() ){
 					LongRemovingBits.removingBits.removeOneRowTrueColumns(tmp, mem.get(0).get(a));
+					System.out.println("remove: "+mem.get(0).get(a));
 					LongRemovingBits.removingBits.counterremoveRows++;
 					counter=true;
 				} else{
@@ -47,5 +40,45 @@ public class heuristic {
 			}
 		}
 	}
-	
+	/**
+	 * http://www.java-uni.de/index.php?Seite=86
+	 * @param x
+	 * @param y
+	 * @param links
+	 * @param rechts
+	 */
+	public static void qSort(ArrayList<Integer> x,ArrayList<Integer> y, int links, int rechts) {
+	      if (links < rechts) {
+	         int i = partition(x,y,links,rechts);
+	         qSort(x,y,links,i-1);
+	         qSort(x,y,i+1,rechts);
+	      }
+	   }
+	    
+	   public static int partition(ArrayList<Integer> x,ArrayList<Integer> y, int links, int rechts) {
+	      int pivot, i, j, help,help1;
+	      pivot = x.get(rechts);               
+	      i     = links;
+	      j     = rechts-1;
+	      while(i<=j) {
+	         if (x.get(i) > pivot) {     
+	            // tausche x[i] und x[j]
+	            help = x.get(i); 
+	            help1= y.get(i);
+	            x.set(i, x.get(j)); 
+	            y.set(i, y.get(j));
+	            x.set(j, help);
+	            y.set(j, help1);
+	            j--;
+	         } else i++;            
+	      }
+	      // tausche x[i] und x[rechts]
+	      help      = x.get(i);
+	      help1=y.get(i);
+	      x.set(i, x.get(rechts));
+	      y.set(i, y.get(rechts));
+	      x.set(rechts, help);
+	      y.set(rechts, help1);
+	      return i;
+	   }
 }

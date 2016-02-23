@@ -15,13 +15,20 @@ public class solution {
 		removingBits.circuits = "C:/Users/Dennis/git/Minimization/";
 //		removingBits.circuits = "/home/dj0804/workspace/Minimization/";
 		ArrayList<DBit> tmp; 
-		File f = new File(removingBits.circuits+"TEST/results/");
+//		File f = new File(removingBits.circuits+"TEST/results/");
+//		for(File files : f.listFiles()){
+//			tmp= new ArrayList<DBit>();
+//			System.out.println(files.getName());
+////			longData.testpfad= removingBits.circuits+"results/"+files.getName();
+//			longData.protokoll= removingBits.circuits + "TEST/logs/"+files.getName();
+//			longData.testpfad= removingBits.circuits + "TEST/results/"+files.getName();
+		File f = new File(removingBits.circuits+"results/");
 		for(File files : f.listFiles()){
 			tmp= new ArrayList<DBit>();
 			System.out.println(files.getName());
 //			longData.testpfad= removingBits.circuits+"results/"+files.getName();
-			longData.protokoll= removingBits.circuits + "TEST/logs/"+files.getName();
-			longData.testpfad= removingBits.circuits + "TEST/results/"+files.getName();
+			longData.protokoll= removingBits.circuits + "logs/"+files.getName();
+			longData.testpfad= removingBits.circuits + "results/"+files.getName();
 			longData.validColumn=new ArrayList<Long>();
 			make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
 			make1DatafileLong.numberOfTruesInRow = new ArrayList<Integer>();
@@ -51,16 +58,18 @@ public class solution {
 			int counter = 0;
 			int c = 0;
 			for (int d = 0; d < tmp.get(0).getList().size();) {
-//				if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1) {
-					for (int k = 0; k < tmp.size() && !covered; k++) {
+					for (int k = 0; k < removingBits.solution.size() && !covered; k++) {
 						if (removingBits.solution.get(k)) {
-							if ((stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(k).getList().get(d), c) == 1)) {
-								covered = true;
-								counter++;
+							for (int b=0; b<tmp.size(); b++){
+								if (tmp.get(b).getValue()==k){
+									if ((stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(b).getList().get(d), c) == 1)) {
+										covered = true;
+										counter++;
+									}
+								}
 							}
 						}
 					}
-//				}
 					c++;
 					if (c == 64) {
 						d++;

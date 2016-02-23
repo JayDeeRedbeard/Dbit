@@ -9,6 +9,8 @@ import readdata.*;
 import java.io.PrintWriter;
 public class removingBits {
 		public static ArrayList<Boolean> solution = new ArrayList<Boolean>();
+		public static float duration=0;
+		public static boolean stopdomination=false;
 		public static String circuits= "C:/Users/Dennis/git/Minimization/";
 //		public static String circuits="/home/dj0804/workspace/Minimization/";
 		
@@ -18,8 +20,9 @@ public class removingBits {
 		public static void main (String [] args) throws IOException{
 			//Programmablauf
 			long startTime = System.nanoTime();
-			long endTime ;float duration;
+			long endTime ;
 			ArrayList<DBit> tmp; 
+			
 			File f = new File(circuits+"Schaltungen/");	
 			//File f = new File(circuits+"TEST/");
 			for(File files : f.listFiles()){
@@ -33,11 +36,16 @@ public class removingBits {
 				longData.validColumn=new ArrayList<Long>();
 				make1DatafileLong.numberOfTruesInColumn= new ArrayList<ArrayList<Integer>>();
 				
-				tmp=make1DatafileLong.patternwithdomination();
+				tmp=make1DatafileLong.patternwithdomination(startTime);
 				
 				PrintWriter writer = new PrintWriter(longData.protokoll+"/Zusammenfassend.txt");
 				writer.append("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp)+ "\n");
 				System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
+				
+				endTime = System.nanoTime();
+				duration = (float) (endTime - startTime)/(1000000000)/60;
+				writer.append("time: "+duration+ "\n");
+				System.out.println(duration);
 				
 				essentialdominating(tmp);
 				
@@ -131,7 +139,30 @@ public class removingBits {
 			}
 			return counter;
 		}
-		
+		public static boolean validFalse(ArrayList<DBit> tmp){
+			int counter=0;
+			for (int i=0; i<tmp.size();i++){
+				if(!tmp.get(i).getValid())
+					counter++;
+			}
+			int counter1=0;
+			int c=0;
+			for (int d=0; d<longData.validColumn.size();){
+				if (stuff.DirtyLittleHelpers.getBitAtPosition(longData.validColumn.get(d),
+						c) == 1) {
+					counter1++;
+				}
+				c++;
+				if (c == 64) {
+					d++;
+					c = 0;
+				}
+			}
+			if(tmp.size()==counter || counter1==0)
+				return true;
+			else 
+				return false;
+		}
 		/**  
 		@return	Wenn eine Reihe nur aus "false" besteht wird "True zurueckgegeben.				-
 		*/
@@ -183,9 +214,7 @@ public class removingBits {
 			writer.append("Start");
 			long startTime = System.nanoTime();
 			long endTime;
-			float duration;
 			// ENDE
-
 			int counter = 0;
 			int counter1 = 2;
 			int counter1EqualRows = 2;
@@ -195,14 +224,14 @@ public class removingBits {
 			int a = 0;
 			int numberOfValidBeginningRows=0;
 			int numberOfValidBeginningColumns=0;
-			while (!validRowAllFalse(tmp) || !validColumnAllFalse()) {
+			while (!validFalse(tmp) ) {
 				counterColumns = 0;
 				counter1Columns = 2;
-				while (counterColumns != counter1Columns) {
+				while (counterColumns != counter1Columns ) {
 					// Remove all NOT dominating Columns and Eqaual Columns
 					counter = 0;
 					counter1 = 2;
-					while (counter != counter1) {
+					while (counter != counter1 ) {
 						// Remove NOT dominating and Equal Rows
 						counterColumns = 0;
 						counter1Columns = 2;
@@ -210,7 +239,7 @@ public class removingBits {
 							// Remove Equal Columns
 							counter = 0;
 							counter1EqualRows = 2;
-							while (counter != counter1EqualRows) {
+							while (counter != counter1EqualRows ) {
 								// Remove Equal Rows
 								counter = 0;
 								counter1FalseRows = 2;
@@ -292,7 +321,7 @@ public class removingBits {
 								writer.append("RemoveEqual Rows: " + "\n");
 								System.out.println("RemoveEqual Rows: ");
 //								domRows.removeEqualRows(tmp);
-								Dmasking.removeEqualRows(tmp);
+								Dmasking.removeEqualRows(tmp, startTime);
 								
 								counter1EqualRows = removingBits.numberOfvalidRows(tmp);
 							}
@@ -302,20 +331,22 @@ public class removingBits {
 							
 							writer.append("RemoveEqual Columns: " + "\n");
 							System.out.println("RemoveEqual Columns: ");
-							domColumn.removeEqualColumns(tmp);
+							domColumn.removeEqualColumns(tmp, startTime);
 							
-//							if(counterremoveColumns<(numberOfValidBeginningColumns*0.04)){
-//								counter1Columns=counterColumns;
-//							}else{
+							if(counterremoveColumns<(numberOfValidBeginningColumns*0.04)){
+								counter1Columns=counterColumns;
+							}else{
 								counter1Columns = removingBits.numberOfvalidColumns(tmp);
-//							}
+							}
 						}
 						// ENDE Remove Equal Columns
 
 						writer.append("Remove NOT dominating and Equal Rows: " + "\n");
 						System.out.println("Remove NOT dominating and Equal Rows: ");
 //						domRows.dominatingRows(tmp);
-						Dmasking.dominatingRows(tmp);
+						
+						Dmasking.dominatingRows(tmp,(startTime));
+						
 						if(counterremoveRows<(numberOfValidBeginningRows*0.04)){
 							counter1=counter;
 						}else{
@@ -330,7 +361,7 @@ public class removingBits {
 
 					writer.append("Remove all NOT dominating Columns and Eqaual Columns: " + "\n");
 					System.out.println("Remove all NOT dominating Columns and Eqaual Columns: ");
-					domColumn.dominatingColumns(tmp);
+					domColumn.dominatingColumns(tmp, startTime);
 
 					counter1Columns = removingBits.numberOfvalidColumns(tmp);
 
@@ -357,11 +388,11 @@ public class removingBits {
 				writer.append("removeBitWithMostTrues: " + "\n");
 				System.out.println("removeBitWithMostTrues: ");
 				
-				while(counterremoveRows<(numberOfValidBeginningRows*0.05)){
-					System.out.println("removeBitWithMostTrues");
+//				while(counterremoveRows<(numberOfValidBeginningRows*0.005)){
+//					System.out.println("removeBitWithMostTrues");
 					heuristic.removeBitWithMostTrues(tmp);
-					essentialBits.removeAllEssential(tmp);
-				}
+//					essentialBits.removeAllEssential(tmp);
+//				}
 				// writer=longData.printLongPatternwithoutEmptySpace(tmp,writer);
 				counter = 0;
 				counter1 = 2;
@@ -371,6 +402,10 @@ public class removingBits {
 				endTime = System.nanoTime();
 				duration = (float) (endTime - startTime)/(1000000000)/60;
 				writer.append("time: " + duration + "\n");
+				
+				if(duration>24*60){
+					stopdomination=false;
+				}
 			}
 			writer.close();
 		}

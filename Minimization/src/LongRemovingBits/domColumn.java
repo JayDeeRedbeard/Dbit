@@ -11,7 +11,7 @@ public class domColumn {
 	@return													Es wird eine ArrayList zurueckgegeben, wo die 0. Spalte jeweils die dominierende Spalte ist.
 															Die 1.Spalte ist dann die nicht dominierende Spalte
 	*/
-	public static void dominatingColumns(ArrayList<DBit> tmp) {
+	public static void dominatingColumns(ArrayList<DBit> tmp, long startTime) {
 		// Initialisierungen
 		int counttrueA = 0;
 		int counttrueB = 0;
@@ -20,14 +20,15 @@ public class domColumn {
 		boolean dominationcounterA = false;
 		boolean dominationcounterB = false;
 		boolean isdominated = true;
+		long endTime ;float duration;
 		if (!removingBits.validRowAllFalse(tmp)) {
-			for (int d = 0; d < tmp.get(0).getList().size();) {
+			for (int d = 0; d < tmp.get(0).getList().size() && removingBits.stopdomination;) {
 				if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1) {
 					System.out.println("Ueberpruefe Spalte");
 					System.out.println("d= " + d + " c= " + c);
-					for (int y = 0; y < tmp.get(0).getList().size();) {
+					for (int y = 0; y < tmp.get(0).getList().size() && removingBits.stopdomination;) {
 						if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(y), e) == 1) {
-							for (int k = 0; k < tmp.size() && isdominated; k++) {
+							for (int k = 0; k < tmp.size() && isdominated ; k++) {
 							 	if (tmp.get(k).getValid()&& !(d == y && c == e) ) {
 									// Entscheidendes Kriterium!! Ueberpruefe ob Spalte A die Spalte B dominiert.
 									if (!dominationcounterA) {
@@ -97,6 +98,11 @@ public class domColumn {
 							dominationcounterB = false;
 							counttrueA = 0;
 							counttrueB = 0;
+							endTime = System.nanoTime();
+							duration = (float) (endTime - startTime)/(1000000000)/60;
+							if (duration> 24*60){
+								removingBits.stopdomination=false;
+							}
 						}
 						e++;
 						if (e == 64) {
@@ -117,7 +123,7 @@ public class domColumn {
  * Loescht alle gleichen Spalten
  * @param tmp
  */
-	public static void removeEqualColumns(ArrayList<DBit> tmp) {
+	public static void removeEqualColumns(ArrayList<DBit> tmp, long startTime) {
 		// Diese Funktion ist nicht mehr brauchbar! Denn sie wird dominiert du
 		// die oberen Funktion
 		// Start Initialisieren
@@ -127,17 +133,18 @@ public class domColumn {
 		boolean notequalbreak=false;
 		int c = 0;
 		int e = 0;
+		long endTime ;float duration;
 		// Ende Initialisieren
-		if (!removingBits.validRowAllFalse(tmp)) {
-		for (int d = 0; d < tmp.get(0).getList().size();) {
+		if (!removingBits.validFalse(tmp)) {
+		for (int d = 0; d < tmp.get(0).getList().size() && removingBits.stopdomination;) {
 			if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1) {
-				for (int y = 0; y < tmp.get(0).getList().size();) {
+				for (int y = 0; y < tmp.get(0).getList().size() && removingBits.stopdomination;) {
 //					System.out.println("  ,");
 					if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(y), e) == 1
 							&& !(d == y && c == e)) {
 						if (readdata.make1DatafileLong.numberOfTruesInColumn.get(d)
 								.get(c) == readdata.make1DatafileLong.numberOfTruesInColumn.get(y).get(e)) {
-							for (int row = 0; row < tmp.size() && !isdominated && !notequalbreak; row++) {
+							for (int row = 0; row < tmp.size() && !isdominated && !notequalbreak && removingBits.stopdomination; row++) {
 								if (tmp.get(row).getValid()) {
 									if (stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).getList().get(d),
 													c) == stuff.DirtyLittleHelpers.getBitAtPosition(tmp.get(row).getList().get(y), e)) {
@@ -169,6 +176,11 @@ public class domColumn {
 					if (e == 64) {
 						y++;
 						e = 0;
+					}
+					endTime = System.nanoTime();
+					duration = (float) (endTime - startTime)/(1000000000)/60;
+					if (duration> 24*60){
+						removingBits.stopdomination=false;
 					}
 				}
 				e=0;

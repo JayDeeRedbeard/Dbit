@@ -45,17 +45,15 @@ public class minimumhittingSetHyperGraph {
 			long startTime = System.nanoTime();
 			long endTime ;float duration;
 			
-			tmp=make1DatafileLong.returnbigList();
+			tmp=make1DatafileLong.patternwithdomination(startTime) ;
 			
-			LongRemovingBits.falseRowsAndColumns.RemoveFalseColumn(tmp);
+//			LongRemovingBits.falseRowsAndColumns.RemoveFalseColumn(tmp);
 //			LongRemovingBits.domColumn.dominatingColumns(tmp);
 //			LongRemovingBits.falseRowsAndColumns.RemoveFalseRows(tmp);
 //			longData.printLongPatternwithoutEmptySpace(tmp);
 			tmp = removeRowsColumns.removeColumnsfromList(tmp);
-			domRows.removeEqualRows(tmp);
 			tmp = removeRowsColumns.removeRowsfromList(tmp);
-			LongRemovingBits.domRows.dominatingRows(tmp);
-			tmp = removeRowsColumns.removeRowsfromList(tmp);
+			System.out.println("everyFailurecovered: "+pruefen.solution.everyFailurecovered(tmp));	
 			
 			mhs=mhsHyperGraphdbits(tmp);
 			
@@ -84,7 +82,8 @@ public class minimumhittingSetHyperGraph {
 		
 		ArrayList<Integer> dbits = new ArrayList<>();
 		for(int i =0; i<tmp.size(); i++){
-			dbits.add(i);
+			if(tmp.get(i).getValid())
+				dbits.add(i);
 		}
 		System.out.println(dbits);
 		ArrayList<ArrayList<Integer>> faults = faults(tmp);

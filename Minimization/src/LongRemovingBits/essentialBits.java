@@ -14,7 +14,7 @@ public class essentialBits {
 	public static void removeAllEssential(ArrayList<DBit> tmp)throws IOException{
 		int column=0;
 		boolean breakcounter=false;
-		if (!removingBits.validRowAllFalse(tmp)) {
+		if (!removingBits.validFalse(tmp)) {
 			for (int d = 0; d < tmp.get(0).getList().size(); d++) {
 				while (readdata.make1DatafileLong.numberOfTruesInColumn.get(d).contains(1)) {
 					column = readdata.make1DatafileLong.numberOfTruesInColumn.get(d).indexOf(1);

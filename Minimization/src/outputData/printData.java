@@ -87,7 +87,7 @@ public class printData {
 			       */
 			      gos.finish();
 			      gos.close();
-			 
+			      ausgabeDatei.delete();
 			      System.out.println("File Compressed!!");
 			 
 			    }catch(IOException ioe){
