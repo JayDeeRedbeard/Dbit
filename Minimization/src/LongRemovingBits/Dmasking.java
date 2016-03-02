@@ -72,7 +72,7 @@ public class Dmasking {
 						}
 						endTime = System.nanoTime();
 						removingBits.duration = (float) (endTime - startTime)/(1000000000)/60;
-						if (removingBits.duration> 24*60){
+						if (removingBits.duration> 12*60){
 							removingBits.stopdomination=false;
 						}
 					}
@@ -124,7 +124,7 @@ public class Dmasking {
 							counttrueA=0;
 							endTime = System.nanoTime();
 							duration = (float) (endTime - startTime)/(1000000000)/60;
-							if (duration> 24*60){
+							if (duration> 12*60){
 								removingBits.stopdomination=false;
 							}
 					}

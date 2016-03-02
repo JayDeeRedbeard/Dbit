@@ -28,8 +28,8 @@ public class heuristic {
 					qSort(mem.get(1), mem.get(0), 0, tmp.size()-1);
 				}
 			}
-			while(!counter && !mem.isEmpty() && a>=0){
-				if(tmp.get(mem.get(0).get(a)).getValid() ){
+			while(!counter && !mem.isEmpty() && a>=0 ){
+				if(tmp.get(mem.get(0).get(a)).getValid() && readdata.make1DatafileLong.numberOfTruesInRow.get(mem.get(0).get(a))>0){
 					LongRemovingBits.removingBits.removeOneRowTrueColumns(tmp, mem.get(0).get(a));
 					System.out.println("remove: "+mem.get(0).get(a));
 					LongRemovingBits.removingBits.counterremoveRows++;

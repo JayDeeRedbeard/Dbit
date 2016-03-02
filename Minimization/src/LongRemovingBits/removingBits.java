@@ -10,7 +10,7 @@ import java.io.PrintWriter;
 public class removingBits {
 		public static ArrayList<Boolean> solution = new ArrayList<Boolean>();
 		public static float duration=0;
-		public static boolean stopdomination=false;
+		public static boolean stopdomination=true;
 		public static String circuits= "C:/Users/Dennis/git/Minimization/";
 //		public static String circuits="/home/dj0804/workspace/Minimization/";
 		

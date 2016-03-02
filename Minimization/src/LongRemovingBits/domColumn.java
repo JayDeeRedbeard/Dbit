@@ -21,7 +21,7 @@ public class domColumn {
 		boolean dominationcounterB = false;
 		boolean isdominated = true;
 		long endTime ;float duration;
-		if (!removingBits.validRowAllFalse(tmp)) {
+		if (!removingBits.validFalse(tmp)) {
 			for (int d = 0; d < tmp.get(0).getList().size() && removingBits.stopdomination;) {
 				if (stuff.DirtyLittleHelpers.getBitAtPosition(readdata.longData.validColumn.get(d), c) == 1) {
 					System.out.println("Ueberpruefe Spalte");
@@ -100,7 +100,7 @@ public class domColumn {
 							counttrueB = 0;
 							endTime = System.nanoTime();
 							duration = (float) (endTime - startTime)/(1000000000)/60;
-							if (duration> 24*60){
+							if (duration> 12*60){
 								removingBits.stopdomination=false;
 							}
 						}
@@ -179,7 +179,7 @@ public class domColumn {
 					}
 					endTime = System.nanoTime();
 					duration = (float) (endTime - startTime)/(1000000000)/60;
-					if (duration> 24*60){
+					if (duration> 12*60){
 						removingBits.stopdomination=false;
 					}
 				}
